@@ -1,35 +1,44 @@
-# README #
+# Node Stripe Membership SaaS
 
+This project is a boilerplate express app for creating a membership/subscription site with [Stripe](https://stripe.com), [Mailgun](https://mailgun.com/signup), mongodb and swig. Inspired by [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) and [RailsApps/rails-stripe-membership-saas](https://github.com/RailsApps/rails-stripe-membership-saas). It also handles stripe webhooks.
 
-```sh
-git clone git clone https://TylerHenry@bitbucket.org/TylerHenry/seosite-dashboard.git
-````
+Check out the [demo](https://node-stripe-membership-saas.herokuapp.com/dashboard)!
 
+<a href="https://node-stripe-membership-saas.herokuapp.com/dashboard">
+    <img src="https://a16545fb495c8760fb33-4cec33efbe2744e99ba863e52edb2075.ssl.cf2.rackcdn.com/stripe-membership-app-screenshot.png">
+</a>
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### System Requirements
 
-### What is this repository for? ###
+- mongodb
+- nodejs
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Getting Started
 
-### How do I get set up? ###
+First update `/server/config/secrets.js` with the following credentials:
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+- Stripe [API keys](https://dashboard.stripe.com/account/apikeys) and [plan info](https://dashboard.stripe.com/test/plans)
+- [Mailgun](https://mailgun.com/signup) for sending forgot/reset password confirmations.
+- session secret
+- google analytics id
 
-### Contribution guidelines ###
+Install dependencies with `npm install`.
 
-* Writing tests
-* Code review
-* Other guidelines
+Start the server with `node server`.
 
-### Who do I talk to? ###
+Note: Stripe webhooks can be recieved at `https://your-url.com/stripe/events`.
 
-* Repo owner or admin
-* Other community or team contact
+### Heroku Deployment
+
+```
+heroku create your-awesome-saas-product
+heroku addons:add mongohq
+heroku config:set SESSION_SECRET='your_secret';
+heroku config:set STRIPE_KEY='sk_test_example'
+heroku config:set STRIPE_PUB_KEY='pk_test_example'
+heroku config:set MAILGUN_USER='example.org'
+heroku config:set MAILGUN_PASSWORD='key-secret'
+heroku config:set GOOGLE_ANALYTICS='UA-XXXXXX-1'
+```
+
+Want add a heroku deploy button? Pull requests welcome :]
