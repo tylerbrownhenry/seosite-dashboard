@@ -24,13 +24,17 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li {%if path == '/dashboard'%}class="active"{%endif%}><a href="/dashboard">Home</a></li>
-            <li {%if path == '/profile'%}class="active"{%endif%}><a href="/profile">Profile</a></li>
-            <li {%if path == '/billing'%}class="active"{%endif%}><a href="/billing">Billing</a></li>
-            <li><a href="https://github.com/eddywashere/node-stripe-membership-saas">Fork Me</a></li>
+            <!-- <li {%if path == '/dashboard'%}class="active"{%endif%}><a href="/dashboard">Home</a></li> -->
+
+            <li {%if path == '/summary'%}class="active"{%endif%}><a href="/dashboard">Summary</a></li>
+            <li {%if path == '/activity'%}class="active"{%endif%}><a href="/dashboard">Activity</a></li>
+            <li {%if path == '/research'%}class="active"{%endif%}><a href="/dashboard">Research</a></li>
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/logout">Logout</a></li>
+            <li {%if path == '/profile'%}class="active"{%endif%}><a href="/profile">Profile</a></li>
+            <li {%if path == '/billing'%}class="active"{%endif%}><a href="/billing">Billing</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
