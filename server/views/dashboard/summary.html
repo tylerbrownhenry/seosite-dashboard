@@ -2,72 +2,56 @@
 {% extends '../layouts/dashboard.html' %}
 
 {% block title %}{{title}}{% endblock %}
-
+tegfdgdg
 {% block content %}
   <div class="container-fluid container-max">
     <div class="page-header">
       <h1>Home <small>/views/dashboard/index</small></h1>
     </div>
-    {% include "../partials/flash.html" %}
-    {% if user.stripe.plan == 'free' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Free Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the free plan! Enjoy this free content!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Free Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
+  
+    {% for x in requests.list %}
+      {% if loop.first %}<ul>{% endif %}
+      <li>{{ loop.index }} - {{ loop.key }}: {{ x }} {{x}}
+      Status: 
+      Request Date: {{x.requestDate}}
+      Options: {{x.options.date}}
+      Options: {{x.options.scanDepth}}
+      Options: {{x.options.filterLevel}}
+      processes: {{x.options.limit}}
+      retries: {{x.status}}
+      url: {{x.status}}
 
-    {% if user.stripe.plan == 'silver' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Silver Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the silver plan!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Silver Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
+      </li>
+      {% if loop.last %}</ul>{% endif %}
+    {% endfor %}
 
-    {% if user.stripe.plan == 'gold' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Gold Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the gold plan!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Gold Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
+    <div class="p
 
-    {% if user.stripe.plan == 'platinum' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Platinum Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the platinum plan!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Platinum Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
 
-    <div class="well">
-      <p>Debug Info:</p>
-      <ul>
-        <li>Does this user have a plan? {% if _.has(plans, user.stripe.plan) %}YES{% else %}NOPE{% endif %}</li>
-        <li>Does this user have paid plan? {% if _.contains(['silver','gold','platinum'], user.stripe.plan) %}YES{% else %}NOPE{% endif %}</li>
-      </ul>
+    age-header">
+      <h3>Check your site!</h3>
     </div>
-  </div>
+    <form action="/queue" method="POST" class="form-horizontal">
+      <div class="form-group">
+        <label for="url" class="col-sm-3 control-label">Website URL</label>
+        <div class="col-sm-4">
+          <input type="text" name="url" class="form-control">
+          <input type="text" name="email" value="{{user.email}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
+
+
+
+
+    <form id="rendered-form"><div class="fb-text form-group field-input-url"><label for="input-url" class="fb-text-label">URL  <span class="tooltip-element" tooltip="The base url for your website">?</span></label> <input type="text" placeholder="http://www.mywebsite.com" class="form-control" name="input-url" id="input-url"></div><div class="fb-submit form-group field-button-1484611485837"><button type="submit" class="button-input btn btn-primary" name="button-1484611485837" style="primary" id="button-1484611485837">Let's Do This!</button></div><div class=""><h1 type="h1" class="header" name="" id="">Options</h1></div><div class="fb-checkbox form-group field-checkbox-1484610059719"><input type="checkbox" class="checkbox" name="checkbox-1484610059719" access="true" role="1" id="checkbox-1484610059719"> <label for="checkbox-1484610059719" class="fb-checkbox-label">Scan entire site?  </label></div><div class="fb-radio form-group field-radio-group-1484610699461"><label for="radio-group-1484610699461" class="fb-radio-group-label">Scan depth?  <span class="tooltip-element" tooltip="Picture this: We go to the url you enter. That is a scan depth of 0.  If we find all of the links on that page, and click on them, and perform the same scan on each of those pages, that is level 1.  Level 2 is the same process for all the links found on those pages.">?</span></label><div class="radio-group"><input value="option-1" type="radio" class="radio-group" name="radio-group-1484610699461" id="radio-group-1484610699461-0" checked=""> <label for="radio-group-1484610699461-0">Just the home page</label><br><input value="option-2" type="radio" class="radio-group" name="radio-group-1484610699461" id="radio-group-1484610699461-1"> <label for="radio-group-1484610699461-1">Scan every page that is linked to one the home page</label><br><input value="option-3" type="radio" class="radio-group" name="radio-group-1484610699461" id="radio-group-1484610699461-2"> <label for="radio-group-1484610699461-2">Then every page on those pages</label><br><input value="" type="radio" class="radio-group" name="radio-group-1484610699461" id="radio-group-1484610699461-3"> <label for="radio-group-1484610699461-3">And every page of all of those pages</label><br><input value="" type="radio" class="radio-group" name="radio-group-1484610699461" id="radio-group-1484610699461-4"> <label for="radio-group-1484610699461-4">Screw it, do the whole thing (Max 10000 Total Scanned Pages)</label><br></div></div><div class="fb-text form-group field-text-1484611596181"><label for="text-1484611596181" class="fb-text-label">Request Header (Advanced Option)  </label> <input type="text" class="form-control" name="text-1484611596181" id="text-1484611596181"></div><div class=""><h3 type="h3" class="header" name="" id="">Security Options</h3></div><div class="fb-checkbox form-group field-checkbox-1484610059719"><input type="checkbox" class="checkbox" name="checkbox-1484610059719" access="true" role="1" id="checkbox-1484610059719"> <label for="checkbox-1484610059719" class="fb-checkbox-label">Perform security check?  <span class="tooltip-element" tooltip="Does a basic html security scan looking for known viruses (We're not Norton but this can still be helpful)">?</span></label></div><div class=""><h3 type="h3" class="header" name="" id="">Link Options</h3></div><div class="fb-radio form-group field-radio-group-1484611304266"><label for="radio-group-1484611304266" class="fb-radio-group-label">Accepted Schemas  </label><div class="radio-group"><input value="option-1" type="radio" class="radio-group" name="radio-group-1484611304266" access="true" id="radio-group-1484611304266-0" checked=""> <label for="radio-group-1484611304266-0">Http</label><br><input value="option-2" type="radio" class="radio-group" name="radio-group-1484611304266" access="true" id="radio-group-1484611304266-1"> <label for="radio-group-1484611304266-1">Https (Beta)</label><br></div></div><div class="fb-checkbox form-group field-checkbox-1484610059719"><input type="checkbox" class="checkbox" name="checkbox-1484610059719" access="true" role="1" id="checkbox-1484610059719"> <label for="checkbox-1484610059719" class="fb-checkbox-label">Scan external pages?  <span class="tooltip-element" tooltip="Likely you may have links to other sites or use libraries that you do not own, that you might not want to waste resourses on monitoring.  Enable this to check them anyway, just in case.">?</span></label></div><div class="fb-checkbox form-group field-checkbox-group-1484611147972"><label for="checkbox-group-1484611147972" class="fb-checkbox-group-label">Link information to store  <span class="tooltip-element" tooltip="Limit the information about a link found on your page that you want to display.">?</span></label><div class="checkbox-group"><input value="option-1" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-0" checked=""> <label for="checkbox-group-1484611147972-0">Html Element</label><br><input value="option-2" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-1"> <label for="checkbox-group-1484611147972-1">Selector</label><br><input value="option-3" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-2"> <label for="checkbox-group-1484611147972-2">Redirects</label><br><input value="" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-3"> <label for="checkbox-group-1484611147972-3">Status</label><br><input value="" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-4"> <label for="checkbox-group-1484611147972-4">Url</label><br><input value="" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-5"> <label for="checkbox-group-1484611147972-5">Parent</label><br><input value="" type="checkbox" class="checkbox-group" name="checkbox-group-1484611147972[]" id="checkbox-group-1484611147972-6"> <label for="checkbox-group-1484611147972-6">Href</label><br></div></div><div class="fb-checkbox form-group field-checkbox-1484610059719"><input type="checkbox" class="checkbox" name="checkbox-1484610059719" id="checkbox-1484610059719"> <label for="checkbox-1484610059719" class="fb-checkbox-label">Verify links?  <span class="tooltip-element" tooltip="Do you want to check if the links on your page are working?">?</span></label></div><div class="fb-radio form-group field-radio-group-1484610192263"><label for="radio-group-1484610192263" class="fb-radio-group-label">Types of links to verify  </label><div class="radio-group"><input value="0" type="radio" class="radio-group" name="radio-group-1484610192263" id="radio-group-1484610192263-0" checked=""> <label for="radio-group-1484610192263-0">Clickable links</label><br><input value="1" type="radio" class="radio-group" name="radio-group-1484610192263" id="radio-group-1484610192263-1"> <label for="radio-group-1484610192263-1">Clickable links, media, iframes and meta refreshes</label><br><input value="2" type="radio" class="radio-group" name="radio-group-1484610192263" id="radio-group-1484610192263-2"> <label for="radio-group-1484610192263-2">Clickable links, media, iframes, meta refreshes, stylesheets, scripts and forms</label><br><input value="3" type="radio" class="radio-group" name="radio-group-1484610192263" id="radio-group-1484610192263-3"> <label for="radio-group-1484610192263-3">Clickable links, media, iframes, meta refreshes, stylesheets, scripts, forms and metadata</label><br></div></div></form>
+
+
 </div>
 {% endblock %}

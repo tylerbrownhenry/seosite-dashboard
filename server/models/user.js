@@ -8,7 +8,49 @@ var timestamps = require('mongoose-timestamp');
 var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
   password: String,
-
+  uid: String,
+    activity: {
+        requests:{
+            daily: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+            monthly: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+        },
+        pages:{
+            daily: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+            monthly: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+        },
+        sites:{
+            daily: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+            monthly: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+        },
+        links:{
+            daily: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+            monthly: {
+                refreshed: { type: Date, default: Date.now() },
+                count:{ type: Number, default: 0 },
+            },
+        }
+    },
   profile: {
     name: { type: String, default: '' },
     gender: { type: String, default: '' },
@@ -16,7 +58,7 @@ var userSchema = new mongoose.Schema({
     website: { type: String, default: '' },
     picture: { type: String, default: '' }
   },
-
+  apiToken: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date
 });
@@ -58,6 +100,10 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     cb(null, isMatch);
   });
 };
+
+userSchema.methods.getRequests = function(){
+    console.log('get request called!');
+}
 
 /**
  * Get URL to a user's gravatar.

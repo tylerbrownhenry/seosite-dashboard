@@ -8,9 +8,9 @@ module.exports = {
     //   "database": "stripe-users"
     // },
 
+    apiToken: '530d0C$3cr3T',
 
-
-  sessionSecret: process.env.SESSION_SECRET || 'diNo$aursarelikebyfarthecoolestthing3v3r',
+    sessionSecret: process.env.SESSION_SECRET || '530d0C$3cr3T',
 
   mailgun: {
     apiKey: process.env.MAILGUN_API_KEY || '',

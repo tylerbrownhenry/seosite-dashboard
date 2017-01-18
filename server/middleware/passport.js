@@ -1,5 +1,8 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var sh = require("shorthash");
+var jwt = require('jsonwebtoken');
+var secrets = require('../config/secrets');
 
 module.exports = function(passport){
 
@@ -12,6 +15,13 @@ module.exports = function(passport){
       done(err, user);
     });
   });
+
+function createToken(email){
+    return jwt.sign(email, secrets.apiToken, {
+        expiresIn: 14 * 24 * 3600000 // expires in 2 weeks
+        
+    });
+}
 
   // login
   passport.use('login', new LocalStrategy({
@@ -32,7 +42,12 @@ module.exports = function(passport){
               req.session.cookie.maxAge = time; //2 weeks
               req.session.cookie.expires = new Date(Date.now() + time);
               req.session.touch();
+              user.update({$set:{apiToken: createToken(user.uid)}});
               return done(null, user, req.flash('success', 'Successfully logged in.'));
+            /* Generate Token */
+
+
+
             } else {
               return done(null, false, req.flash('error', 'Invalid Password'));
             }
@@ -56,8 +71,11 @@ module.exports = function(passport){
             return done(null, false, req.flash('error', 'An account with that email address already exists.'));
           }
           // edit this portion to accept other properties when creating a user.
+          var uid = sh.unique(req.body.email);
           var user = new User({
+            apiToken: createToken(uid),
             email: req.body.email,
+            uid: sh.unique(req.body.email),
             password: req.body.password // user schema pre save task hashes this password
           });
 

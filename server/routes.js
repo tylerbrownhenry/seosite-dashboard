@@ -11,7 +11,9 @@ secrets = require('./config/secrets');
 // controllers
 var users = require('./controllers/users-controller'),
 main = require('./controllers/main-controller'),
+queue = require('./controllers/queue-controller'),
 dashboard = require('./controllers/dashboard-controller'),
+summary = require('./controllers/summary-controller'),
 passwords = require('./controllers/passwords-controller'),
 registrations = require('./controllers/registrations-controller'),
 sessions = require('./controllers/sessions-controller');
@@ -78,11 +80,19 @@ module.exports = function (app, passport) {
     setRedirect({auth: '/'}),
     isAuthenticated,
     dashboard.getDefault);
+
+  app.get('/summary',
+    setRender('dashboard/summary'),
+    setRedirect({auth: '/'}),
+    isAuthenticated,
+    summary.getDefault);
+
   app.get('/billing',
     setRender('dashboard/billing'),
     setRedirect({auth: '/'}),
     isAuthenticated,
     dashboard.getBilling);
+
   app.get('/profile',
     setRender('dashboard/profile'),
     setRedirect({auth: '/'}),
@@ -90,10 +100,17 @@ module.exports = function (app, passport) {
     dashboard.getProfile);
 
   // user api stuff
+  app.post('/queue',
+    setRedirect({auth: '/', success: 'dashboard/summary', failure: 'dashboard/summary'}),
+    isAuthenticated,
+    queue.postApiCall);
+
+
   app.post('/user',
     setRedirect({auth: '/', success: '/profile', failure: '/profile'}),
     isAuthenticated,
     users.postProfile);
+
   app.post('/user/billing',
     setRedirect({auth: '/', success: '/billing', failure: '/billing'}),
     isAuthenticated,

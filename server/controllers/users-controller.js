@@ -1,5 +1,5 @@
 'use strict';
-
+var secrets = require('../config/secrets');
 var User = require('../models/user');
 
 // show user page
