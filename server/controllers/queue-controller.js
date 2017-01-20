@@ -23,7 +23,7 @@ exports.getHome = function(req, res, next){
 
 
 exports.postApiCall = function(_req, _res, next){
-    console.log('postApiCall-->',_req.body);
+    console.log('postApiCall-->',_req.body.preClass);
 
     console.log('dfdsfs');
 

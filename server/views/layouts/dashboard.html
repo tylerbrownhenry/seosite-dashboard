@@ -11,6 +11,26 @@
   </head>
   <body>
     <!-- Static navbar -->
+
+
+    <div class="alert alert-warning alert-dismissible parentAlert" role="alert" style="margin:0;display:none">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>No Biggie.</strong> We lost your connection, but we'll find it!
+    </div>
+    
+    <div class="alert alert-info alert-dismissible" id="info" role="alert" style="margin:0;display:none">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Whew whew!</strong> Your request is complete!
+    </div>
+
+
+
+    
+
     <div class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container-fluid container-wide">
         <div class="navbar-header">
@@ -61,5 +81,9 @@
     <script src="/javascripts/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="/javascripts/app.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+
+
 </body>
 </html>

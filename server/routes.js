@@ -4,6 +4,8 @@
 var StripeWebhook = require('stripe-webhook-middleware'),
 isAuthenticated = require('./middleware/auth').isAuthenticated,
 isUnauthenticated = require('./middleware/auth').isUnauthenticated,
+apiIsUnauthenticated = require('./middleware/auth').apiIsUnauthenticated,
+apiCallback = require('./controllers/api-callback-controller.js'),
 setRender = require('middleware-responder').setRender,
 setRedirect = require('middleware-responder').setRedirect,
 stripeEvents = require('./middleware/stripe-events'),
@@ -86,6 +88,10 @@ module.exports = function (app, passport) {
     setRedirect({auth: '/'}),
     isAuthenticated,
     summary.getDefault);
+ // app.post('/summary',
+ //    setRedirect({auth: '/', success: 'dashboard/summary', failure: 'dashboard/summary'}),
+ //    isAuthenticated,
+ //    queue.postApiCall);
 
   app.get('/billing',
     setRender('dashboard/billing'),
@@ -98,13 +104,6 @@ module.exports = function (app, passport) {
     setRedirect({auth: '/'}),
     isAuthenticated,
     dashboard.getProfile);
-
-  // user api stuff
-  app.post('/queue',
-    setRedirect({auth: '/', success: 'dashboard/summary', failure: 'dashboard/summary'}),
-    isAuthenticated,
-    queue.postApiCall);
-
 
   app.post('/user',
     setRedirect({auth: '/', success: '/profile', failure: '/profile'}),
@@ -132,5 +131,10 @@ module.exports = function (app, passport) {
   app.post('/stripe/events',
     stripeWebhook.middleware,
     stripeEvents
+  );
+
+  app.post('/callback',
+    apiIsUnauthenticated,
+    apiCallback
   );
 };

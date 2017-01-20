@@ -15,3 +15,10 @@ exports.isUnauthenticated = function(req, res, next) {
 
   res.redirect(req.redirect.auth);
 };
+
+exports.apiIsUnauthenticated = function(req, res, next) {
+  // if (!req.isAuthenticated()){
+    return next();
+  // }
+  // res.redirect(req.redirect.auth);
+};
