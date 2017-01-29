@@ -23,8 +23,8 @@ module.exports = function(grunt) {
       },
        options: {
             livereload: {
-             host: 'localhost',
-              port: 35729
+                host: 'localhost',
+                port: 35729
             }
         }
 
@@ -32,9 +32,9 @@ module.exports = function(grunt) {
       express: {
           dev: {
             options: {
-              script: 'server.js',
-              port: 3000,
-              livereload: true
+                script: 'server.js',
+                port: 3000,
+                livereload: true
             }
           }
     },
