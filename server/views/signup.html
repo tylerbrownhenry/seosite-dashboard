@@ -1,8 +1,6 @@
-{% extends 'layouts/application.html' %}
 
-{% block title %}{{title}}{% endblock %}
+<% layout('layout') -%>
 
-{% block content %}
     <div class="container" style="max-width: 400px;">
       <form action="/signup" method="POST">
         <h2>Sign Up</h2>
@@ -17,4 +15,4 @@
       </form>
       <hr>
     </div>
-{% endblock %}
+<!-- {% endblock %} -->

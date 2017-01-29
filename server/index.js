@@ -1,7 +1,9 @@
 'use strict';
 
 var express = require('express');
-var swig = require('swig');
+// var swig = require('swig');
+var ejs = require('ejs');
+var expressLayouts = require('express-ejs-layouts');
 var subdomainOffset = process.env.SUBDOMAIN_OFFSET || 0;
 var secrets = require('./config/secrets');
 var path = require('path');
@@ -41,18 +43,21 @@ var app = express();
 
 if (app.get('env') === 'production') {
   app.locals.production = true;
-  swig.setDefaults({ cache: 'memory' });
+  // swig.setDefaults({ cache: 'memory' });
   staticDir = path.join(__dirname + '/../public');
 } else {
   app.locals.production = false;
-  swig.setDefaults({ cache: false });
+  // swig.setDefaults({ cache: false });
   staticDir = path.join(__dirname + '/../public');
 }
 
 // This is where all the magic happens!
-app.engine('html', swig.renderFile);
+// app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+
+// app.set('view engine', 'html');
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
 app.locals._ = lodash;
 app.locals.stripePubKey = secrets.stripeOptions.stripePubKey;
 
@@ -113,3 +118,59 @@ if (app.get('env') === 'development') {
 }
 
 module.exports = app;
+
+
+
+//   var querystring = require('querystring');
+// var http = require('http');
+
+// function PostCode(codestring) {
+//   // Build the post string from an object
+
+//   // An object of options to indicate where to post to
+
+//         var postData = querystring.stringify({
+//       "fields": {
+//         "project": {
+//           "key": "test1"
+//         },
+//         "summary": "REST ye merry gentlemen.",
+//         "description": "Creating of an issue using project keys and issue type names using the REST API",
+//         "issuetype": {
+//           "name": "Bug"
+//         }
+//       }
+//     });
+//         console.log('postData',postData);
+
+//         var options =  {
+//       path: '/rest/api/2/issues/TEST-1',
+//       hostname: 'milmerry.atlassian.net',
+//       method: 'GET',
+//       headers: {
+//           "Authorization": "Basic dHlsZXJAbWlsbWVycnkuY29tOjFsdnpCOGNVakhHVmppcEh4VWdD"
+
+//       }
+//   }
+
+//     var req = http.request(options, (res) => {
+//       console.log(`STATUS: ${res.statusCode}`);
+//       console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+//       res.setEncoding('utf8');
+//       res.on('data', (chunk) => {
+//         console.log(`BODY: ${chunk}`);
+//       });
+//       res.on('end', () => {
+//         console.log('No more data in response.');
+//       });
+//     });
+
+
+    // write data to request body
+//     req.write(postData);
+//     req.end();
+
+// }
+
+
+// PostCode('test');

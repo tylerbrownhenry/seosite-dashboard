@@ -1,0 +1,285 @@
+{% extends '../layouts/dashboard.html' %}
+{% extends '../layouts/dashboard.html' %}
+
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+
+  <div id="summary">
+  <div class="container-fluid" style="text-align:center;    background: darkcyan;">
+ 
+    <!-- <div class="page-header"> -->
+    <h1 style="color:#fff;font-weight:100;">Check your site!</h1>
+    <!-- </div> -->
+    <form action="/summary" method="POST" class="form-horizontal" onsubmit='return onSubmit(this)'>
+      
+    <div class="alert alert-warning alert-dismissible error" style="display:none" role="alert" style="margin:0;display:none">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong class="message-bold"></strong><span class="message-text"></span><!-- <span class="message-hint" data-toggle="tooltip" data-placement="top" title="Tooltip on top">i</span> -->
+    </div>
+
+      <div class="form-group">
+        <!-- <label for="url" class="col-sm-3 control-label">Website URL</label> -->
+        <div class="col-sm-4" style="
+    float: none;
+    margin: 0 auto;
+">
+          <input type="text" name="url" class="form-control" value="http://www.myurl.com" style="    box-sizing: border-box;
+    border: 0;
+    border-radius: 7px 0 0 7px;
+    color: gray;
+    font-size: 16px;
+    line-height: normal;
+    height: 100%;
+    padding: 20px 10px;
+    width: 86%;
+    float: left;
+    -webkit-appearance: none;
+    padding: 10px 5px 10px 20px;">
+              <button type="submit" class="jsEnabled apiRequest submitUrl" style="    font-family: marketplace-glyphs;
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    text-align: center;
+    width: 1em;
+    float: right;
+    height: 100%;
+    width: 14%;
+    background-color: white;
+    color: #999999;
+    border-radius: 0 7px 7px 0;
+    font-size: 20px;
+        line-height: 41px;
+    height: 39px;
+    border: 0px;"><span class="lnr lnr-rocket"></span></button>
+          <input type="hidden" name="uid" value="{{user.uid}}">
+          <input type="hidden" name="token" value="{{user.apiToken}}">
+          <input type="hidden" name="request" value="page">
+          <input type="hidden" name="page" value="summary">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4">
+          <button type="submit" class="jsDisabled btn btn-primary submitUrl">Submit</button>
+
+        </div>
+      </div>
+    </form>
+    <h3 style="margin-bottom: 30px;color:#fff;font-weight:100;"> We've made contact! </h3>
+  </div>
+ <div class="container-fluid" style="border:1px dashed #efefef;">
+   <div class="container-fluid container-max">
+   <div class="image-help" style="    width: 145px;
+    height: 95px;
+    float: left;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;">
+        <span style="font-size: 45px;
+    background-color: #aaf;
+    width: 95px;
+    height: 95px;
+    padding: 25px;
+    color: #fff;
+    border-radius: 50px;" class="lnr lnr-printer"></span>
+   </div>
+   <div class="image-desc">
+   <h3 style="font-size: 32px;
+    font-weight: 300;
+    margin-top: 35px;
+    margin-bottom: 10px">Did you know?</h3>
+<span style="font-size:22px;">Having a print css file can increase local sales by 25%? </span><a>Learn More</a> | <a>Thanks, I got it</a>
+   </div>
+   </div>
+ </div>
+
+  <div class="container-fluid container-max">
+    <!-- <div class="page-header"> -->
+      <!-- <h1>Home <small>/views/dashboard/index</small></h1> -->
+    <!-- </div> -->
+    <script>
+    window.uid = '{{user.uid}}';
+    </script>
+
+
+    <style>
+
+
+    </style>
+  
+
+
+    <span style="display:none">
+    {% for x in requests.list %}
+      {% if loop.first %}<ul>{% endif %}
+      <li>{{ loop.index }} - {{ loop.key }}: {{ x }} {{x}}
+      Status: 
+      Request Date: {{x.requestDate}}
+      Options: {{x.options.date}}
+      Options: {{x.options.scanDepth}}
+      Options: {{x.options.filterLevel}}
+      processes: {{x.options.limit}}
+      retries: {{x.status}}
+      url: {{x.status}}
+
+      </li>
+      {% if loop.last %}</ul>{% endif %}
+    {% endfor %}
+    </span>
+
+
+
+
+
+    <div id="request-container">
+        <ul class="list">
+
+
+        </ul>
+    </div>
+
+        <h3>Recent Activity</h3>
+
+
+        <div class="container-fluid">
+            <div class="content">
+                    <div>Loading</div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid">
+            <div class="content">
+                <div class="display-selected"><span>Search</span></div>
+                <div id="the-basics">
+                    <input class="typeahead" type="text" placeholder="Http://www.mysite.com">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="container-fluid">
+            <div class="row header">
+                <div class="col-xs-4 title">Info</div>
+                <div class="col-xs-2 title">Grade<span class="lnr lnr-question-circle"></span></div>
+                <div class="col-xs-2 title">Performance<span class="lnr lnr-question-circle"></span></div>
+                <div class="col-xs-2 title">
+                    Issues
+                    <!-- <a class="small-links" style="float:right"> <span class="lnr lnr-pencil"></span> Capture Settings </a>-->
+                </div>
+            </div>
+            <div class="row">
+                <!-- Small devices >= 768px     
+                    Collapsed to start, horizontal above breakpoints -->
+                <div class="col-sm-4">
+                    <div style="width:100%;">
+                        <h3 class="blue-title">http://www.wikipedia.com/werwerew.dfsdfdsfdsf/dfdsfdsfdsfs</h3>
+                        <h5 class="sub-title black" style="margin-top:0px;margin-bottom:26px !important;">Resolved: http://www.wikipedia.com</h5>
+                    </div>
+                    <div style="clear:both"></div>
+                    <div style="float:left;width:50%;">
+                        <h4 class="detail last"><span class="lnr lnr-clock"></span> 1/15/17 - 9:25pm</h4>
+                        <!--<h4 class="detail bold status">Scan Complete</h4>-->
+                        <!-- <a class="button main">VIEW DETAIL <span class="lnr lnr-magnifier"></span></a> -->
+                        <a class="button">SCAN AGAIN  <span style="margin-left:5px;" class="lnr lnr-redo"></span></a>
+                    </div>
+                    <div style="float:right;width:50%;text-align:right;    padding-top: 25px;">
+                        <h4 class="detail small-links"><a>Group: My Main Page</a></h4>
+                    </div>
+                </div>
+                <div class="col-sm-2 chart-col" style="
+                    border-left: 1px dashed #efefef;
+                    border-right: 1px dashed #efefef;
+                    ">
+                    <div id="chart">B<sup>+</sup></div>
+                    <h4 class="detail last summary-statement">Needs improvement</h4>
+                    <h4 class="detail last"><a class="small-links">What should I do next?</a></h4>
+                </div>
+                <div class="col-sm-2 issue-list">
+                    <h3 class="blue-title second"> Issues <a class="button secondary">View</a></h3>
+                    <h5 class="sub-title">
+                        <hr>
+                    </h5>
+                    <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-link"></span>3 Link Issues </h4>
+                    <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-database"></span>4 Resource Issues </h4>
+                    <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-warning"></span>1 Security Concern </h4>
+                    <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-warning"></span>1 Meta Data Issue </h4>
+                </div>
+                <div class="col-sm-2">
+                    <h3 class="blue-title second">Performance <a class="button secondary">View</a></h3>
+                    <h5 class="sub-title">
+                        <hr>
+                    </h5>
+                    <div style="width:100%;height:100px;">
+                        <div style="width:20%;height:5px;background-color:red"></div>
+                        <div style="margin-left:20%;width:20%;height:5px;background-color:blue"></div>
+                        <div style="margin-left:45%;width:10%;height:5px;background-color:green"></div>
+                        <div style="margin-left:55%;width:1%;height:5px;background-color:green"></div>
+                        <div style="margin-left:56%;width:2%;height:5px;background-color:blue"></div>
+                        <div style="margin-left:58%;width:1%;height:5px;background-color:orange"></div>
+                        <div style="margin-left:59%;width:41%;height:5px;background-color:red"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2 right-align">
+                    <h3 class="blue-title second">Captures <a class="button secondary">View All</a></h3>
+                    <h5 class="sub-title">
+                        <hr>
+                    </h5>
+                    <h5 style="width:100%;clear:both" class="detail">
+                        <span style="float:right;margin-top:2px"><span class="lnr lnr-smartphone"></span></span><span  style="margin-right:5px;" class="small-links"><a >Portrait</a> / <a >Landscape</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                            <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+                    </h5>
+                    <h5 style="width:100%;clear:both" class="detail">
+                        <span style="float:right;margin-top:2px"><span class="lnr lnr-tablet"></span></span><span  style="margin-right:5px;" class="small-links"><a >Portrait</a> / <a >Landscape</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                            <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+                    </h5>
+                    <h5 style="width:100%;clear:both" class="detail">
+                        <span style="float:right;margin-top:2px"><span class="lnr lnr-laptop"></span></span><span  style="margin-right:5px;" class="small-links"><a >Desktop</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                            <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+                    </h5>
+                    <h5 style="width:100%;clear:both" class="detail">
+                        <span style="float:right;margin-top:2px"><span class="lnr lnr-screen"></span></span><span style="margin-right:5px;" class="small-links"><a >Wide Screen Monitor</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                            <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+
+
+<hr>
+
+        <div class="container-fluid">
+            <div class="row header">
+                <div class="col-xs-4 title">Info</div>
+                <div class="col-xs-2 title">Grade<span class="lnr lnr-question-circle"></span></div>
+                <div class="col-xs-2 title">Performance<span class="lnr lnr-question-circle"></span></div>
+                <div class="col-xs-2 title">
+                    Issues
+                    <!-- <a class="small-links" style="float:right"> <span class="lnr lnr-pencil"></span> Capture Settings </a>-->
+                </div>
+            </div>
+            <div class="row">
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+  </div>
+{% endblock %}

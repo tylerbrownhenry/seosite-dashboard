@@ -44,7 +44,7 @@ function requests(socket){
         var options = {
           hostname: 'localhost',
           port: 3001,
-          path: '/api/queue',
+          path: '/api/v1/queue',
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -65,6 +65,12 @@ function requests(socket){
     });
 
     req.on('error', (e) => {
+        /*
+        WE need handle this error by reporting it back
+        to the front end, otherwise the use will have 
+        no idea what is going on if the server doesn't 
+        respond at all
+        */
       console.log(`problem with request: ${e.message}`);
     });
 

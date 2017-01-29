@@ -1,13 +1,18 @@
+
 var socket = '';
 var count = 0;
+
+
+
+
+
 function onSubmit( form ){
   var data = $(form).serializeArray(); //  <-----------
+    console.log('onSubmit');
     var arr = {};
-
     $.map(data, function(n, i){
         arr[n['name']] = n['value'];
     });
-    console.log('arr.request');
     count++;
     socket.emit('queue/'+ arr.request, {
         preClass: 'request_temp_id_'+count,
@@ -16,7 +21,6 @@ function onSubmit( form ){
         url: arr.url,
         page: arr.page
     });
-
     return false; //don't submit
 }
 
@@ -84,53 +88,99 @@ jQuery(function($) {
         console.log('test!!!!');
     });
     socket.on('disconnect', function(){
-        $('.parentAlert').slideDown();
+        $('.disconnected.alert').slideDown();
     });
 
     socket.on('connect', function(){
-        $('.parentAlert').slideUp();
-        /* Move this somewhere else */
+        $('.disconnected.alert').slideUp();
     });
 
+    socket.on('broadcastAll/',function(e){
+        console.log('e',e);
+    });
     socket.on('alert/' + uid,function(e){
-            console.log('e',e);
+        console.log('e',e);
 
-            if(e.eventType === 'requestUpdate'){
-                if($('#'+e.page).length === 0){
-                    $('#info').slideDown().text(e.message);
+        if(e.eventType === 'requestUpdate'){
+            if($('#'+e.page).length === 0){
+                $('#info').slideDown().text(e.message);
+            } else {
+                console.log('here1');
+                var requestItem = $('#request_'+e.item);
+                if(requestItem.length === 0){
+                    return $('#request-container>.list').prepend('<li class="'+e.postClass+'" id="request_'+e.item+'">'+e.message+'</li>')
                 } else {
-                    var requestItem = $('#request_'+e.item);
-                    if(requestItem.length === 0){
-                        var pendingItem = $('#request-container .'+e.preClass);
-                        if(pendingItem.length === 1){
-                        return    pendingItem.attr('id',e.item).removeClass(e.preClass).addClass(e.postClass);
-                        }
-                        
-                    } 
-                    $('#request-container .list').prepend('<li class="'+e.postClass+'" id="'+e.item+'">'+e.message+'</li>')
+                    console.log('here3');
+                    return requestItem.attr('id',e.item).removeClass(e.preClass).addClass(e.postClass).text(e.message);
                 }
-            } else if(e.eventType === 'requestError') {
-                if(e.item){
-                    var requestItem = $('#request_'+e.item);
-                    if(requestItem.length === 0){
-                        // var pendingItem = $('#request-container');
-                        // if(pendingItem.length === 1){
-                        //     return pendingItem.attr('id',e.item).removeClass(e.preClass).addClass(e.postClass);
-                        // }
-                    }
+            }
+        } else if(e.eventType === 'requestError') {
+            if(e.item){
+                var requestItem = $('#request_'+e.item);
+                if(requestItem.length === 0){
+                    return $('#request-container>.list').prepend('<li class="'+e.postClass+'" id="request_'+e.item+'">'+e.message+'</li>')
+                } else {
+                    console.log('here3');
+                    return requestItem.attr('id',e.item).removeClass(e.preClass).addClass(e.postClass).text(e.message);
                 }
-                var arr = JSON.parse(e.message);
-                for (var i = arr.length - 1; i >= 0; i--) {
-                    var error = $(arr[i].parent + ' .error');
-                    error.slideDown()
-                    error.children('.message-bold').text(arr[i].title);
-                    error.children('.message-text').text(arr[i].message);
-                    // error.children('.message-hint').attr('title',arr[i].hint).tooltip();
-                }
-            } 
-        });
-
+            }
+            var arr = JSON.parse(e.message);
+            for (var i = arr.length - 1; i >= 0; i--) {
+                var error = $(arr[i].parent + ' .error');
+                error.slideDown()
+                error.children('.message-bold').text(arr[i].title);
+                error.children('.message-text').text(arr[i].message);
+            }
+        } 
+    });
     $('.jsDisabled ').hide();
     $('.jsEnabled ').show();
     
 });
+
+
+
+
+
+
+// $("#p").click(function() {
+
+
+// function createIssue(req, res) {
+  // var Http = require('machinepack-http');
+  // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+  // var http = require('http');
+  // http.sendHttpRequest({
+  //   url: '/rest/api/2/issue/',
+  //   baseUrl: 'https://milmerry.atlassian.net',
+  //   method: 'post',
+  //   params: {
+  //     "fields": {
+  //       "project": {
+  //         "key": "TASC"
+  //       },
+  //       "summary": "REST ye merry gentlemen.",
+  //       "description": "Creating of an issue using project keys and issue type names using the REST API",
+  //       "issuetype": {
+  //         "name": "Bug"
+  //       }
+  //     }
+  //   },
+  //   headers: {
+  //     "Authorization": "Basic dHlsZXJAbWlsbWVycnkuY29tOjFsdnpCOGNVakhHVmppcEh4VWdD"
+  //   },
+  // }).exec({
+  //   serverError: function(result) {
+  //     res.send("server error" + JSON.stringify(result))
+  //   },
+  //   success: function(result) {
+  //     res.send("issue has been created succefly");
+  //   },
+  // });
+// }
+// createIssue();
+// });
+
+
+

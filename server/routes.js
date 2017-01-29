@@ -16,6 +16,7 @@ main = require('./controllers/main-controller'),
 queue = require('./controllers/queue-controller'),
 dashboard = require('./controllers/dashboard-controller'),
 summary = require('./controllers/summary-controller'),
+issues = require('./controllers/issues-controller'),
 passwords = require('./controllers/passwords-controller'),
 registrations = require('./controllers/registrations-controller'),
 sessions = require('./controllers/sessions-controller');
@@ -88,6 +89,13 @@ module.exports = function (app, passport) {
     setRedirect({auth: '/'}),
     isAuthenticated,
     summary.getDefault);
+
+
+    app.get('/issues',
+    setRender('dashboard/issues'),
+    setRedirect({auth: '/'}),
+    isAuthenticated,
+    issues.getDefault);
  // app.post('/summary',
  //    setRedirect({auth: '/', success: 'dashboard/summary', failure: 'dashboard/summary'}),
  //    isAuthenticated,

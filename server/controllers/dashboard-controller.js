@@ -4,6 +4,7 @@ var User = require('../models/user'),
 plans = User.getPlans();
 
 exports.getDefault = function(req, res, next){
+    console.log('YESSSSSSSS3');
   var form = {},
   error = null,
   formFlash = req.flash('form'),
@@ -16,10 +17,15 @@ exports.getDefault = function(req, res, next){
     error = errorFlash[0];
   }
 
-  res.render(req.render, {user: req.user, form: form, error: error, plans: plans});
+
+  res.render(req.render, {user: req.user, form: form, error: error, plans: plans, requests: [{test:'one'}]});
+
+
+  
 };
 
 exports.getBilling = function(req, res, next){
+    console.log('YESSSSSSSS6');
   var form = {},
   error = null,
   formFlash = req.flash('form'),
@@ -36,6 +42,7 @@ exports.getBilling = function(req, res, next){
 };
 
 exports.getProfile = function(req, res, next){
+    console.log('YESSSSSSSS88');
   var form = {},
   error = null,
   formFlash = req.flash('form'),
