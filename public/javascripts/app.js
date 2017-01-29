@@ -82,8 +82,8 @@ jQuery(function($) {
     }
   });
 
-    // socket = io.connect('http://localhost:3000');
-    socket = io.connect('https://seodr-dashboard.herokuapp.com');
+    socket = io.connect('http://localhost:3000');
+    // socket = io.connect('https://seodr-dashboard.herokuapp.com');
 
     socket.on('back', function(){ 
         console.log('test!!!!');
