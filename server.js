@@ -19,6 +19,7 @@ var server = app.listen(app.get('port'), function() {
 
 
 var io = require('socket.io')
+io.listen(server);
 
 /* If local do not use */
 io.set('transports', ['xhr-polling']);
@@ -29,7 +30,6 @@ io.sockets.on('connection', function (socket) {
     apiCallbacks(socket);
 });
 
-io.listen(server);
 
 module.exports = io;
 
