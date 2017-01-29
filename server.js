@@ -18,12 +18,13 @@ var server = app.listen(app.get('port'), function() {
 
 
 
-var io = require('socket.io')
-io.listen(server);
+var io = require('socket.io').listen(server);
 
-/* If local do not use */
-io.set('transports', ['xhr-polling']);
-io.set('polling duration', 10);
+if(process.env.NODE_ENV !== 'dev'){
+    /* If local do not use */
+    io.set('transports', ['xhr-polling']);
+    io.set('polling duration', 10);
+}
 
 io.sockets.on('connection', function (socket) {
     apiRequests(socket);
