@@ -18,6 +18,9 @@ var server = app.listen(app.get('port'), function() {
 
 var io = require('socket.io').listen(server);
 
+io.set('transports', ['xhr-polling']);
+io.set('polling duration', 10);
+
 io.sockets.on('connection', function (socket) {
     apiRequests(socket);
     apiCallbacks(socket);
