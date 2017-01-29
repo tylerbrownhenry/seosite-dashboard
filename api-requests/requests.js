@@ -42,7 +42,7 @@ function requests(socket){
         console.log('postData',postData);
 
         var options = {
-          hostname: 'localhost',
+          hostname: process.env.API_HOST || 'localhost',
           port: 3001,
           path: '/api/v1/queue',
           method: 'POST',
