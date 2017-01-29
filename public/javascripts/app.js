@@ -82,7 +82,7 @@ jQuery(function($) {
     }
   });
 
-    socket = io.connect('http://localhost:3000');
+    socket = io.connect(process.env.CURRENT_HOST+process.env.PORT);
 
     socket.on('back', function(){ 
         console.log('test!!!!');
