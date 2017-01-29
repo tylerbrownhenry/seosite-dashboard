@@ -18,6 +18,7 @@ var server = app.listen(app.get('port'), function() {
 
 var io = require('socket.io').listen(server);
 
+/* If local do not use */
 io.set('transports', ['xhr-polling']);
 io.set('polling duration', 10);
 
