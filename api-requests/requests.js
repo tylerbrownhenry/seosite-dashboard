@@ -72,7 +72,7 @@ function requests(socket){
         no idea what is going on if the server doesn't 
         respond at all
         */
-      console.log(`problem with request: ${e.message}`);
+      console.log(`problem with request: ${e.message}`,e);
     });
 
     // write data to request body
