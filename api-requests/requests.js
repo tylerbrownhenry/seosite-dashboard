@@ -43,10 +43,9 @@ function requests(socket){
 
         var options = {
           hostname: process.env.API_HOST || 'localhost',
-          // port: 21545,
-          // path: '/api/v1/queue',
-          path: '/api/',
-          method: 'GET',
+          // port: 3001,
+          path: '/api/v1/queue',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Content-Length': Buffer.byteLength(postData)
