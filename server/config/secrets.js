@@ -1,12 +1,5 @@
 module.exports = {
-    var mongoURL = null;
-    if(process.env.MONGO_URL && process.env.MONGO_DB){
-        mongoURL = 'mongodb://' + process.env.MONGO_URL + '/' + process.env.MONGO_DB
-    } else {
-        console.log('Either set MONGO_URL AND MONGO_DB in your .env file or set those config vars in heroku dashboard');
-    }
-
-  db: process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || mongoURL,
+    db: process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://' + process.env.MONGO_URL + '/' + process.env.MONGO_DB,
     apiToken: '530d0C$3cr3T',
     sessionSecret: process.env.SESSION_SECRET || '530d0C$3cr3T',
   mailgun: {
