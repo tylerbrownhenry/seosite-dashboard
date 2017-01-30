@@ -4,12 +4,7 @@ var querystring = require('querystring');
 function requests(socket){
     
     socket.on('queue/page', function (data) {
-        console.log('test');
-            // exports.postApiCall = function(_req, _res, next){
-            console.log('postApiCall-->',data);
-
-
-        console.log('dfdsfs');
+        console.log('postApiCall-->',data);
 
         var postData = querystring.stringify({
             "uid" : data.uid,
@@ -39,18 +34,18 @@ function requests(socket){
                 "acceptedSchemes": ['http']
                 })
             });
-        console.log('postData',postData);
-
-        var options = {
-          hostname: process.env.API_HOST || 'localhost',
-          // port: 3001,
-          path: '/api/v1/queue',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': Buffer.byteLength(postData)
-          }
-        };
+    var options = {
+      hostname: process.env.API_HOST || 'localhost',
+      path: '/api/v1/queue',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
+    if(process.env.NODE_ENV === 'dev' && process.env.API_HOST_PORT){
+        options.port = process.env.API_HOST_PORT;
+    }
 
     var req = http.request(options, (res) => {
       console.log(`STATUS: ${res.statusCode}`);

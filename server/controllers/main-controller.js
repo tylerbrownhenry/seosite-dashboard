@@ -4,7 +4,6 @@ var User = require('../models/user'),
 plans = User.getPlans();
 
 exports.getHome = function(req, res, next){
-        console.log('YESSSSSSSS222');
   var form = {},
   error = null,
   formFlash = req.flash('form'),
@@ -16,6 +15,8 @@ exports.getHome = function(req, res, next){
   if (errorFlash.length) {
     error = errorFlash[0];
   }
+    console.log('YESSSSSSSS222',errorFlash,formFlash);
+    
   res.render(req.render, {form: form, error: error, plans: plans});
 
 

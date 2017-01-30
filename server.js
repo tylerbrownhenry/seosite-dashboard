@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('dotenv').config();
 
 var debug = require('debug')('app');
 var app = require('./server/index');
@@ -6,7 +7,6 @@ var apiRequests = require('./api-requests/requests');
 var apiCallbacks = require('./api-requests/callbacks').callbacks;
 var secrets = require('./server/config/secrets');
 
-require('dotenv').config();
 
 app.set('port', process.env.PORT || 3000);
 

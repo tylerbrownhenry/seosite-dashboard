@@ -30,8 +30,8 @@ var staticDir;
 
 // setup db
 mongoose.connect(secrets.db);
-mongoose.connection.on('error', function() {
-  console.error('MongoDB Connection Error. Make sure MongoDB is running.');
+mongoose.connection.on('error', function(e) {
+  console.error('MongoDB Connection Error. Make sure MongoDB is running.',e);
 });
 
 var corsOptions = {
@@ -60,6 +60,7 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.locals._ = lodash;
 app.locals.stripePubKey = secrets.stripeOptions.stripePubKey;
+app.locals.CURRENT_HOST = process.env.CURRENT_HOST;
 
 
 app.use(favicon(path.join(__dirname + '/../public/favicon.ico')));

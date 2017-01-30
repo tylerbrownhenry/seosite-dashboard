@@ -1,31 +1,33 @@
-{% extends '../layouts/dashboard.html' %}
-
-{% block title %}{{title}}{% endblock %}
-
-{% block content %}
   <div class="container-fluid container-max">
     <div class="page-header">
       <h1>Billing <small>/views/dashboard/billing</small></h1>
     </div>
-    {% include "../partials/flash.html" %}
+
+    <% include flash %>
+
     <div class="page-header">
       <h3>Subscription</h3>
     </div>
-    <form {% if !user.stripe.last4 %}id="cardForm"{% endif %} action="/user/plan" method="POST" class="form-horizontal">
-      <div class="form-group">
+
+ <form <% if (!locals ||  !locals.user ||  !locals.user.stripe || !locals.user.stripe.last4){ %>id="cardForm"<% } %> action="/user/plan" method="POST" class="form-horizontal">
+  
+    <div class="form-group">
         <label for="plan" class="col-sm-3 control-label">Plan</label>
         <div class="col-sm-4">
-          {% for plan in plans %}
+
+        <% _.each(_.keys(locals.plans),function(key){ %>
             <div class="radio">
               <label>
-                <input type="radio" {% if user.stripe.plan == loop.key %}checked{% endif %} name="plan" value="{{loop.key}}" data-toggle="radio">
-                <span>{{plan.name}} - ${{plan.price}}</span>
+                <input type="radio" <% if (locals && locals.user && locals.user.stripe && locals.user.stripe.plan == key){ %>checked<% } %> name="plan" value="<%= key %>" data-toggle="radio">
+                <span><%= locals.plans[key].name %> - $<%= locals.plans[key].price %></span>
               </label>
             </div>
-          {% endfor %}
+        <% }) %>
         </div>
       </div>
-      {% if !user.stripe.last4 %}
+
+
+      <% if (!locals ||  !locals.user ||  !locals.user.stripe || !locals.user.stripe.last4){ %>
       <div id="cardWrapper">
         <div class="form-group">
           <label class="col-sm-3 control-label">Test Card Info</label>
@@ -58,20 +60,20 @@
         <div class="form-group">
           <div class="col-sm-6">
             <div id="cardFormError" class="alert alert-danger hidden" role="alert">
-              <p>{{error}}</p>
+              <p><%=error%></p>
             </div>
           </div>
         </div>
       </div>
-      {% endif %}
+      <% } %>
+
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-4">
           <button type="submit" class="btn btn-primary">Update Plan</button>
         </div>
       </div>
-    </form>
 
-    {% if user.stripe.last4 %}
+ <% if (locals ||  locals.user || locals.user.stripe || locals.user.stripe.last4){ %>
     <div class="page-header">
       <h3>Payment Details</h3>
     </div>
@@ -85,7 +87,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">Card Number</label>
         <div class="col-sm-4">
-          <input id="card-num" type="text" class="form-control" placeholder="XXXX XXXX XXXX {{user.stripe.last4}}">
+          <input id="card-num" type="text" class="form-control" placeholder="XXXX XXXX XXXX <%= locals.user.stripe.last4 %>">
         </div>
       </div>
       <div class="form-group">
@@ -107,7 +109,7 @@
       <div class="form-group">
         <div class="col-sm-6">
           <div id="cardFormError" class="alert alert-danger hidden" role="alert">
-            <p>{{error}}</p>
+            <p><%=error%></p>
           </div>
         </div>
       </div>
@@ -117,9 +119,9 @@
         </div>
       </div>
     </form>
-    {% endif %}
+    <% } %>
 
-    <div class="page-header">
+     <div class="page-header">
       <h3>Delete Account</h3>
     </div>
     <form action="/user/delete" method="POST" class="form-horizontal">
@@ -127,6 +129,10 @@
         <div class="col-sm-offset-3 col-sm-4"><button type="submit" class="btn btn-danger"><span class="ion-edit"></span>Delete Account</button></div>
       </div>
     </form>
-  </div>
+
+
+
+
+   
+     </form>
 </div>
-{% endblock %}

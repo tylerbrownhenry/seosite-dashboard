@@ -1,6 +1,8 @@
 'use strict';
 
 var User = require('../models/user'),
+Request = require('../models/request'),
+Scan = require('../models/scan'),
 plans = User.getPlans();
 
 exports.getDefault = function(req, res, next){
@@ -16,25 +18,36 @@ exports.getDefault = function(req, res, next){
   if (errorFlash.length) {
     error = errorFlash[0];
   }
+  // console.log('Request',Request);
+    // var Request = mongoose.model('Request', {}, 'requests');
+    // var Scan = mongoose.model('Scan', {}, 'scans');
+    var uid = req.user.uid;
 
+    Scan.find({uid:req.user.uid},function(err,data){
+        console.log('data',data);
+        var scans = {message: '', list: []};
+        if(err === null){
+            scans.message = 'Request found!';
+            scans.list = data;
+        } else {
+            scans.message = err;
+        }
+        res.render(req.render, {user: req.user, form: form, error: error, plans: plans, scans: scans});
+    });
 
-  res.render(req.render, {user: req.user, form: form, error: error, plans: plans, requests: [{test:'one'}]});
-
-
-  
 };
 
 exports.getBilling = function(req, res, next){
-    console.log('YESSSSSSSS6');
   var form = {},
   error = null,
   formFlash = req.flash('form'),
   errorFlash = req.flash('error');
+    console.log('YESSSSSSSS6',formFlash,errorFlash);
 
-  if (formFlash.length) {
+  if (formFlash.length > 0) {
     form.email = formFlash[0].email;
   }
-  if (errorFlash.length) {
+  if (errorFlash.length > 0) {
     error = errorFlash[0];
   }
 

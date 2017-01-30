@@ -4,8 +4,6 @@ var User = require('../models/user'),
 mongoose = require('mongoose'),
 plans = User.getPlans();
 
-var Request = mongoose.model('Request', {}, 'requests');
-
 var mongoose = require('mongoose');
 
 var linkSchema = new mongoose.Schema({

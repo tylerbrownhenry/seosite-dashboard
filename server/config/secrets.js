@@ -1,7 +1,9 @@
 module.exports = {
-    db: process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://' + process.env.MONGO_URL + '/' + process.env.MONGO_DB,
+
+    db: process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://'+ process.env.MONGO_URL +'/'+ process.env.MONGO_DB,
     apiToken: '530d0C$3cr3T',
     sessionSecret: process.env.SESSION_SECRET || '530d0C$3cr3T',
+
   mailgun: {
     apiKey: process.env.MAILGUN_API_KEY || '',
     domain: process.env.MAILGUN_DOMAIN || ''
@@ -31,5 +33,6 @@ module.exports = {
       }
     }
   },
+
   googleAnalytics: process.env.GOOGLE_ANALYTICS || ''
 };

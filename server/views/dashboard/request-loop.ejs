@@ -1,8 +1,428 @@
 <div id="request-container">
       <h3 class="section-header">Recent Activity</h3>
-
-<% for(var i=0; i < requests.length; i++) { %>
-     <li><%= requests[i].test %></li>
+<span style="display:none">
+<% for(var i=0; i < scans.list.length; i++) { %>
+     <li><%= scans.list[i] %></li>
 <% } %>
+</span>
 
 </div>
+
+
+<div id="request-container">
+      <h3 class="section-header">Recent Activity</h3>
+    <!--       <div class="container-fluid">
+             <div class="content">
+                <div>Loading</div>
+             </div>
+          </div> -->
+      <div class="container-fluid">
+         <div class="content">
+            <div class="display-selected"><span>Search</span></div>
+            <div id="the-basics">
+               <input class="typeahead" type="text" placeholder="Http://www.mysite.com">
+            </div>
+         </div>
+      </div>
+      <div class="container-fluid">
+         <div class="row header">
+            <div class="col-xs-4 title">Info</div>
+            <div class="col-xs-2 title">Grade<span class="lnr lnr-question-circle"></span></div>
+            <div class="col-xs-2 title">Performance<span class="lnr lnr-question-circle"></span></div>
+            <div class="col-xs-2 title">
+               Issues
+               <!-- <a class="small-links" style="float:right"> <span class="lnr lnr-pencil"></span> Capture Settings </a>-->
+            </div>
+         </div>
+         <div class="row">
+            <!-- Small devices >= 768px     
+               Collapsed to start, horizontal above breakpoints -->
+            <div class="col-sm-4">
+               <div style="width:100%;">
+                  <h3 class="blue-title"><%= scan.list[i].url.url %></h3>
+                  <h5 class="sub-title black" style="margin-top:0px;margin-bottom:26px !important;">Resolved: <%= scan.list[i].url.resolvedUrl %></h5>
+               </div>
+               <div style="clear:both"></div>
+               <div style="float:left;width:50%;">
+                  <h4 class="detail last"><span class="lnr lnr-clock"></span>January 5, 2016 - 9:25pm</h4>
+                  <!--<h4 class="detail bold status">Scan Complete</h4>-->
+                  <!-- <a class="button main">VIEW DETAIL <span class="lnr lnr-magnifier"></span></a> -->
+                  <a class="button">SCAN AGAIN  <span style="margin-left:5px;" class="lnr lnr-redo"></span></a>
+               </div>
+               <div style="float:right;width:50%;text-align:right;    padding-top: 25px;">
+                  <h4 class="detail small-links"><a>Group: My Main Page</a></h4>
+               </div>
+            </div>
+            <div class="col-sm-2 chart-col" style="
+               border-left: 1px dashed #efefef;
+               border-right: 1px dashed #efefef;
+               ">
+               <div id="chart">B<sup>+</sup></div>
+               <h4 class="detail last summary-statement">Needs improvement</h4>
+               <h4 class="detail last"><a class="small-links">What should I do next?</a></h4>
+            </div>
+            <div class="col-sm-2 issue-list">
+               <h3 class="blue-title second"> Issues <a class="button secondary">View</a></h3>
+               <h5 class="sub-title">
+                  <hr>
+               </h5>
+               <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-link"></span>3 Link Issues </h4>
+               <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-database"></span>4 Resource Issues </h4>
+               <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-warning"></span>1 Security Concern </h4>
+               <h4 class="detail small-links"><span style="margin-right:5px;" class="lnr lnr-warning"></span>1 Meta Data Issue </h4>
+            </div>
+            <div class="col-sm-2">
+               <h3 class="blue-title second">Performance <a class="button secondary">View</a></h3>
+               <h5 class="sub-title">
+                  <hr>
+               </h5>
+               <div style="width:100%;height:100px;">
+                  <div style="width:20%;height:5px;background-color:red"></div>
+                  <div style="margin-left:20%;width:20%;height:5px;background-color:blue"></div>
+                  <div style="margin-left:45%;width:10%;height:5px;background-color:green"></div>
+                  <div style="margin-left:55%;width:1%;height:5px;background-color:green"></div>
+                  <div style="margin-left:56%;width:2%;height:5px;background-color:blue"></div>
+                  <div style="margin-left:58%;width:1%;height:5px;background-color:orange"></div>
+                  <div style="margin-left:59%;width:41%;height:5px;background-color:red"></div>
+               </div>
+            </div>
+            <div class="col-sm-2 right-align">
+               <h3 class="blue-title second">Captures <a class="button secondary">View All</a></h3>
+               <h5 class="sub-title">
+                  <hr>
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                  <span style="float:right;margin-top:2px"><span class="lnr lnr-smartphone"></span></span><span  style="margin-right:5px;" class="small-links"><a >Portrait</a> / <a >Landscape</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                     <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                  <span style="float:right;margin-top:2px"><span class="lnr lnr-tablet"></span></span><span  style="margin-right:5px;" class="small-links"><a >Portrait</a> / <a >Landscape</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                     <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                  <span style="float:right;margin-top:2px"><span class="lnr lnr-laptop"></span></span><span  style="margin-right:5px;" class="small-links"><a >Desktop</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                     <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                  <span style="float:right;margin-top:2px"><span class="lnr lnr-screen"></span></span><span style="margin-right:5px;" class="small-links"><a >Wide Screen Monitor</a></span> <!--<span class="lnr lnr-smartphone"></span>
+                     <span class="lnr lnr-smartphone icon-rotate-90"></span> -->
+               </h5>
+            </div>
+         </div>
+      </div>
+  </div>
+
+
+
+  // requestId: '1zSgnz',
+  //   url:
+  //    { resolvedUrl: 'http://mariojacome.com/',
+  //      url: 'http://www.mariojacome.com' },
+  //   emails: [ 'hello@mariojacome.com' ],
+  //   redirects: 1,
+  //   linkCount: 47,
+  //   __v: 0 } ]
+
+// { _id: 588ed5b596f0253aa6af84e4,
+//   uid: '17PmsI',
+//   meta: 
+//    { title: 
+//       { message: 'Found',
+//         text: 'Mario Jacome | Designer & Illustrator',
+//         found: true },
+//      description: 
+//       { message: 'Found',
+//         element: '<meta name="description" content="The Work of Mario Jacome">',
+//         text: 'The Work of Mario Jacome',
+//         found: true },
+//      h1: { message: 'No h1 found.', element: null, text: '', found: false },
+//      h2: { message: 'No h2 found.', element: null, text: '', found: false } },
+//   resources: 
+//    [ { duration: 849,
+//        start: '2017-01-30T05:56:56.025Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/html; charset=UTF-8',
+//        cached: false,
+//        minified: null },
+//      { duration: 127,
+//        start: '2017-01-30T05:56:56.651Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-content/themes/semplice/css/reset.css',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/css',
+//        cached: false,
+//        minified: null },
+//      { duration: 573,
+//        start: '2017-01-30T05:56:56.680Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-content/themes/semplice/style.css',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/css',
+//        cached: false,
+//        minified: null },
+//      { duration: 238,
+//        start: '2017-01-30T05:56:56.740Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/mediaelement/mediaelementplayer.min.css?ver=2.22.0',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/css',
+//        cached: false,
+//        minified: null },
+//      { duration: 602,
+//        start: '2017-01-30T05:56:56.747Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=4.7.2',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/css',
+//        cached: false,
+//        minified: null },
+//      { duration: 721,
+//        start: '2017-01-30T05:56:56.753Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/jquery/jquery.js?ver=1.12.4',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 592,
+//        start: '2017-01-30T05:56:56.758Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 169,
+//        start: '2017-01-30T05:56:56.793Z',
+//        timings: [Object],
+//        url: 'http://static.cushionapp.com/availability.css',
+//        status: 301,
+//        gzip: null,
+//        type: 'text/html',
+//        cached: false,
+//        minified: null },
+//      { duration: 175,
+//        start: '2017-01-30T05:56:56.796Z',
+//        timings: [Object],
+//        url: 'http://static.cushionapp.com/availability.js',
+//        status: 301,
+//        gzip: null,
+//        type: 'text/html',
+//        cached: false,
+//        minified: null },
+//      { duration: 413,
+//        start: '2017-01-30T05:56:56.819Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=2.22.0',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 144,
+//        start: '2017-01-30T05:56:56.839Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/mediaelement/wp-mediaelement.min.js?ver=4.7.2',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 629,
+//        start: '2017-01-30T05:56:56.842Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-content/themes/semplice/js/scripts.min.js?ver=4.7.2',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 496,
+//        start: '2017-01-30T05:56:56.855Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/wp-embed.min.js?ver=4.7.2',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 591,
+//        start: '2017-01-30T05:56:56.909Z',
+//        timings: [Object],
+//        url: 'https://static.cushionapp.com/availability.css',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/css',
+//        cached: true,
+//        minified: null },
+//      { duration: 533,
+//        start: '2017-01-30T05:56:56.966Z',
+//        timings: [Object],
+//        url: 'https://static.cushionapp.com/availability.js',
+//        status: 200,
+//        gzip: true,
+//        type: 'application/x-javascript',
+//        cached: true,
+//        minified: null },
+//      { duration: 400,
+//        start: '2017-01-30T05:56:57.256Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-content/themes/semplice/css/styles.min.css',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/css',
+//        cached: false,
+//        minified: null },
+//      { duration: 1321,
+//        start: '2017-01-30T05:56:57.803Z',
+//        timings: [Object],
+//        url: 'https://www.google-analytics.com/analytics.js',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/javascript',
+//        cached: true,
+//        minified: null },
+//      { duration: 160,
+//        start: '2017-01-30T05:56:59.008Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/wp-includes/js/wp-emoji-release.min.js?ver=4.7.2',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/javascript',
+//        cached: false,
+//        minified: null },
+//      { duration: 311,
+//        start: '2017-01-30T05:56:59.128Z',
+//        timings: [Object],
+//        url: 'https://www.youtube.com/embed/-G4PUlUvRlw?feature=oembed',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/html; charset=utf-8',
+//        cached: true,
+//        minified: null },
+//      { duration: 198,
+//        start: '2017-01-30T05:56:59.133Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/webfonts/32D021_0_0.woff',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/x-font-woff',
+//        cached: false,
+//        minified: null },
+//      { duration: 196,
+//        start: '2017-01-30T05:56:59.134Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/webfonts/32D00E_1_0.woff',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/x-font-woff',
+//        cached: false,
+//        minified: null },
+//      { duration: 162,
+//        start: '2017-01-30T05:56:59.166Z',
+//        timings: [Object],
+//        url: 'https://www.google-analytics.com/r/collect?v=1&_v=j47&a=1187698892&t=pageview&_s=1&dl=http%3A%2F%2Fmariojacome.com%2F&ul=en-us&de=UTF-8&dt=Mario%20Jacome%20%7C%20Designer%20%26%20Illustrator&sd=32-bit&sr=1024x768&vp=400x300&je=0&_u=AEAAAMQAI~&jid=819482379&cid=595979281.1485755819&tid=UA-85476038-1&_r=1&z=1291592615',
+//        status: 200,
+//        gzip: null,
+//        type: 'image/gif',
+//        cached: true,
+//        minified: null },
+//      { duration: 191,
+//        start: '2017-01-30T05:56:59.178Z',
+//        timings: [Object],
+//        url: 'http://mariojacome.com/webfonts/32D021_1_0.woff',
+//        status: 200,
+//        gzip: null,
+//        type: 'application/x-font-woff',
+//        cached: false,
+//        minified: null },
+//      { duration: 458,
+//        start: '2017-01-30T05:56:59.327Z',
+//        timings: [Object],
+//        url: 'https://my.cushionapp.com/api/v1/users/ad831b9b-ae76-4bad-907b-aa4bf684f027/availability',
+//        status: 200,
+//        gzip: true,
+//        type: 'application/json',
+//        cached: false,
+//        minified: null },
+//      { duration: 261,
+//        start: '2017-01-30T05:56:59.436Z',
+//        timings: [Object],
+//        url: 'https://s.ytimg.com/yts/cssbin/www-embed-player-vfl_GjYBW.css',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/css',
+//        cached: true,
+//        minified: null },
+//      { duration: 311,
+//        start: '2017-01-30T05:56:59.437Z',
+//        timings: [Object],
+//        url: 'https://s.ytimg.com/yts/jsbin/www-embed-player-vflaae1Gl/www-embed-player.js',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/javascript',
+//        cached: true,
+//        minified: null },
+//      { duration: 779,
+//        start: '2017-01-30T05:56:59.438Z',
+//        timings: [Object],
+//        url: 'https://s.ytimg.com/yts/jsbin/player-en_US-vflQBHHdn/base.js',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/javascript',
+//        cached: true,
+//        minified: null },
+//      { duration: 222,
+//        start: '2017-01-30T05:57:00.327Z',
+//        timings: [Object],
+//        url: 'https://googleads.g.doubleclick.net/pagead/id',
+//        status: 200,
+//        gzip: true,
+//        type: 'application/json; charset=UTF-8',
+//        cached: true,
+//        minified: null },
+//      { duration: 211,
+//        start: '2017-01-30T05:57:00.333Z',
+//        timings: [Object],
+//        url: 'https://www.google.com/js/bg/OX9yPxVGYQhNAdcIDFDeBXfgae9vyAHITKBYJWiUq0c.js',
+//        status: 200,
+//        gzip: true,
+//        type: 'text/javascript',
+//        cached: true,
+//        minified: null },
+//      { duration: 207,
+//        start: '2017-01-30T05:57:00.334Z',
+//        timings: [Object],
+//        url: 'https://static.doubleclick.net/instream/ad_status.js',
+//        status: 200,
+//        gzip: null,
+//        type: 'text/javascript',
+//        cached: true,
+//        minified: null },
+//      { duration: 230,
+//        start: '2017-01-30T05:57:00.484Z',
+//        timings: [Object],
+//        url: 'https://fonts.gstatic.com/s/roboto/v15/QHD8zigcbDB8aPfIoaupKOvvDin1pK8aKteLpeZ5c0A.ttf',
+//        status: 200,
+//        gzip: true,
+//        type: 'font/ttf',
+//        cached: true,
+//        minified: null },
+//      { duration: 221,
+//        start: '2017-01-30T05:57:00.485Z',
+//        timings: [Object],
+//        url: 'https://fonts.gstatic.com/s/roboto/v15/RxZJdnzeo3R5zSexge8UUSZ2oysoEQEeKwjgmXLRnTc.ttf',
+//        status: 200,
+//        gzip: true,
+//        type: 'font/ttf',
+//        cached: true,
+//        minified:…
