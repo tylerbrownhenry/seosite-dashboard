@@ -59,12 +59,12 @@ module.exports = function(grunt) {
           yuicompress: true
         },
         files: {
-          'style.css': 'style.less'
+           './public/stylesheets/style.css': './public/stylesheets/style.less'
         }
       },
       production: {
         options: {
-          paths: ['./public/stylesheets/css'],
+          paths: ['./public/stylesheets/'],
           plugins: [
             new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]}),
             new (require('less-plugin-clean-css'))()

@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('../models/user'),
+_ = require('underscore'),
 Request = require('../models/request'),
 Scan = require('../models/scan'),
 plans = User.getPlans();

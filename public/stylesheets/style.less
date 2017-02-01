@@ -104,6 +104,12 @@ h3.section-header{
     text-align:center;
 }
 
+.loud-text{
+    font-weight:600;
+    font-size:36px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
 
 h1.advice-header{
     padding:40px;
@@ -175,6 +181,13 @@ h1.advice-header{
     &.clr{
         color: @white !important;
     } 
+}
+
+
+
+/* Results */
+.grade-letter{
+    text-anchor: middle;
 }
 
 /* END NEW STYLES */
@@ -384,11 +397,15 @@ hr {
   }
   .button:hover{
        border-color: #ffb400;
-       text-transform:none;
        text-decoration:none;
        color: #ffb400;
        cursor:pointer;
   }
+  button[type=submit]:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+    background-color: @lightPrimary;
+    color: @white;
+    }
   .summary-statement{
     font-weight:700;
     color:#008;
@@ -434,7 +451,6 @@ hr {
   margin:0 auto;
 }
 .secondary{
-
     color: #7fb800;
     border-color: #7fb800;
     font-family: inherit;
@@ -444,7 +460,7 @@ hr {
     -o-appearance: none;
     appearance: none;
     display: inline-block;
-      padding: 4px 8px 4px;
+    padding: 4px 8px 4px;
     border-width: 1px;
     border-style: solid;
     border-radius: 3px;
@@ -453,15 +469,15 @@ hr {
     user-select: none;
     font-size: 18px;
     letter-spacing: 0.025em;
-    line-height: 1;
+    line-height: 11px;
     font-weight: 300;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
     white-space: nowrap;
     transition: all 0.1s linear;
-        font-size: 10px;
-        text-transform:uppercase;
+    font-size: 10px;
+    text-transform:uppercase;
 }
 .right-align{
   text-align:right;
@@ -721,6 +737,10 @@ p + p {
 padding:15px 0px;
 }
 
+.button:focus{
+    outline: -webkit-focus-ring-color auto 0px;
+    background-color: blue;
+}
 
 .expanded-header,.expanded-child{
   background-color:#eef;
@@ -730,8 +750,30 @@ padding:15px 0px;
 padding:15px 0px;
 }
 
-
-
 .navbar {
     margin-bottom: 0px;
+}
+
+.scan-url-container{
+width:100%;
+}
+.sub-title{
+    margin-top:0px;
+    margin-bottom:26px !important;
+}
+.scan-details{
+   float:left;width:50%;
+}
+.rescan-icon{
+  margin-left:5px;
+}
+.left-dash{
+   border-left: 1px dashed #efefef;
+
+}
+.right-dash{
+   border-right: 1px dashed #efefef;
+}
+.margin-right-five{
+  margin-right:5px;
 }

@@ -1,10 +1,194 @@
+function drawWaterfall(element) {
+    function timelineLabelColor(resources,id) {
+        var width = 165;
+        var height = 60;
+        var end = 0;
+        var start = moment(resources[0].start).unix();
+        var colors = ['red', 'gray', 'blue', 'yellow', 'green', 'purple', 'violet']
+        var timings = [];
+        _.each(resources, function(resource) {
+            var rStart = moment(resource.start).unix();
+            if (start > rStart) {
+                start = rStart;
+            }
+            var tt = {
+                times: []
+            };
+            startOffset = rStart;
+            var lastEndTime = (startOffset + resource.timings.ssl);
+            _.each(_.keys(resource.timings), function(key, idx) {
+                var endTime = (lastEndTime + resource.timings[key]);
+                tt.times.push({
+                    color: colors[idx],
+                    starting_time: lastEndTime,
+                    ending_time: endTime
+                })
+                lastEndTime = endTime
 
-var socket = '';
-var count = 0;
+                if (endTime > end) {
+                    end = endTime
+                }
+            });
+            timings.push(tt);
+        });
+        var chart = d3.timeline()
+            .stack()
+            .showTimeAxis()
+            .height(height)
+            .itemHeight(height / timings.length)
+            .itemMargin(0)
+            .beginning(start)
+            .ending(end)
+            .margin({
+                left: 0,
+                right: 0,
+                top: -height / timings.length,
+                bottom: 0
+            });
+        var svg = d3.select("#"+id)
+            .append("svg")
+            .attr("width", width).attr('height', height)
+            .datum(timings).call(chart);
+    }
+    timelineLabelColor(JSON.parse($(element).attr('data')),$(element).attr('id'));
+}
+
+jQuery(function($) {
+    /*
+    We can do this more effectively as a data object in d3
+    */
+    var waterFalls = $('.waterfall-container');
+    for (var i = 0; i < waterFalls.length; i++) {
+        drawWaterfall(waterFalls[i]);
+    }
+});
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+function drawGrade(id){
+
+    var socket = '';
+    var count = 0;
+
+    var grades = $('.grade');
+    var data = [];
+    var results = [];
+
+    for (var i = 0; i < grades.length; i++) {
+        data.push($(grades[i]).data())
+    }
+
+    var container = d3.selectAll('.grade').data(data)
+    var svg = container
+        .append("svg")
+        .attr("height",109)
+        .attr("width",100)
+        .append("g")
+        console.log('container',container,container.attr('data'));
+    svg.append("g")
+        .attr("class", "slices");
+
+    var width = 100,
+        height = 100,
+        radius = Math.min(width, height) / 2;
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) {
+            return d.value;
+        });
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius * 0.7)
+        .innerRadius(radius * 0.55);
+
+    var outerArc = d3.svg.arc()
+        .innerRadius(radius * 0.9)
+        .outerRadius(radius * 0.9);
+
+    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    svg.append("text")
+        .attr('y',13)
+        .attr("class", "grade-letter loud-text")
+        .text(function(e){
+            return e.letter
+        });
+
+    var key = function(d){ return d.data.label; };
+
+    var color = d3.scale.ordinal()
+        .domain(["Passed", "Failed", "Not yet run"])
+        .range(["#4CAF50", "#F44336", "#E0E0E0"]);
+
+    function randomData (){
+        var labels = color.domain();
+        return labels.map(function(label){
+            return { label: label, value: Math.random() }
+        });
+    }
+    console.log('data',randomData());
+
+    function change(data) {
+        var data = [{
+            label:'Passed',
+            value: 0.1
+        },{
+            label:'Failed',
+            value: 0.1
+        },{
+            label:'Not yet run',
+            value: 0.1
+        }];
+        /* ------- PIE SLICES -------*/
+        var slice = svg.select(".slices").selectAll("path.slice")
+            .data(function(e){
+                console.log('e',e);
+                data[0].value = Math.random();
+                data[1].value = Math.random();
+                data[2].value = Math.random();
+                return pie(data);
+            }, key);
+
+        slice.enter()
+            .insert("path")
+            .style("fill", function(d) { return color(d.data.label); })
+            .attr("class", "slice");
+
+        slice       
+            .transition().duration(1000)
+            .attrTween("d", function(d) {
+                this._current = this._current || d;
+                var interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+                    return arc(interpolate(t));
+                };
+            })
+
+        slice.exit()
+            .remove();
+    };
+
+    change(data);
+}
+
+jQuery(function($) {
+drawGrade();
+});
 
 function onSubmit( form ){
   var data = $(form).serializeArray(); //  <-----------
