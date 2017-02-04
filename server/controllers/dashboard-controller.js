@@ -7,7 +7,7 @@ Scan = require('../models/scan'),
 plans = User.getPlans();
 
 exports.getDefault = function(req, res, next){
-    console.log('YESSSSSSSS3');
+    console.log('YESSSSSSSS3',req.user);
   var form = {},
   error = null,
   formFlash = req.flash('form'),
@@ -25,7 +25,7 @@ exports.getDefault = function(req, res, next){
     var uid = req.user.uid;
 
     Scan.find({uid:req.user.uid},function(err,data){
-        console.log('data',data);
+        // console.log('data',data);
         var scans = {message: '', list: []};
         if(err === null){
             scans.message = 'Request found!';
@@ -33,6 +33,7 @@ exports.getDefault = function(req, res, next){
         } else {
             scans.message = err;
         }
+        console.log('YESSSSSSSS3',req.user);
         res.render(req.render, {user: req.user, form: form, error: error, plans: plans, scans: scans});
     });
 

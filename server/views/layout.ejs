@@ -47,14 +47,14 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li <% if (locals.path == '/dashboard'){%>class="active"<% } %>><a href="/dashboard">Home</a></li>
-            <li <% if (locals.path == '/logout'){%>class="active"<% } %>><a href="/logout">Sign Out</a></li>
             <li <% if (locals.path == '/profile'){%>class="active"<% } %>><a href="/profile">Profile</a></li>
             <li <% if (locals.path == '/billing'){%>class="active"<% } %>><a href="/billing">Billing</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li <% if (locals.path !== '/'){%>class="active"<% } %>><a href="/logout">Sign Out</a></li>
             <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/">Log in</a></li>
-            <li <% if (locals.path == '/signup'){%>class="active"<% } %>><a href="/signup">Sign Up</a></li>
-            <li <% if (locals.path == '/forgot'){%>class="active"<% } %>><a href="/forgot">Forgot Password</a></li>
+            <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/signup">Sign Up</a></li>
+            <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/forgot">Forgot Password</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -88,7 +88,7 @@
     <script src="/javascripts/app.js"></script>
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-        <% if(locals.stripePubKey && locals.Stripe && locals.Stripe.setPublishableKey){ %>
+        <% if(locals.stripePubKey){ %>
     <script type="text/javascript">
       Stripe.setPublishableKey('<%= stripePubKey %>');
    

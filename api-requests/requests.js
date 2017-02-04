@@ -13,6 +13,22 @@ function requests(socket){
             "preClass": data.preClass,
             "token" : data.token,
             "options": JSON.stringify({
+                "save": {
+                    "captures":true,
+                    "scan":true
+                    // "captures": data.saveCaptures,
+                    // "scan": data.saveScan,
+                },
+                "check":{
+                    // "links":data.checkLinks,
+                    // "resources":data.checkResources,
+                    // "security":data.checkSecurity,
+                    // "meta":data.checkMeta
+                    "links":true,
+                    "resources":true,
+                    "security":true,
+                    "meta":true
+                },
                 "type": 'page',
                 "filterLimit": 10,
                 "digDepthLimit": 1,

@@ -54,6 +54,11 @@
                   -webkit-appearance: none;
                   box-shadow:none;
                   padding: 10px 5px 10px 20px;">
+
+
+
+
+
                <button type="submit" class="jsEnabled apiRequest submitUrl" style="    font-family: marketplace-glyphs;
                   font-style: normal;
                   font-weight: normal;
@@ -75,6 +80,94 @@
                <input type="hidden" name="request" value="page">
                <input type="hidden" name="page" value="summary">
             </div>
+
+
+
+    <div class="form-group row">
+      <label class="col-sm-2">Checkbox</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="save-captures" type="checkbox"> Save Captures?
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label class="col-sm-2">Checkbox</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="save-scan" type="checkbox"> Save Scan?
+          </label>
+        </div>
+      </div>
+    </div>
+
+        <div class="form-group row">
+      <label class="col-sm-2">Checkbox</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="check-links" type="checkbox"> Check Links?
+          </label>
+        </div>
+      </div>
+    </div>
+
+        <div class="form-group row">
+      <label class="col-sm-2">Checkbox</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="check-resources" type="checkbox"> Check Resources?
+          </label>
+        </div>
+      </div>
+    </div>
+
+        <div class="form-group row">
+      <label class="col-sm-2">Checkbox</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="check-meta" type="checkbox"> Check Meta Data?
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2">Checkbox</label>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="check-security" type="checkbox"> Check Meta Security?
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+
+                  <div class="open-modal modal-pop-open" id="advanced-url-options">
+                <div class="modal-content">
+                    <h3>iPhone (5000 x 4000) Screen Captures</h3>
+                    <div>
+                        <div class="image-capture"></div>
+                        <button class="modal-close">Close me!</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-overlay"></div>
+
+
+            <button class="modal-trigger" data-modal="advanced-url-options">Advanced Options</button>
+
          </div>
          <div class="form-group">
             <div class="col-sm-offset-3 col-sm-4">
@@ -114,5 +207,8 @@
       <% include request-loop %>
   </div>
 
+
+   <div class="container-fluid container-max">
+  </div>
 
 </div>

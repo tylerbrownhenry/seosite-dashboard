@@ -1,3 +1,16 @@
+var overlay = $('.modal-overlay');
+$('.modal-close,.modal-overlay').on('click',function(){
+    $('.open-modal').removeClass('modal-show');
+})
+$('.modal-trigger').on('click', function( el, i ) {
+    var modal = el.currentTarget.attributes['data-modal'].value;
+    console.log('modal',el,modal);
+  $('#'+modal).addClass('modal-show');
+
+});
+
+
+
 function drawWaterfall(element) {
     function timelineLabelColor(resources,id) {
         var width = 165;
@@ -50,6 +63,7 @@ function drawWaterfall(element) {
             .attr("width", width).attr('height', height)
             .datum(timings).call(chart);
     }
+    return ;
     timelineLabelColor(JSON.parse($(element).attr('data')),$(element).attr('id'));
 }
 
@@ -58,6 +72,9 @@ jQuery(function($) {
     We can do this more effectively as a data object in d3
     */
     var waterFalls = $('.waterfall-container');
+    if(waterFalls.length === 0){
+        return;
+    }
     for (var i = 0; i < waterFalls.length; i++) {
         drawWaterfall(waterFalls[i]);
     }
@@ -86,7 +103,9 @@ function drawGrade(id){
     var grades = $('.grade');
     var data = [];
     var results = [];
-
+    if(grades.length === 0){
+        return;
+    }
     for (var i = 0; i < grades.length; i++) {
         data.push($(grades[i]).data())
     }
@@ -190,7 +209,27 @@ jQuery(function($) {
 drawGrade();
 });
 
+var count = 0;
+
+var submittedWaiting = false;
+
+function styleForm(form){
+    $(form).addClass('loading');
+    $('.row.header').after('<div class="row fancy"><div class="col-sm-4">Scan Initiated</div></div>')
+    submittedWaiting = true;
+}
+
+function errorMessage(form,text){
+    $(form).children('jsErrorMessage').text(text).show();
+}
+
 function onSubmit( form ){
+    if(submittedWaiting){
+        errorMessage(form,'You already have a run in progress, please wait for it to complete before starting another one.');
+        return;
+    }
+    styleForm(form);
+
   var data = $(form).serializeArray(); //  <-----------
     console.log('onSubmit');
     var arr = {};
@@ -201,6 +240,12 @@ function onSubmit( form ){
     socket.emit('queue/'+ arr.request, {
         preClass: 'request_temp_id_'+count,
         token: arr.token,
+        saveCaptures: arr["save-captures"],
+        saveScan: arr["save-scan"],
+        checkLinks:arr["check-links"],
+        checkResources:arr["check-resources"],
+        checkSecurity:arr["check-security"],
+        checkMeta:arr["check-meta"],
         uid: arr.uid,
         url: arr.url,
         page: arr.page
@@ -283,8 +328,11 @@ jQuery(function($) {
     socket.on('broadcastAll/',function(e){
         console.log('e',e);
     });
-    socket.on('alert/' + uid,function(e){
+    socket.on('alert/' + window.uid,function(e){
         console.log('e',e);
+
+        $('.loading').removeClass('loading');
+
 
         if(e.eventType === 'requestUpdate'){
             if($('#'+e.page).length === 0){
