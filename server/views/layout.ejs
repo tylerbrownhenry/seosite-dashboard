@@ -44,17 +44,19 @@
           </button>
           <a class="navbar-brand" href="/dashboard">SeoDr</a>
         </div>
+
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li <% if (locals.path == '/dashboard'){%>class="active"<% } %>><a href="/dashboard">Home</a></li>
-            <li <% if (locals.path == '/profile'){%>class="active"<% } %>><a href="/profile">Profile</a></li>
-            <li <% if (locals.path == '/billing'){%>class="active"<% } %>><a href="/billing">Billing</a></li>
+            <li class="js_page_/dashboard js_page_summary" <% if (locals.path == '/dashboard'){%>class="active"<% } %>><span class="js_count"></span><a href="/dashboard">Home</a></li>
+            <li class="js_page_/profile profile" <% if (locals.path == '/profile'){%>class="active"<% } %>><span class="js_count"></span><a href="/profile">Profile</a></li>
+            <li class="js_page_/billing billing" <% if (locals.path == '/billing'){%>class="active"<% } %>><span class="js_count"></span><a href="/billing">Billing</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li <% if (locals.path !== '/'){%>class="active"<% } %>><a href="/logout">Sign Out</a></li>
             <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/">Log in</a></li>
             <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/signup">Sign Up</a></li>
             <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/forgot">Forgot Password</a></li>
+            <li <% if (locals.path == '/activity'){%>class="active"<% } %>><a href="/activity">Activity</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -75,17 +77,23 @@
 
      <script>
         <% if(locals.user && locals.user.uid){ %>
-         window.uid = '<%= user.uid %>';
+            window.uid = '<%= user.uid %>';
+            window.apiToken = '<%= user.apiToken %>';
         <% } %>
         window.CURRENT_HOST = '<%= CURRENT_HOST %>';
     </script>
 
     <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/react.min.js"></script>
+    <script src="/javascripts/react-do.js"></script>
+    <script src="/javascripts/react-infinite.min.js" type="text/jsx"></script>
+    <script src="/javascripts/precompiledinsteadofthis____jsTransformer.js"></script>
     <script src="/javascripts/d3.min.js"></script>
     <script src="/javascripts/d3-timeline.min.js"></script>
     <script src="/javascripts/moment.min.js"></script>
     <script src="/javascripts/underscore.min.js"></script>
     <script src="/javascripts/app.js"></script>
+    <script src="/javascripts/render.js" type="text/jsx"></script>
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <% if(locals.stripePubKey){ %>
@@ -99,6 +107,51 @@
 
 
     <script src="<%= CURRENT_HOST %>/socket.io/socket.io.js"></script>
+    <script src="/javascripts/ejs.js"></script>
+
+
+
+   <script type="text/javascript">
+        $(document).ready(function(){
+        //save templates to variable
+
+        <% if(locals.templates){ %>
+        window.templates = <%- JSON.stringify(locals.templates) %>;
+        <% } %>
+        window.currentPage = '<%= locals.path %>';
+        // window.templates = '<%= JSON.stringify(locals.templates) %>';
+        });
+    </script>
+
+
+
+<script>
+    function insertTemplate(data) {
+        getTemplate('/tpl/template.ejs', function renderTemplate(err, tpl) {
+        if (err) {
+            throw err;
+        } 
+        console.log('gots it!');
+        var tpl = ejs.render(tpl, {data: data});
+        $(tpl).after('.row.header');
+        });
+    }
+    function getTemplate(file, callback) {
+        $.ajax(file, {
+            type: 'GET',
+            success: function(data, textStatus, xhr) {
+            return callback(null, data);
+            },
+            error: function(xhr, textStatus, error) {
+            return callback(error);
+            }
+        });
+    }
+    // insertTemplate({love:'dinos'});
+
+</script>
+
+
     <!-- <script src="//localhost:35729/livereload.js"></script>-->
 
 </body>

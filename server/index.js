@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express');
-// var swig = require('swig');
 var ejs = require('ejs');
 var expressLayouts = require('express-ejs-layouts');
 var subdomainOffset = process.env.SUBDOMAIN_OFFSET || 0;
@@ -11,83 +10,82 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var MongoStore = require('connect-mongo')({ session: session });
+var MongoStore = require('connect-mongo')({
+     session: session
+});
 var mongoose = require('mongoose');
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var compress = require('compression')();
 var lodash = require('lodash');
-// var Authentication = require('./authentication');
 var expressValidator = require('express-validator');
 var errorHandler = require('./middleware/error');
 var viewHelper = require('./middleware/view-helper');
 var flash = require('express-flash');
 var cors = require('cors');
 var corsOptions = {
-  origin: '*'
+     origin: '*'
 };
 var staticDir;
 
 // setup db
 mongoose.connect(secrets.db);
-mongoose.connection.on('error', function(e) {
-  console.error('MongoDB Connection Error. Make sure MongoDB is running.',e);
+mongoose.connection.on('error', function (e) {
+     console.error('MongoDB Connection Error. Make sure MongoDB is running.', e);
 });
 
 var corsOptions = {
-  origin: '*'
+     origin: '*'
 };
 
 // express setup
 var app = express();
 
 if (app.get('env') === 'production') {
-  app.locals.production = true;
-  // swig.setDefaults({ cache: 'memory' });
-  staticDir = path.join(__dirname + '/../public');
+     app.locals.production = true;
+     staticDir = path.join(__dirname + '/../public');
 } else {
-  app.locals.production = false;
-  // swig.setDefaults({ cache: false });
-  staticDir = path.join(__dirname + '/../public');
+     app.locals.production = false;
+     staticDir = path.join(__dirname + '/../public');
 }
 
 // This is where all the magic happens!
-// app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
 
-// app.set('view engine', 'html');
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.locals._ = lodash;
 app.locals.stripePubKey = secrets.stripeOptions.stripePubKey;
 app.locals.CURRENT_HOST = process.env.CURRENT_HOST;
 
-
 app.use(favicon(path.join(__dirname + '/../public/favicon.ico')));
 app.use(logger('dev'));
 
 app.use(compress);
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+     extended: true
+}));
+app.use(bodyParser.json());
+
 app.use(expressValidator());
 app.use(cookieParser());
 
 app.use(express.static(staticDir));
-if(app.get('env') !== 'production'){
-  app.use('/styles', express.static(__dirname + '/../.tmp/styles'));
-  // app.use('/', routes.styleguide);
+if (app.get('env') !== 'production') {
+     app.use('/styles', express.static(__dirname + '/../.tmp/styles'));
 }
 
 app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 60 * 1000 // 1 minute
-  },
-  secret: secrets.sessionSecret,
-  store: new MongoStore({
-    url: secrets.db,
-    auto_reconnect: true
-  })
+     resave: true,
+     saveUninitialized: true,
+     cookie: {
+          maxAge: 60 * 1000 // 1 minute
+     },
+     secret: secrets.sessionSecret,
+     store: new MongoStore({
+          url: secrets.db,
+          auto_reconnect: true
+     })
 }));
 
 // setup passport authentication
@@ -113,65 +111,9 @@ app.use(errorHandler.notFound);
 
 /// error handlers
 if (app.get('env') === 'development') {
-  app.use(errorHandler.development);
+     app.use(errorHandler.development);
 } else {
-  app.use(errorHandler.production);
+     app.use(errorHandler.production);
 }
 
 module.exports = app;
-
-
-
-//   var querystring = require('querystring');
-// var http = require('http');
-
-// function PostCode(codestring) {
-//   // Build the post string from an object
-
-//   // An object of options to indicate where to post to
-
-//         var postData = querystring.stringify({
-//       "fields": {
-//         "project": {
-//           "key": "test1"
-//         },
-//         "summary": "REST ye merry gentlemen.",
-//         "description": "Creating of an issue using project keys and issue type names using the REST API",
-//         "issuetype": {
-//           "name": "Bug"
-//         }
-//       }
-//     });
-//         console.log('postData',postData);
-
-//         var options =  {
-//       path: '/rest/api/2/issues/TEST-1',
-//       hostname: 'milmerry.atlassian.net',
-//       method: 'GET',
-//       headers: {
-//           "Authorization": "Basic dHlsZXJAbWlsbWVycnkuY29tOjFsdnpCOGNVakhHVmppcEh4VWdD"
-
-//       }
-//   }
-
-//     var req = http.request(options, (res) => {
-//       console.log(`STATUS: ${res.statusCode}`);
-//       console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-//       res.setEncoding('utf8');
-//       res.on('data', (chunk) => {
-//         console.log(`BODY: ${chunk}`);
-//       });
-//       res.on('end', () => {
-//         console.log('No more data in response.');
-//       });
-//     });
-
-
-    // write data to request body
-//     req.write(postData);
-//     req.end();
-
-// }
-
-
-// PostCode('test');

@@ -1,4 +1,4 @@
-Set config vars to 
+Set config vars to
 key:API_HOST value:https://limitless-cove-68401.herokuapp.com/
 
 
@@ -80,3 +80,11 @@ Install Grunt in your local project:
 npm install grunt --save-dev
 Install any Grunt Module you may need in your build process. Just for sake of this sample I will add Concat module for combining files together:
 npm install grunt-contrib-concat --save-dev
+
+Install DynamoDB
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html
+(Install Java As Well)
+
+Download Node SDK
+https://aws.amazon.com/sdk-for-node-js/
+npm install aws-sdk
