@@ -34,7 +34,7 @@ function findOrCreateUser(req, email, password, done, console) {
                email: req.body.email
           },
           function (err, existingUser) {
-               console.log('existingUser', existingUser);
+              //  console.log('existingUser', existingUser);
                if (existingUser && existingUser.uid) {
                     req.flash('form', {
                          email: req.body.email
@@ -43,7 +43,7 @@ function findOrCreateUser(req, email, password, done, console) {
                }
                // edit this portion to accept other properties when creating a user.
                utils.encrypt(req.body.password, function (err, hash) {
-                    console.log('hash', hash);
+                    // console.log('hash', hash);
                     if (err) {
                          return done(null, false, req.flash('error', 'Error hashing password.'));
                     }
@@ -74,7 +74,7 @@ function findOrCreateUser(req, email, password, done, console) {
                                    var time = 14 * 24 * 3600000;
                                    req.session.cookie.maxAge = time; //2 weeks
                                    req.session.cookie.expires = new Date(Date.now() + time);
-                                   console.log('user saved!', req.session);
+                                  //  console.log('user saved!', req.session);
                                    req.session.touch();
                                    return done(null, user, req.flash('success', 'Thanks for signing up!!'));
                               });

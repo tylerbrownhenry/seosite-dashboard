@@ -202,7 +202,7 @@ function _authorize(req) {
           }, function (err, user) {
                console.log('scan response: ', err, 'user', user, typeof user);
                //  if (user !== null) {
-               // console.log('1213')
+               console.log('1213')
                // user = JSON.puser.toJSON();
                //  }
                if (err) {

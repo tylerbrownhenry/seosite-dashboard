@@ -54,7 +54,7 @@ function callbacks(_socket) {
                          selector: e.alertSelector
                     });
                }
-               // // console.log('data',data);
+               console.log('data',data);
                // var scans = {message: '', list: []};
                // if(err === null){
                //     scans.message = 'Request found!';

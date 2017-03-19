@@ -43,7 +43,7 @@ describe('app/api-requests/requests/pageScan', function () {
      //       return callback('success');
      //  },
      //  get: function (options, callback) {
-     // console.log('callback');
+     console.log('callback');
      // return callback();
      //  }
      // });

@@ -763,7 +763,7 @@ var Rect = React.createClass({
             return {toolbarOpen:false};
         },
         setTime: function(){
-            // console.log('this',this.props);
+            console.log('this',this.props);
             this.setState({
                 shortDate: formatDate(this.props.completedTime,true),
                 longDate: formatDate(this.props.completedTime)
@@ -973,7 +973,7 @@ var Bar = React.createClass({
 
   render: function() {
     var props = this.props;
-    // console.log('props',props);
+    console.log('props',props);
     var data = props.data.data.map(function(d) {
       return d.y;
     });
@@ -1026,7 +1026,7 @@ var i = 0;
 
     var InfiniteList = React.createClass({
         getInitialState: function() {
-              // console.log('getInitialState');
+              console.log('getInitialState');
             return {
                 elements: [],
                 animating: false,
@@ -1141,7 +1141,7 @@ var i = 0;
             }
 
 
-            // console.log('newItems',newItems);
+            console.log('newItems',newItems);
             var that = this;
             this.setState({
                 isInfiniteLoading: true
@@ -1149,43 +1149,43 @@ var i = 0;
 
             var newItem = new Item(newItems);
             var allItems = that.state.elements;
-            // console.log('newItem',newItem,'allItems',allItems);
+            console.log('newItem',newItem,'allItems',allItems);
 
             var existing = _.find(allItems,function(item){
                 if(newItem.temp_id !== null && item.props.temp_id === newItem.temp_id){
-                // console.log('exisint',item,newItem);
+                console.log('exisint',item,newItem);
                     return true;
                 } else if(newItem.i_id !== null && item.props.i_id === newItem.i_id){
-                // console.log('exisint',item,newItem);
+                console.log('exisint',item,newItem);
                     return true;
                 } else if(newItem.requestId !== null && item.props.requestId === newItem.requestId){
-                // console.log('exisint',item,newItem);
+                console.log('exisint',item,newItem);
                     return true;
                 } else if(newItem.requestId !== null && item.props.i_id === newItem.requestId){
                     return true;
                 } else {
-                    // console.log('exisint',item.props.requestId,newItem.requestId);
+                    console.log('exisint',item.props.requestId,newItem.requestId);
                 }
             });
             if(existing){
                 _.each(allItems,function(item,idx){
                     if(newItem.temp_id !== null && item.props.temp_id === newItem.temp_id){
                         allItems[idx] = toDoItem(newItem,this);
-                        // console.log('exisint yep',item);
+                        console.log('exisint yep',item);
                     } else if(newItem.i_id !== null && item.props.i_id === newItem.i_id){
                         allItems[idx] = toDoItem(newItem,this);
-                        // console.log('exisint yep',item);
+                        console.log('exisint yep',item);
                     } else if(newItem.requestId !== null && item.props.requestId === newItem.requestId){
                         allItems[idx] = toDoItem(newItem,this);
-                        // console.log('exisint yep',item);
+                        console.log('exisint yep',item);
                     } else if(newItem.requestId !== null && item.props.i_id === newItem.requestId){
                         allItems[idx] = toDoItem(newItem,this);
-                        // console.log('exisint yep',item);
+                        console.log('exisint yep',item);
                     } else {
-                        // console.log('exisint nope',item,newItem);
+                        console.log('exisint nope',item,newItem);
                     }
                 });
-                // console.log('existing',existing,'that.state.elements',allItems);
+                console.log('existing',existing,'that.state.elements',allItems);
             } else {
                 newItem =  toDoItem(newItem,this)
                 allItems = [newItem].concat(allItems);
@@ -1203,7 +1203,7 @@ var i = 0;
             });
         },
         handleInfiniteLoad: function() {
-            // console.log('handleInfiniteLoad');
+            console.log('handleInfiniteLoad');
             var that = this;
 
         },
