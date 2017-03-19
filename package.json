@@ -53,7 +53,8 @@
     "socket.io": "1.7.2",
     "socket.io-client": "1.7.2",
     "stripe": "^3.0.2",
-    "stripe-webhook-middleware": "^0.2.0"
+    "stripe-webhook-middleware": "^0.2.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "aws-sdk-mock": "^1.6.1",
