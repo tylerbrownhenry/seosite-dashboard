@@ -1,0 +1,37 @@
+<div id="request_container">
+      <h3 class="section-header">Recent Activity</h3>
+<!--            <div class="container-fluid">
+             <div class="content">
+                <div>Loading</div>
+             </div>
+          </div>
+      <div class="container-fluid">
+         <div class="content">
+            <div class="display-selected"><span>Search</span></div>
+            <div id="the-basics">
+               <input class="typeahead" type="text" placeholder="Http://www.mysite.com">
+            </div>
+         </div>
+      </div> -->
+      <div class="container-fluid">
+         <div class="row header">
+            <div class="col-xs-4 title">Info</div>
+            <div class="col-xs-2 title beta">Grade<span class="lnr lnr-question-circle"></span></div>
+            <div class="col-xs-2 title beta">Performance<span class="lnr lnr-question-circle"></span></div>
+            <div class="col-xs-2 title beta">Issues</div>
+            <div class="col-xs-2 title beta">Captures</div>
+         </div>
+        <div id="request_loop">
+         <% if(locals && locals.scans && locals.scans.list && locals.scans.list.length > 0){ %>
+            <%  locals.scans.list.forEach( function( _scan ){  %>
+                <% scan = JSON.parse(JSON.stringify(_scan)) %> 
+                
+                    <% include content-loop-main %>
+
+            <% }); %>
+        <% }  else { %>
+              <h4 class="section-header">You have not performed any scans yet.</h4>
+        <% } %>
+        </div>
+    </div>
+</div>    

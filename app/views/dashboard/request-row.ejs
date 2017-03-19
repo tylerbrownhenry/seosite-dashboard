@@ -1,0 +1,108 @@
+
+         <div class="row fancy">
+            <div class="col-sm-4">
+               <div class="scan-url-container">
+                  <% if(scan.url && scan.url.url){ %>
+                      <h3 class="blue-title"><%= scan.url.url %></h3>
+                  <% } %>
+                  <% if(scan.url && scan.url.resolvedUrl){ %>
+                      <h5 class="sub-title black">Resolved: <%= scan.url.resolvedUrl %></h5>
+                  <% } %>
+               </div>
+               <div style="clear:both"></div>
+               <div class="scan-details">
+                  <% if(scan.completedTime){ %>
+                      <h4 class="detail last"><span class="lnr lnr-clock"></span><%= scan.completedTime %></h4>
+                  <% } %>
+                  <% if(scan.requestId){ %>
+                      <a href="/scan/<%= scan.requestId %>" class="button">SCAN AGAIN  <span class="rescan-icon lnr lnr-redo"></span></a>
+                  <% } %>
+               </div>
+            </div>
+            <div class="col-sm-2 chart-col dashed left-dash right-dash">
+                <% if(scan.grade){ %>
+                   <div class="grade" data-letter="<%= scan.grade.letter %>" data-issues="<%= scan.issues %>"></div>
+                <% } %>
+                <% if(scan.grade && scan.grade.message){ %>
+                   <h4 class="detail last summary-statement"><%= scan.grade.message %></h4>
+                <% } %>
+                <% if(scan.requestId){ %>
+                    <h4 class="detail last"><a href="/tasks/<%= scan.requestId %>" class="small-links">What should I do next?</a></h4>
+                <% } %>
+            </div>
+
+            <div class="col-sm-2 issue-list">
+                <% if(scan.requestId){ %>
+                    <h3 class="blue-title second"> Issues <a href="/issues/<%= scan.requestId %>" class="button secondary">View</a></h3>
+                <% } %>
+                <h5 class="sub-title">
+                    <hr>
+                </h5>
+             
+                <% if(scan.issues && scan.issues.noIssues === true){ %>
+                    <h4  class="detail small-links margin-right-five"><span class="lnr lnr-link"></span>No Issues Found!</h4>
+                <% } %>
+
+                <% if(scan.issues && scan.issues.links !== 0){ %>
+                    <h4 class="detail small-links margin-right-five"><span class="lnr lnr-link"></span><%= scan.issues.links %> Link Issues </h4>
+                <% } %>
+                <% if(scan.issues && scan.issues.resources !== 0){ %>
+                    <h4 class="detail small-links margin-right-five"><span class="lnr lnr-database"></span><%= scan.issues.resources %> Resource Issues </h4>
+                <% } %>
+                <% if(scan.issues && scan.issues.security !== 0){ %>
+                    <h4 class="detail small-links margin-right-five"><span class="lnr lnr-warning"></span><%= scan.issues.security %> Security Concern </h4>
+                <% } %>
+                <% if(scan.issues && scan.issues.meta !== 0){ %>
+                    <h4 class="detail small-links margin-right-five"><span class="lnr lnr-warning"></span><%= scan.issues.meta %> Meta Data Issue </h4>
+                <% } %>
+            </div>
+            <div class="col-sm-2">
+                <% if(scan.requestId){ %>
+                    <h3 class="blue-title second">Performance <a href="performance/<%= scan.requestId %>" class="button secondary">View</a></h3>
+                <% } %>
+                <h5 class="sub-title">
+                    <hr>
+                </h5>
+               <div style="width:100%;height:100px;" id="jsWaterfall_<%=scan.requestId %>" class="waterfall-container" data='<%-JSON.stringify(scan.resources)%>'>
+               </div>
+            </div>
+            <div class="col-sm-2 right-align">
+
+            <div class="open-modal modal-pop-open" id="modal-1">
+                <div class="modal-content">
+                    <h3>iPhone (5000 x 4000) Screen Captures</h3>
+                    <div>
+                        <div class="image-capture"></div>
+                        OOOOOX
+                        // <button class="modal-close">Close me!</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-overlay"></div>
+
+
+            <!-- <button class="modal-trigger" data-modal="modal-1">Newspaper</button> -->
+
+
+            <% if(scan.requestId){ %>
+                <h3 class="blue-title second">Captures <a data-captures="*" data-request="<%= scan.requestId %>" class="view-captures button secondary">View All</a></h3>
+                <h5 class="sub-title">
+                    <hr>
+                </h5>
+                <h5 style="width:100%;clear:both" class="detail">
+                    <span style="float:right;margin-top:2px"><span class="lnr lnr-smartphone"></span></span><span  style="margin-right:5px;" class="small-links"><a >Portrait</a> / <a >Landscape</a></span>
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                    <span style="float:right;margin-top:2px"><span class="lnr lnr-tablet"></span></span><span  style="margin-right:5px;" class="small-links"><a >Portrait</a> / <a >Landscape</a></span>
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                    <span style="float:right;margin-top:2px"><span class="lnr lnr-laptop"></span></span><span  style="margin-right:5px;" class="small-links"><a >Desktop</a></span>
+               </h5>
+               <h5 style="width:100%;clear:both" class="detail">
+                    <span style="float:right;margin-top:2px"><span class="lnr lnr-screen"></span></span><span style="margin-right:5px;" class="small-links"><a >Wide Screen Monitor</a></span>
+               </h5>
+            <% } %>
+            </div>
+         </div>

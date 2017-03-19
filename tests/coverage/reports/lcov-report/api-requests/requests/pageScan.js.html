@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for api-requests/requests/pageScan.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">api-requests/requests/pageScan.js</span></h1>
+    <h2>
+        Statements: <span class="metric">11.11% <small>(3 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">11.11% <small>(3 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">api-requests/requests/</a> &#187; pageScan.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * @file File contains the validation and the submission to Rabbit MQ for any page scans
+ * @module pageScanRequest
+ */
+&nbsp;
+var sh = require('shorthash'),
+     q = require('q'),
+     publisher = require('../../amqp/publisher'),
+     Request = require('../../models/index').request,
+     _preFlight = require('../preFlight')._preFlight,
+     _log = require('../../debug');
+//  notify = require('../../notify');
+/**
+ * Checks that a user has provided the correct options needed for making a page
+ * request, has enough credits and permission for their request, and then
+ * publishes it to RabbitMQ to be consumed by the engine.
+ * @function
+ * @param {options} Object - {options:Object, token:String, url:String, uid:String}
+ */
+&nbsp;
+<span class="fstat-no" title="function not covered" >function pageScanRequest(options) {</span>
+<span class="cstat-no" title="statement not covered" >     var defer = q.defer();</span>
+<span class="cstat-no" title="statement not covered" >     console.log('test1', options, _preFlight);</span>
+<span class="cstat-no" title="statement not covered" >     _preFlight(options, ['options', 'token', 'url', 'uid'], <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >          console.log('test3');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          _log('pageScanRequest _preFlight success');</span>
+<span class="cstat-no" title="statement not covered" >          var message = {</span>
+               requestDate: Date.now(),
+               uid: options.uid,
+               url: options.url,
+               options: options.options
+          };
+<span class="cstat-no" title="statement not covered" >          message.id = sh.unique(JSON.stringify(message));</span>
+<span class="cstat-no" title="statement not covered" >          console.log('test4');</span>
+<span class="cstat-no" title="statement not covered" >          var request = new Request(message);</span>
+<span class="cstat-no" title="statement not covered" >          request.save(<span class="fstat-no" title="function not covered" >function (err) {</span></span>
+<span class="cstat-no" title="statement not covered" >               console.log('tes2t');</span>
+<span class="cstat-no" title="statement not covered" >               if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    _log('pageScanRequest save error', 'error');</span>
+<span class="cstat-no" title="statement not covered" >                    defer.reject({</span>
+                         success: false,
+                         status: 'error',
+                         type: 'global',
+                         _debug: 'request.save',
+                         message: [{
+                              parent: 'global',
+                              title: 'Opps... ',
+                              message: 'Trouble saving request'
+                         }]
+                    });
+               } else {
+<span class="cstat-no" title="statement not covered" >                    _log('pageScanRequest saved', 'success');</span>
+<span class="cstat-no" title="statement not covered" >                    publisher.publish("", "summary", new Buffer(JSON.stringify(message))).then(<span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >                         _log('pagescanrequest publish success', 'success', e);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                         defer.resolve({</span>
+                              success: true,
+                              status: 'success',
+                              _debug: 'publisher.publish',
+                              type: 'request',
+                              message: [{
+                                   parent: 'global',
+                                   title: 'Whoo!',
+                                   message: 'Request sent to queue. It should begin shortly.'
+                              }]
+                         });
+                         //  notify({
+                         //       message: 'Starting Scan!',
+                         //       uid: user.uid,
+                         //       page: req.page,
+                         //       type: req.type,
+                         //       requestDate: requestDate,
+                         //       status: 'pending',
+                         //       temp_id: req.temp_id,
+                         //       i_id: requestId
+                         //  });
+                    }).catch(<span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >                         _log('pagescanrequest publish error', 'error', err);</span>
+<span class="cstat-no" title="statement not covered" >                         defer.reject({</span>
+                              success: false,
+                              status: 'error',
+                              type: 'global',
+                              _debug: 'publisher.publish',
+                              _err: err,
+                              message: [{
+                                   parent: 'global',
+                                   title: 'Opps... ',
+                                   message: 'Request saved, but there was an error while sending it to the queue.'
+                              }]
+                         });
+&nbsp;
+                         //  notify({
+                         //       message: JSON.stringify(err.message),
+                         //       uid: user.uid,
+                         //       page: req.page,
+                         //       type: req.type,
+                         //       status: 'error',
+                         //       temp_id: req.temp_id,
+                         //       i_id: requestId
+                         //  });
+                    });
+               }
+          });
+&nbsp;
+     }, <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >          console.log('err');</span>
+<span class="cstat-no" title="statement not covered" >          _log('pageScan.js _prelight failed', 'error', err);</span>
+<span class="cstat-no" title="statement not covered" >          defer.reject(err);</span>
+     });
+<span class="cstat-no" title="statement not covered" >     return defer.promise;</span>
+}
+&nbsp;
+module.exports = pageScanRequest;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 11 2017 10:07:27 GMT-0500 (EST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

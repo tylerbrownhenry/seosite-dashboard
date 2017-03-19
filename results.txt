@@ -1,0 +1,45 @@
+
+[0m[0m
+[0m  api-requests/requests/pageScan[0m
+  [32m  ✓[0m[90m pageScanRequest() should fail when called with no options[0m
+server.js checkApiCall checkOptions err { success: false,
+  status: 'error',
+  type: 'userInput',
+  _debug: 'checkOptions',
+  message: [ { parent: 'options', title: 'Doh! ', message: 'Empty request' } ] } undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined
+pageScan.js _prelight failed error undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined
+  [32m  ✓[0m[90m pageScanRequest() should fail when not enough options[0m
+server.js checkOptions success undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined
+server.js checkApiCall checkRequirements err { status: 'error',
+  type: 'global',
+  _debug: 'checkRequirements',
+  success: false,
+  message: 
+   [ { parent: 'options',
+       title: 'Oops!',
+       message: 'Missing required parameter: options.' },
+     { parent: 'token',
+       title: 'Oops!',
+       message: 'Missing required parameter: token.' },
+     { parent: 'url',
+       title: 'Oops!',
+       message: 'Missing required parameter: url.' },
+     { parent: 'uid',
+       title: 'Oops!',
+       message: 'Missing required parameter: uid.' } ] } undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined
+pageScan.js _prelight failed error undefined undefined undefined undefined undefined undefined undefined undefined undefined undefined
+pageScanRequest
+
+[0m  CartSummary[0m
+  [32m  ✓[0m[90m getSubtotal() should return 0 if no items are passed in[0m
+  [32m  ✓[0m[90m getSubtotal() should return the sum of the price * quantity for all items[0m
+  [32m  ✓[0m[90m getTax() should execute the callback function with the tax amount[0m
+
+[0m  tax[0m
+  [32m  ✓[0m[90m calculate() should resolve with an object containing the tax details[0m
+  [32m  ✓[0m[90m calculate() should send the subtotal in the request[0m
+  [32m  ✓[0m[90m calculate() should not make a request if the state is not CA[0m
+
+
+[92m [0m[32m 8 passing[0m[90m (95ms)[0m
+

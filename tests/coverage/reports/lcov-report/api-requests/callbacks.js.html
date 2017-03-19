@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for api-requests/callbacks.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">api-requests/callbacks.js</span></h1>
+    <h2>
+        Statements: <span class="metric">13.1% <small>(11 / 84)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">13.1% <small>(11 / 84)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">api-requests/</a> &#187; callbacks.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var socket = {};
+// var Alert = require('../../app/models/alert');
+var Scan = require('../models/scan');
+// var Link = require('../../server/models/link');
+// var Request = require('../../server/models/request');
+var _ = require('underscore');
+var utils = require('../utils');
+&nbsp;
+<span class="fstat-no" title="function not covered" >function sendStatus(req) {</span>
+<span class="cstat-no" title="statement not covered" >     console.log('req', req.body);</span>
+<span class="cstat-no" title="statement not covered" >     console.log('request/complate/' + req.body.uid);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket.emit('alert/' + req.body.uid, req.body);</span>
+&nbsp;
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function broadcastAll(message) {</span>
+<span class="cstat-no" title="statement not covered" >     socket.emit('broadcastAll', message);</span>
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function callbacks(_socket) {</span>
+<span class="cstat-no" title="statement not covered" >     console.log('it has begun!');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket = _socket;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket.on('get:scan', <span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >          console.log('e', e);</span>
+&nbsp;
+          // e { uid: '17PmsI',
+          //   page: '/dashboard',
+          //   message: 'Scan complete!',
+          //   type: 'request',
+          //   status: 'complete',
+          //   progress: 'init',
+          //   loadingSelector: '.js_temp_request_null',
+          //   alertSelector: '.js_request_2jgEfQ',
+          //   saved: true,
+          //   i_id: '2jgEfQ' }
+<span class="cstat-no" title="statement not covered" >          utils.findBy(Scan, {</span>
+               uid: e.uid,
+               requestId: e.message.i_id
+          }, <span class="fstat-no" title="function not covered" >function (err, data) {</span>
+<span class="cstat-no" title="statement not covered" >               console.log('found');</span>
+<span class="cstat-no" title="statement not covered" >               if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    socket.emit('render:scan:' + e.uid + '/' + e.apiToken, {</span>
+                         data: {
+                              message: 'Could not located scan information.'
+                         },
+                         selector: e.alertSelector
+                    });
+               } else {
+<span class="cstat-no" title="statement not covered" >                    socket.emit('render:scan:' + e.uid + '/' + e.apiToken, {</span>
+                         data: data,
+                         selector: e.alertSelector
+                    });
+               }
+               // // console.log('data',data);
+               // var scans = {message: '', list: []};
+               // if(err === null){
+               //     scans.message = 'Request found!';
+               //     scans.list = data;
+               // } else {
+               //     scans.message = err;
+               // }
+               //     console.log('YESSSSSSSS3',req.user);
+               //     res.render(req.render, {templates: templates, user: req.user, form: form, error: error, plans: plans, scans: scans});
+          });
+&nbsp;
+     });
+&nbsp;
+<span class="fstat-no" title="function not covered" >     function bulkDelete(links) {</span>
+<span class="cstat-no" title="statement not covered" >          var commands = [];</span>
+<span class="cstat-no" title="statement not covered" >          _.each(links, <span class="fstat-no" title="function not covered" >function (link) {</span></span>
+<span class="cstat-no" title="statement not covered" >               commands.push({</span>
+                    deleteOne: {
+                         "filter": {
+                              "_id": link._id
+                         }
+                    }
+               });
+          });
+<span class="cstat-no" title="statement not covered" >          return commands;</span>
+     }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket.on('handleScan', <span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >          utils.findBy(Scan, {</span>
+               uid: e.uid,
+               requestId: e.requestId
+          }, <span class="fstat-no" title="function not covered" >function (err, data) {</span>
+<span class="cstat-no" title="statement not covered" >               if (data) {</span>
+<span class="cstat-no" title="statement not covered" >                    socket.emit('deleteCallBack', {</span>
+                         captures: data.captures,
+                         data: e
+                    });
+<span class="cstat-no" title="statement not covered" >                    utils.deleteBy(Scan, {</span>
+                         uid: e.uid,
+                         requestId: e.requestId
+                    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    utils.deleteBy(Request, {</span>
+                         uid: e.uid,
+                         requestId: e.requestId
+                    });
+<span class="cstat-no" title="statement not covered" >                    utils.findBy(Link, {</span>
+                         uid: e.uid,
+                         requestId: e.requestId
+                    }, <span class="fstat-no" title="function not covered" >function (err, r) {</span>
+<span class="cstat-no" title="statement not covered" >                         console.log('Scan data', err, r.length);</span>
+<span class="cstat-no" title="statement not covered" >                         var commands = bulkDelete(r);</span>
+<span class="cstat-no" title="statement not covered" >                         Link.collection.bulkWrite(commands, {}, <span class="fstat-no" title="function not covered" >function (err, e) {</span></span>
+<span class="cstat-no" title="statement not covered" >                              console.log('Error/Success pageScanner...3', err, e);</span>
+                         });
+&nbsp;
+                    });
+               }
+          })
+     });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket.on('getScanData', <span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >          console.log('huh?', e);</span>
+<span class="cstat-no" title="statement not covered" >          utils.findBy(Link, {</span>
+               uid: e.uid,
+               requestId: e.requestId
+          }, <span class="fstat-no" title="function not covered" >function (err, links) {</span>
+<span class="cstat-no" title="statement not covered" >               console.log('huh?!!');</span>
+               // Resources.find({uid:e.uid,requestId:e.requestId}).lean().exec(function(err,resources){
+<span class="cstat-no" title="statement not covered" >               socket.emit('scanData/' + e.uid + '/' + e.apiToken + '/' + e.requestId, links);</span>
+               // });
+          });
+     });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket.on('getScans', <span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >          utils.findBy(Request, {</span>
+               uid: e.uid
+          }, <span class="fstat-no" title="function not covered" >function (err, data) {</span>
+<span class="cstat-no" title="statement not covered" >               console.log('Request data');</span>
+<span class="cstat-no" title="statement not covered" >               var requests = data;</span>
+<span class="cstat-no" title="statement not covered" >               utils.findBy(Scan, {</span>
+                    uid: e.uid
+               }, <span class="fstat-no" title="function not covered" >function (err, data) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log('Scan data', data);</span>
+<span class="cstat-no" title="statement not covered" >                    var scans = {</span>
+                         message: '',
+                         list: []
+                    };
+<span class="cstat-no" title="statement not covered" >                    if (err === null) {</span>
+<span class="cstat-no" title="statement not covered" >                         scans.message = 'Request found!';</span>
+<span class="cstat-no" title="statement not covered" >                         scans.list = _.uniq(_.union(data, requests), false, <span class="fstat-no" title="function not covered" >function (item) {</span></span>
+<span class="cstat-no" title="statement not covered" >                              return item.requestId;</span>
+                         });
+                    } else {
+<span class="cstat-no" title="statement not covered" >                         scans.message = err;</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    console.log('scans!!!!');</span>
+<span class="cstat-no" title="statement not covered" >                    socket.emit('setScans/' + e.uid + '/' + e.apiToken, scans);</span>
+               });
+          });
+     });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     socket.on('getAlerts', <span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >          console.log('e', e);</span>
+<span class="cstat-no" title="statement not covered" >          if (!e || !e.uid) {</span>
+<span class="cstat-no" title="statement not covered" >               return;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+          /* was originally findOne */
+          /* was originally findOne */
+          /* was originally findOne */
+          /* was originally findOne add limit?*/
+<span class="cstat-no" title="statement not covered" >          utils.findBy(Alert, {</span>
+               uid: e.uid
+          }, <span class="fstat-no" title="function not covered" >function (err, r) {</span>
+<span class="cstat-no" title="statement not covered" >               if (typeof r === 'undefined') {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log('err', err, 'r', r);</span>
+<span class="cstat-no" title="statement not covered" >                    return;</span>
+               }
+<span class="cstat-no" title="statement not covered" >               var messages = r.messages;</span>
+<span class="cstat-no" title="statement not covered" >               console.log('messages', r, _.keys(r));</span>
+<span class="cstat-no" title="statement not covered" >               var showMessages = [];</span>
+<span class="cstat-no" title="statement not covered" >               var keepingMessages = [];</span>
+<span class="cstat-no" title="statement not covered" >               _.each(messages, <span class="fstat-no" title="function not covered" >function (message) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    console.log('message', message.page, e.currentPage, message.page === e.currentPage);</span>
+<span class="cstat-no" title="statement not covered" >                    if (message.page === e.currentPage) {</span>
+<span class="cstat-no" title="statement not covered" >                         showMessages.push(message);</span>
+                    } else {
+<span class="cstat-no" title="statement not covered" >                         keepingMessages.push(message);</span>
+                    }
+               });
+<span class="cstat-no" title="statement not covered" >               socket.emit('alerts/' + e.uid, {</span>
+                    page: showMessages,
+                    app: keepingMessages
+               });
+               /* Erase 'read' messages */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* Erase 'read' messages */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* Erase 'read' messages */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               /* this will need to be addressed... */
+               // Alert.collection.update({
+               //      uid: e.uid
+               // }, {
+               //      $set: {
+               //           "messages": keepingMessages
+               //      }
+               // });
+          });
+     });
+}
+&nbsp;
+module.exports.callbacks = callbacks;
+module.exports.sendStatus = sendStatus;
+module.exports.broadcastAll = broadcastAll;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 11 2017 10:07:27 GMT-0500 (EST)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

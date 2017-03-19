@@ -20,7 +20,7 @@ Check out the [demo](https://node-stripe-membership-saas.herokuapp.com/dashboard
 
 ### Getting Started
 
-First update `/server/config/secrets.js` with the following credentials:
+First update `/app/config/secrets.js` with the following credentials:
 
 - Stripe [API keys](https://dashboard.stripe.com/account/apikeys) and [plan info](https://dashboard.stripe.com/test/plans)
 - [Mailgun](https://mailgun.com/signup) for sending forgot/reset password confirmations.
@@ -88,3 +88,77 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.h
 Download Node SDK
 https://aws.amazon.com/sdk-for-node-js/
 npm install aws-sdk
+
+
+
+
+
+
+
+
+
+
+
+
+# dynamoose-demo
+
+Download DynaDB
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html
+
+Install Java
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
+Start Dyna
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb -port 9000
+If want to change port add -port <PORT NUMBER> //9000
+
+
+Install AWS CLI
+http://docs.aws.amazon.com/cli/latest/userguide/cli-install-macos.html
+
+Run
+aws configure
+AWS Access Key ID [None]: <YOUR MADE UP ID>
+AWS Secret Access Key [None]: <YOUR MADE UP KEY>
+Default region name [None]: <YOUR REGION> // us-west-2
+Default output format [None]: json
+
+Add to project's .env file
+AWS_ACCESS_KEY_ID=<YOUR MADE UP ID>
+AWS_SECRET_ACCESS_KEY=<YOUR MADE UP KEY>
+AWS_ENDPOINT=http://localhost:9000
+AWS_REGION= <YOUR REGION> // us-west-2
+
+Try It!
+node testListTable.js
+
+
+
+
+
+
+
+
+
+Local RABBITMQ
+
+With Homebrew
+
+Command
+
+brew install rabbitmq
+Add: PATH=$PATH:/usr/local/sbin to your .bash_profile or .profile.rabbitmq-server
+Open new terminal window:
+rabbitmq-server
+(If path doesnt work, you can always go to usr/local/sbin/) and run the command there)
+
+More : https://www.rabbitmq.com/install-homebrew.html
+
+Creating a local user:
+
+rabbitmqctl add_user test test
+rabbitmqctl set_user_tags test administrator
+rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
+
+RabbitMQ Manager:
+http://localhost:15672
