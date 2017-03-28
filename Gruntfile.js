@@ -3,7 +3,7 @@ module.exports = function (grunt) {
      //  require('./grunt/grunt-babel.js')(grunt);
      //  require('./grunt/grunt-benchmark.js')(grunt);
      require('./grunt/grunt-coverage.js')(grunt);
-     //  require('./grunt/grunt-jsdoc.js')(grunt);
+    //  require('./grunt/grunt-jsdoc.js')(grunt);
      require('./grunt/grunt-mocha.js')(grunt);
      require('./grunt/grunt-jshint.js')(grunt);
      require('./grunt/grunt-watch.js')(grunt);
@@ -23,6 +23,9 @@ module.exports = function (grunt) {
           grunt.option('force', true);
           grunt.task.run(tasks);
      });
+
+     grunt.registerTask('jsdoc',['jsdoc']);
+
      // tasks
      grunt.registerTask("test", ["mochaTest"]);
      grunt.registerTask('coverage', ['clean', 'copy:views', 'env:coverage',

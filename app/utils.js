@@ -268,6 +268,34 @@ function findBy(model, args, cb) {
 }
 
 /**
+ * finds item(s) in dyanmo table
+ * @param  {String}   model dynamoose model
+ * @param  {Object}   args  identifier(s) for item
+ * @param  {Function} cb    callback accepts two paramaters, err and item data
+ */
+function findSomeBy(model, args, cb) {
+     try {
+          model.scan(args, function (err, item) {
+               if (err) {
+                    if (typeof cb === 'function') {
+                         return cb(err);
+                    }
+               } else {
+                    if (typeof cb === 'function') {
+                         return cb(null, item);
+                    }
+               }
+          });
+     } catch (err) {
+          if (typeof cb === 'function') {
+               return cb({
+                    message: 'There was an issue finding' + model
+               });
+          }
+     }
+}
+
+/**
  * delete an item from a dynamo table
  * @param  {String}   model dynamoose model
  * @param  {Object}   args  identifier(s) for item
@@ -296,6 +324,7 @@ function deleteBy(model, args, cb) {
 
 module.exports.encrypt = encrypt;
 module.exports.findBy = findBy;
+module.exports.findSomeBy = findSomeBy;
 module.exports.updateActivity = updateActivity;
 module.exports.checkActivity = checkActivity;
 module.exports.checkAvailActivity = checkAvailActivity;

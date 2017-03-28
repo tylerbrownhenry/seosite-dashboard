@@ -1,15 +1,14 @@
 /**
  * @file File contains the validation and the submission to Rabbit MQ for any page scans
- * @module pageScanRequest
+ * @module pageScan
  */
-
 var sh = require('shorthash'),
      q = require('q'),
      publisher = require('../../amqp/publisher'),
      Request = require('../../models/index').request,
      _preFlight = require('../preFlight')._preFlight,
      _log = require('../../debug');
-//  notify = require('../../notify');
+
 /**
  * Checks that a user has provided the correct options needed for making a page
  * request, has enough credits and permission for their request, and then
@@ -17,8 +16,7 @@ var sh = require('shorthash'),
  * @function
  * @param {options} Object - {options:Object, token:String, url:String, uid:String}
  */
-
-function pageScanRequest(options) {
+function pageScan(options) {
      var defer = q.defer();
      _log('pageScan.js init');
      _preFlight(options, ['options', 'token', 'url', 'uid'], function () {
@@ -36,6 +34,7 @@ function pageScanRequest(options) {
                if (err) {
                     _log('pageScanRequest save error', 'error');
                     defer.reject({
+                         page:options.page,
                          success: false,
                          status: 'error',
                          type: 'global',
@@ -50,8 +49,8 @@ function pageScanRequest(options) {
                     _log('pageScanRequest saved', 'success');
                     publisher.publish("", "summary", new Buffer(JSON.stringify(message))).then(function (e) {
                          _log('pagescanrequest publish success', 'success');
-
                          defer.resolve({
+                              page:options.page,
                               success: true,
                               status: 'success',
                               _debug: 'publisher.publish',
@@ -63,44 +62,25 @@ function pageScanRequest(options) {
                                    message: 'Request sent to queue. It should begin shortly.'
                               }]
                          });
-                         //  notify({
-                         //       message: 'Starting Scan!',
-                         //       uid: user.uid,
-                         //       page: req.page,
-                         //       type: req.type,
-                         //       requestDate: requestDate,
-                         //       status: 'pending',
-                         //       temp_id: req.temp_id,
-                         //       i_id: requestId
-                         //  });
                     }).catch(function (err) {
                          _log('pagescanrequest publish error', 'error', err);
                          defer.reject({
+                              page:options.page,
                               success: false,
                               status: 'error',
                               type: 'global',
                               _debug: 'publisher.publish',
                               _err: err,
                               message: [{
+                                   requestId: message.requestId,
                                    parent: 'global',
                                    title: 'Opps... ',
                                    message: 'Request saved, but there was an error while sending it to the queue.'
                               }]
                          });
-
-                         //  notify({
-                         //       message: JSON.stringify(err.message),
-                         //       uid: user.uid,
-                         //       page: req.page,
-                         //       type: req.type,
-                         //       status: 'error',
-                         //       temp_id: req.temp_id,
-                         //       i_id: requestId
-                         //  });
                     });
                }
           });
-
      }, function (err) {
           _log('pageScan.js _prelight failed', 'error', err);
           defer.reject(err);
@@ -108,4 +88,4 @@ function pageScanRequest(options) {
      return defer.promise;
 }
 
-module.exports = pageScanRequest;
+module.exports = pageScan;

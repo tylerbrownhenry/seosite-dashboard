@@ -1,36 +1,53 @@
 var errorHandler = require('./errorHandler');
+var sendStatus = require('../api-requests/callbacks').sendStatus;
 
-function init(assertName, queueFunc, queueName, ack) {
-     ch.assertQueue(queueName, {
-          durable: true
-     }, function (err) {
-          if (errorHandler(amqpConn, err)) {
-               console.log('amqpConn', amqpConn, 'err', err); /* Restart or something? */
-               return;
-          }
-          console.log('queue' + assertName);
-          if (ack) {
-               ch.consume(assertName, queueFunc, {
-                    noAck: false
-               });
-          } else {
-               ch.consume(assertName, queueFunc);
-
-          }
-     });
-}
-
-function processAlerts(msg) {
+function processAlerts(msg, ch) {
+     console.log('app/amqp/worker.js msg', JSON.parse(msg.content));
      ch.ack(msg);
+     sendStatus(JSON.parse(msg.content));
 }
-
+/**
+ * initilizes rabbitMQ consumer
+ * @param  {object} amqpConn rabbitMq connection object
+ */
 module.exports.start = function (amqpConn) {
+
+     /**
+      * initalize consumer
+      * @param  {String} assertName
+      * @param  {Function} queueFunc  function to run on message
+      * @param  {String} queueName  name of queue message belongs to
+      * @param  {Object} ack       object with ack function on it
+      * @param  {Object} ch         rabbitMQ channel
+      * @return {[type]}            [description]
+      */
+     function init(assertName, queueFunc, queueName, ack, ch) {
+           console.log('here');
+          ch.assertQueue(queueName, {
+               durable: true
+          }, function (err) {
+               if (errorHandler(amqpConn, err)) {
+                    console.log('amqpConn', amqpConn, 'err', err); /* Restart or something? */
+                    return;
+               }
+               console.log('queue ' + assertName);
+               if (ack) {
+                    ch.consume(assertName, queueFunc, {
+                         noAck: false
+                    });
+               } else {
+                    ch.consume(assertName, queueFunc);
+               }
+          });
+     }
+
      amqpConn.createChannel(function (err, ch) {
-          console.log('ch', ch);
+          console.log('test ch');
           if (errorHandler(amqpConn, err)) {
+              console.log('test?');
                return; /* Restart or something? */
           }
-
+          console.log('here');
           ch.on("drain", function (err) {
                console.error("[AMQP] channel drgain", err);
           });
@@ -44,8 +61,25 @@ module.exports.start = function (amqpConn) {
           });
 
           ch.prefetch(10);
-
-          init('alerts', processAlerts, 'alerts');
-
+          init('update', function (e) {
+              console.log('queueFunc!');
+               processAlerts(e, ch)
+          }, 'update', true, ch);
+          // init('alerts', function (e) {
+          //     console.log('queueFunc!');
+          //      processAlerts(e, ch)
+          // }, 'alerts', true, ch);
+          // init('alert', function (e) {
+          //     console.log('queueFunc!');
+          //      processAlerts(e, ch)
+          // }, 'alert', true, ch);
+          // init('alerts', function (e) {
+          //     console.log('queueFunc!');
+          //      processAlerts(e, ch)
+          // }, 'alert', true, ch);
+          // init('alert', function (e) {
+          //     console.log('queueFunc!');
+          //      processAlerts(e, ch)
+          // }, 'alerts', true, ch);
      });
 };

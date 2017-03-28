@@ -177,6 +177,7 @@ function validate(user, request, permissions) {
      } else {
           var promise = q.defer();
           promise.reject({
+               page: request.page,
                success: false,
                status: 'error',
                type: 'global',
@@ -193,9 +194,6 @@ function validate(user, request, permissions) {
 function _authorize(req) {
      var promise = q.defer();
      try {
-          //  User.queryOne("label").eq(user.plan).exec(function (err, permissions) {
-
-          console.log('testauthorisse', User.scan);
           User.scan({
                uid: req.uid,
                apiToken: req.token
@@ -208,6 +206,7 @@ function _authorize(req) {
                if (err) {
                     console.log('1213');
                     promise.reject({
+                         page: req.page,
                          success: false,
                          status: 'error',
                          _debug: 'User.findOne',
@@ -222,6 +221,7 @@ function _authorize(req) {
                     console.log('1223');
                     if (typeof user === 'undefined' || user === null) {
                          promise.reject({
+                              page: req.page,
                               success: false,
                               status: 'error',
                               type: 'global',
@@ -241,6 +241,7 @@ function _authorize(req) {
      } catch (e) {
           console.log('test', e);
           promise.reject({
+               page: req.page,
                success: false,
                status: 'error',
                type: 'global',
@@ -260,6 +261,7 @@ function checkOptions(req) {
      var promise = q.defer();
      if (typeof req === 'undefined' || !req) {
           promise.reject({
+               page: null,
                success: false,
                status: 'error',
                type: 'userInput',
@@ -298,6 +300,7 @@ function checkRequirements(requirements, input) {
                });
           });
           promise.reject({
+               page: input.page,
                status: 'error',
                type: 'global',
                _debug: 'checkRequirements',
@@ -341,21 +344,10 @@ function checkApiCall(req, params) {
 }
 
 function _preFlight(req, needs, callback, errCallback) {
-     console.log('test22');
      checkApiCall(req, needs).then(function (user) {
           callback(user);
      }).catch(function (err) {
           errCallback(err);
-          // notify({
-          //      message: JSON.stringify(err.message),
-          //      title: 'Validation Error',
-          //      uid: req.body.uid,
-          //      page: req.body.page,
-          //      type: req.body.type,
-          //      temp_id: req.body.temp_id,
-          //      i_id: null,
-          //      status: 'error',
-          // });
      });
 }
 

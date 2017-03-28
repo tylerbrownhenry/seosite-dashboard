@@ -95,7 +95,7 @@ app.use(session({
           expiresIn: '14d',
           maxAge: 60 * 1000 // 1 minute
      },
-     secret: process.env.SESSIONS_SECRET,
+     secret: process.env.SESSION_SECRET,
      store: new DynamoDBStore(options)
 }));
 

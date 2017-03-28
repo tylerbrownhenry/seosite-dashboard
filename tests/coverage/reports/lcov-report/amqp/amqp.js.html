@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">amqp/amqp.js</span></h1>
     <h2>
-        Statements: <span class="metric">21.74% <small>(5 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">22.73% <small>(5 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">0% <small>(0 / 5)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">21.74% <small>(5 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">22.73% <small>(5 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">amqp/</a> &#187; amqp.js</div>
@@ -68,26 +68,28 @@
 41
 42
 43
-44</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+44
+45</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -117,21 +119,22 @@ var worker = require('./worker'),
      amqp = require('amqplib/callback_api'), // if the connection is closed or fails to be established at all, we will reconnect
      amqpConn = null;
 &nbsp;
-<span class="fstat-no" title="function not covered" >function whenConnected(amqpConn, publish) {</span>
-     //  console.log('connected to queue:', publish, 'amqpConn', amqpConn);
-<span class="cstat-no" title="statement not covered" >     if (publish === true) {</span>
-          //  publisher.publish("", "jobs", new Buffer("work work work"));
-     } else {
-<span class="cstat-no" title="statement not covered" >          publisher.start(amqpConn);</span>
-<span class="cstat-no" title="statement not covered" >          worker.start(amqpConn);</span>
-     }
+/**
+* action to take after establishing a connection to rabbitMQ
+* @param  {object} amqpConn RabbitMQ connection object
+*/
+<span class="fstat-no" title="function not covered" >function whenConnected(amqpConn,done) {</span>
+<span class="cstat-no" title="statement not covered" >    publisher.start(amqpConn);</span>
+<span class="cstat-no" title="statement not covered" >    worker.start(amqpConn);</span>
+<span class="cstat-no" title="statement not covered" >    if(done &amp;&amp; typeof done === 'function'){</span>
+<span class="cstat-no" title="statement not covered" >      done();</span>
+    }
 }
-&nbsp;
-<span class="fstat-no" title="function not covered" >function start(publish) {</span>
+/**
+ * initilizes rabbitmq
+ */
+<span class="fstat-no" title="function not covered" >function start(done) {</span>
      /* Local queue I thought? In case not connected?*/
-<span class="cstat-no" title="statement not covered" >     if (publish === true) {</span>
-<span class="cstat-no" title="statement not covered" >          return whenConnected(amqpConn, publish);</span>
-     }
 <span class="cstat-no" title="statement not covered" >     amqp.connect(process.env.CLOUDAMQP_URL + "?heartbeat=60", <span class="fstat-no" title="function not covered" >function (err, conn) {</span></span>
 <span class="cstat-no" title="statement not covered" >          if (err) {</span>
 <span class="cstat-no" title="statement not covered" >               console.error("[AMQP] error: ", err.message);</span>
@@ -149,7 +152,7 @@ var worker = require('./worker'),
 <span class="cstat-no" title="statement not covered" >          console.log("[AMQP] connected");</span>
 <span class="cstat-no" title="statement not covered" >          amqpConn = conn;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >          whenConnected(amqpConn, publish);</span>
+<span class="cstat-no" title="statement not covered" >          whenConnected(amqpConn,done);</span>
      });
 }
 &nbsp;
@@ -159,7 +162,7 @@ module.exports = start;
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 11 2017 10:07:27 GMT-0500 (EST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 20 2017 12:08:05 GMT-0400 (EDT)</div>
 </div>
 <script src="../prettify.js"></script>
 <script>

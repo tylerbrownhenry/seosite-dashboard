@@ -1,158 +1,162 @@
 <!doctype html>
 <html class="no-js app-temp">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/stylesheets/style.css">
-
+    <!--
+    Styles
+    -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
+</head>
 
-  </head>
-
-
-    <div class="alert alert-warning alert-dismissible disconnected alert" role="alert" style="margin:0;display:none">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<!--
+    Database connection
+    -->
+<div class="alert alert-warning alert-dismissible disconnected alert" role="alert" style="margin:0;display:none">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <strong>No Biggie.</strong> We lost your connection, but we'll find it!
-    </div>
+    <strong>No Biggie.</strong> We lost your connection, but we'll find it!
+</div>
 
-    <div class="alert alert-info alert-dismissible" id="info" role="alert" style="margin:0;display:none">
+<!-- Alert -->
+<!-- <div class="alert alert-info alert-dismissible" id="info" role="alert" style="margin:0;display:none">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
       <strong>Whew whew!</strong> Your request is complete!
-    </div>
+    </div> -->
 
 
-  <body>
+<body>
     <div class="navbar navbar-default navbar-static-top" role="navigation">
-      <div class="container-fluid container-wide">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <div class="container-fluid container-wide">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/dashboard">SeoDr</a>
-        </div>
+                <a class="navbar-brand" href="/dashboard">SeoDr</a>
+            </div>
 
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="js_page_/dashboard js_page_summary" <% if (locals.path == '/dashboard'){%>class="active"<% } %>><span class="js_count"></span><a href="/dashboard">Home</a></li>
-            <li class="js_page_/profile profile" <% if (locals.path == '/profile'){%>class="active"<% } %>><span class="js_count"></span><a href="/profile">Profile</a></li>
-            <li class="js_page_/billing billing" <% if (locals.path == '/billing'){%>class="active"<% } %>><span class="js_count"></span><a href="/billing">Billing</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li <% if (locals.path !== '/'){%>class="active"<% } %>><a href="/logout">Sign Out</a></li>
-            <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/">Log in</a></li>
-            <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/signup">Sign Up</a></li>
-            <li <% if (locals.path == '/'){%>class="active"<% } %>><a href="/forgot">Forgot Password</a></li>
-            <li <% if (locals.path == '/activity'){%>class="active"<% } %>><a href="/activity">Activity</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="js_page_/dashboard js_page_summary" <% if (locals.path=='/dashboard' ){%>class="active"
+                        <% } %>><span class="js_count"></span><a href="/dashboard">Home</a></li>
+                    <li class="js_page_/profile profile" <% if (locals.path=='/profile' ){%>class="active"
+                        <% } %>><span class="js_count"></span><a href="/profile">Profile</a></li>
+                    <li class="js_page_/billing billing" <% if (locals.path=='/billing' ){%>class="active"
+                        <% } %>><span class="js_count"></span><a href="/billing">Billing</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li <% if (locals.path !=='/' ){%>class="active"
+                        <% } %>><a href="/logout">Sign Out</a></li>
+                    <li <% if (locals.path=='/' ){%>class="active"
+                        <% } %>><a href="/">Log in</a></li>
+                    <li <% if (locals.path=='/' ){%>class="active"
+                        <% } %>><a href="/signup">Sign Up</a></li>
+                    <li <% if (locals.path=='/' ){%>class="active"
+                        <% } %>><a href="/forgot">Forgot Password</a></li>
+                    <li <% if (locals.path=='/activity' ){%>class="active"
+                        <% } %>><a href="/activity">Activity</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
     </div>
     <%- body %>
-    <% include dashboard/flash %>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        <% include dashboard/flash %>
 
-     ga('create', '<----%= googleAnalytics %>');
-     ga('send', 'pageview');
-    </script>
+            <script>
+                <% if(locals.user && locals.user.uid){ %>
+                window.uid = '<%= user.uid %>';
+                window.apiToken = '<%= user.apiToken %>';
+                <% } %>
+                window.CURRENT_HOST = '<%= CURRENT_HOST %>';
+            </script>
 
+            <!--
+    Concat Depends..
+    -->
+            <script src="/javascripts/jquery.min.js"></script>
+            <script src="/javascripts/react.min.js"></script>
+            <script src="/javascripts/react-do.js"></script>
+            <script src="/javascripts/react-infinite.min.js" type="text/jsx"></script>
+            <script src="/javascripts/precompiledinsteadofthis____jsTransformer.js"></script>
+            <script src="/javascripts/d3.min.js"></script>
+            <script src="/javascripts/d3-timeline.min.js"></script>
+            <script src="/javascripts/moment.min.js"></script>
+            <script src="/javascripts/underscore.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+            <script src="/javascripts/ejs.js"></script>
 
-     <script>
-        <% if(locals.user && locals.user.uid){ %>
-            window.uid = '<%= user.uid %>';
-            window.apiToken = '<%= user.apiToken %>';
-        <% } %>
-        window.CURRENT_HOST = '<%= CURRENT_HOST %>';
-    </script>
+            <!--
+    Local Scripts
+    -->
+            <script src="/javascripts/render.js" type="text/jsx"></script>
+            <script src="/javascripts/app.js"></script>
+            <script src="/javascripts/app_socket.js"></script>
+            <script src="/javascripts/submit_request.js"></script>
 
-    <script src="/javascripts/jquery.min.js"></script>
-    <script src="/javascripts/react.min.js"></script>
-    <script src="/javascripts/react-do.js"></script>
-    <script src="/javascripts/react-infinite.min.js" type="text/jsx"></script>
-    <script src="/javascripts/precompiledinsteadofthis____jsTransformer.js"></script>
-    <script src="/javascripts/d3.min.js"></script>
-    <script src="/javascripts/d3-timeline.min.js"></script>
-    <script src="/javascripts/moment.min.js"></script>
-    <script src="/javascripts/underscore.min.js"></script>
-    <script src="/javascripts/app.js"></script>
-    <script src="/javascripts/render.js" type="text/jsx"></script>
+            <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+            <% if(locals.stripePubKey){ %>
+                <script type="text/javascript">
+                    Stripe.setPublishableKey('<%= stripePubKey %>');
+                </script>
+                <% } %>
 
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-        <% if(locals.stripePubKey){ %>
-    <script type="text/javascript">
-      Stripe.setPublishableKey('<%= stripePubKey %>');
-   
-    </script>
-        <% } %>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+                    <script src="<%= CURRENT_HOST %>/socket.io/socket.io.js"></script>
 
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            <% if(locals.templates){ %>
+                            window.templates = <%- JSON.stringify(locals.templates) %>;
+                            <% } %>
+                            window.currentPage = '<%= locals.path %>';
+                        });
+                    </script>
 
-    <script src="<%= CURRENT_HOST %>/socket.io/socket.io.js"></script>
-    <script src="/javascripts/ejs.js"></script>
+                    <script>
+                        function insertTemplate(data) {
+                            getTemplate('/tpl/template.ejs', function renderTemplate(err, tpl) {
+                                if (err) {
+                                    throw err;
+                                }
+                                console.log('gots it!');
+                                var tpl = ejs.render(tpl, {
+                                    data: data
+                                });
+                                $(tpl).after('.row.header');
+                            });
+                        }
 
-
-
-   <script type="text/javascript">
-        $(document).ready(function(){
-        //save templates to variable
-
-        <% if(locals.templates){ %>
-        window.templates = <%- JSON.stringify(locals.templates) %>;
-        <% } %>
-        window.currentPage = '<%= locals.path %>';
-        // window.templates = '<%= JSON.stringify(locals.templates) %>';
-        });
-    </script>
-
-
-
-<script>
-    function insertTemplate(data) {
-        getTemplate('/tpl/template.ejs', function renderTemplate(err, tpl) {
-        if (err) {
-            throw err;
-        } 
-        console.log('gots it!');
-        var tpl = ejs.render(tpl, {data: data});
-        $(tpl).after('.row.header');
-        });
-    }
-    function getTemplate(file, callback) {
-        $.ajax(file, {
-            type: 'GET',
-            success: function(data, textStatus, xhr) {
-            return callback(null, data);
-            },
-            error: function(xhr, textStatus, error) {
-            return callback(error);
-            }
-        });
-    }
-    // insertTemplate({love:'dinos'});
-
-</script>
-
-
-    <!-- <script src="//localhost:35729/livereload.js"></script>-->
+                        function getTemplate(file, callback) {
+                            $.ajax(file, {
+                                type: 'GET',
+                                success: function(data, textStatus, xhr) {
+                                    return callback(null, data);
+                                },
+                                error: function(xhr, textStatus, error) {
+                                    return callback(error);
+                                }
+                            });
+                        }
+                        // insertTemplate({love:'dinos'});
+                    </script>
+                    <!-- <script src="//localhost:35729/livereload.js"></script>-->
 
 </body>
+
 </html>

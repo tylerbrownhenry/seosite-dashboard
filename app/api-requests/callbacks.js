@@ -1,17 +1,19 @@
-var socket = {};
-// var Alert = require('../../app/models/alert');
-var Scan = require('../models/scan');
-// var Link = require('../../server/models/link');
-// var Request = require('../../server/models/request');
-var _ = require('underscore');
-var utils = require('../utils');
+var socket = {},
+     Scan = require('../models/scan'),
+     Update = require('../models/update'),
+     Request = require('../models/request'),
+     Link = require('../models/link'),
+     _ = require('underscore'),
+     utils = require('../utils');
+     // var Request = require('../../server/models/request');
+
+// function sendStatus(req) {
+//      socket.emit('alert/' + req.uid);
+// }
 
 function sendStatus(req) {
-     console.log('req', req.body);
-     console.log('request/complate/' + req.body.uid);
-
-     socket.emit('alert/' + req.body.uid, req.body);
-
+     console.log('callbacks -> sendStatus req',req);
+     socket.emit('update/' + req.uid);
 }
 
 function broadcastAll(message) {
@@ -25,17 +27,6 @@ function callbacks(_socket) {
 
      socket.on('get:scan', function (e) {
           console.log('e', e);
-
-          // e { uid: '17PmsI',
-          //   page: '/dashboard',
-          //   message: 'Scan complete!',
-          //   type: 'request',
-          //   status: 'complete',
-          //   progress: 'init',
-          //   loadingSelector: '.js_temp_request_null',
-          //   alertSelector: '.js_request_2jgEfQ',
-          //   saved: true,
-          //   i_id: '2jgEfQ' }
           utils.findBy(Scan, {
                uid: e.uid,
                requestId: e.message.i_id
@@ -54,18 +45,8 @@ function callbacks(_socket) {
                          selector: e.alertSelector
                     });
                }
-               console.log('data',data);
-               // var scans = {message: '', list: []};
-               // if(err === null){
-               //     scans.message = 'Request found!';
-               //     scans.list = data;
-               // } else {
-               //     scans.message = err;
-               // }
-               //     console.log('YESSSSSSSS3',req.user);
-               //     res.render(req.render, {templates: templates, user: req.user, form: form, error: error, plans: plans, scans: scans});
+               console.log('data', data);
           });
-
      });
 
      function bulkDelete(links) {
@@ -83,6 +64,10 @@ function callbacks(_socket) {
      }
 
      socket.on('handleScan', function (e) {
+          console.log('e');
+          if (!e || !e.uid) {
+               return;
+          }
           utils.findBy(Scan, {
                uid: e.uid,
                requestId: e.requestId
@@ -92,6 +77,7 @@ function callbacks(_socket) {
                          captures: data.captures,
                          data: e
                     });
+
                     utils.deleteBy(Scan, {
                          uid: e.uid,
                          requestId: e.requestId
@@ -101,6 +87,7 @@ function callbacks(_socket) {
                          uid: e.uid,
                          requestId: e.requestId
                     });
+
                     utils.findBy(Link, {
                          uid: e.uid,
                          requestId: e.requestId
@@ -118,24 +105,25 @@ function callbacks(_socket) {
 
      socket.on('getScanData', function (e) {
           console.log('huh?', e);
-          utils.findBy(Link, {
+          utils.findSomeBy(Link, {
                uid: e.uid,
                requestId: e.requestId
           }, function (err, links) {
-               console.log('huh?!!');
-               // Resources.find({uid:e.uid,requestId:e.requestId}).lean().exec(function(err,resources){
                socket.emit('scanData/' + e.uid + '/' + e.apiToken + '/' + e.requestId, links);
-               // });
           });
      });
 
      socket.on('getScans', function (e) {
-          utils.findBy(Request, {
+          console.log('e');
+          if (!e || !e.uid) {
+               return;
+          }
+          utils.findSomeBy(Request, {
                uid: e.uid
           }, function (err, data) {
-               console.log('Request data');
+               console.log('Request data', data);
                var requests = data;
-               utils.findBy(Scan, {
+               utils.findSomeBy(Scan, {
                     uid: e.uid
                }, function (err, data) {
                     console.log('Scan data', data);
@@ -151,80 +139,61 @@ function callbacks(_socket) {
                     } else {
                          scans.message = err;
                     }
-                    console.log('scans!!!!');
+                    scans.list.sort(function (a, b) {
+                         return a.requestDate - b.requestDate;
+                    });
                     socket.emit('setScans/' + e.uid + '/' + e.apiToken, scans);
                });
           });
      });
 
-     socket.on('getAlerts', function (e) {
-          console.log('e', e);
+
+
+
+     socket.on('getUpdates', function (e) {
+          console.log('callbacks --> getUpdates e', e);
           if (!e || !e.uid) {
                return;
           }
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          console.log('FETCHING ALERTS DISABLED UNTIL RESTRUCTURED');
-          return
-          /* was originally findOne */
-          /* was originally findOne */
-          /* was originally findOne */
-          /* was originally findOne add limit?*/
-          utils.findBy(Alert, {
+          utils.findSomeBy(Update, {
                uid: e.uid
+              //  apiToken:e.apiToken
           }, function (err, r) {
+               console.log('err', err, 'r', r);
                if (typeof r === 'undefined') {
                     console.log('err', err, 'r', r);
                     return;
                }
-               var messages = r.messages;
-               console.log('messages', r, _.keys(r));
-               var showMessages = [];
-               var keepingMessages = [];
+               var messages = r;
+               console.log('messages', r);
+               var currentPageMessages = [];
+               var appMessages = [];
+               var messageToDelete = []
                _.each(messages, function (message) {
                     console.log('message', message.page, e.currentPage, message.page === e.currentPage);
                     if (message.page === e.currentPage) {
-                         showMessages.push(message);
+                         currentPageMessages.push(message);
+                         messageToDelete.push({
+                              id: message.id
+                         });
                     } else {
-                         keepingMessages.push(message);
+                         appMessages.push(message);
                     }
                });
-               socket.emit('alerts/' + e.uid, {
-                    page: showMessages,
-                    app: keepingMessages
+               /**
+                * Clears out messages that have been delivered
+                */
+               Update.batchDelete(messageToDelete, function (err) {
+                    if (err) {
+                         return console.log(err);
+                    }
+                    console.log('callbacks message successfully deleted');
                });
-               /* Erase 'read' messages */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* Erase 'read' messages */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* Erase 'read' messages */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               /* this will need to be addressed... */
-               // Alert.collection.update({
-               //      uid: e.uid
-               // }, {
-               //      $set: {
-               //           "messages": keepingMessages
-               //      }
-               // });
+
+               socket.emit('updates/' + e.uid + '/' + e.apiToken, {
+                    page: currentPageMessages,
+                    app: appMessages
+               });
           });
      });
 }

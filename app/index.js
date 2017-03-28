@@ -1,45 +1,39 @@
 'use strict';
-var AWS = require('aws-sdk');
-var express = require('express');
-var expressLayouts = require('express-ejs-layouts');
 // var secrets = require('./../config/secrets');
-var path = require('path');
 // var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
 require('dotenv').config();
+var AWS = require('aws-sdk'),
+     express = require('express'),
+     expressLayouts = require('express-ejs-layouts'),
+     path = require('path'),
+     logger = require('morgan'),
+     cookieParser = require('cookie-parser'),
+     session = require('express-session'),
+     passport = require('passport'),
+     bodyParser = require('body-parser'),
+     compress = require('compression')(),
+     lodash = require('lodash'),
+     expressValidator = require('express-validator'),
+     errorHandler = require(path.join(__dirname + '/middleware/error')),
+     viewHelper = require(path.join(__dirname + '/middleware/view-helper')),
+     flash = require('express-flash'),
+     cors = require('cors'),
+     corsOptions = {
+          origin: '*'
+     },
+     staticDir,
+     corsOptions = {
+          origin: '*'
+     };
 
-// var MongoStore = require('connect-mongo')({
-//  session: session
-// });
-// var mongoose = require('mongoose');
-var passport = require('passport');
-var bodyParser = require('body-parser');
-var compress = require('compression')();
-var lodash = require('lodash');
-var expressValidator = require('express-validator');
-var errorHandler = require(path.join(__dirname + '/middleware/error'));
-var viewHelper = require(path.join(__dirname + '/middleware/view-helper'));
-var flash = require('express-flash');
-var cors = require('cors');
-var corsOptions = {
-     origin: '*'
-};
-var staticDir;
-
+var app = express();
 // setup db
 // mongoose.connect(secrets.db);
 // mongoose.connection.on('error', function (e) {
 //      console.error('MongoDB Connection Error. Make sure MongoDB is running.', e);
 // });
 
-var corsOptions = {
-     origin: '*'
-};
-
 // express setup
-var app = express();
 
 if (app.get('env') === 'production') {
      app.locals.production = true;

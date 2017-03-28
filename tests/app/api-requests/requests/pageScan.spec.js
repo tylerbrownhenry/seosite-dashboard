@@ -1,5 +1,3 @@
-// var AWS = require('aws-sdk');;
-
 var chai = require('chai');
 sinon = require('sinon'),
      _ = require('underscore'),
@@ -8,12 +6,6 @@ sinon = require('sinon'),
      Request = require('./../../../../app/models/index').request,
      User = require('./../../../../app/models/user'),
      dynamoose = require('dynamoose');
-// {
-//      status: 'error',
-//      type: 'global',
-//      success: false,
-//      message: messages
-// })
 
 describe('app/api-requests/requests/pageScan', function () {
      var stub;
@@ -24,7 +16,7 @@ describe('app/api-requests/requests/pageScan', function () {
           stub.yields(null, {
                uid: 'yes',
                toke: 'test'
-          })
+          });
           // .returns({
           //      scan: function (data, callback) {
           //           return callback('success');

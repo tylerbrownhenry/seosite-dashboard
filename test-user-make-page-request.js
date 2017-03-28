@@ -16,7 +16,7 @@ amqpConnection(function () {
      var PageScanOptions = require('./app/api-requests/requests/pageScanOptions');
 
      utils.findOneUser({
-          email: '2pdasc@email.com'
+          email: 'me@tylerbrownhenry.com'
      }, function (err, user) {
           utils.checkActivity(user.oid, function (err, _activity) {
               //  console.log('_activity before', _activity['page-day-count']);

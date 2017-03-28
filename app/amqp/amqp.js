@@ -10,6 +10,7 @@ var worker = require('./worker'),
 */
 function whenConnected(amqpConn,done) {
     publisher.start(amqpConn);
+    worker.start(amqpConn);
     if(done && typeof done === 'function'){
       done();
     }

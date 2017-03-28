@@ -20,7 +20,8 @@ var requestSchema = new dynamoose.Schema({
           type: Object
      },
      processes: {
-          type: Number
+          type: Number,
+          default: 0
      },
      status: {
           type: String,

@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">api-requests/requests.js</span></h1>
     <h2>
-        Statements: <span class="metric">24.14% <small>(7 / 29)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">26.67% <small>(8 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">0% <small>(0 / 9)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">24.14% <small>(7 / 29)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">26.67% <small>(8 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">api-requests/</a> &#187; requests.js</div>
@@ -141,52 +141,8 @@
 114
 115
 116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+117</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
@@ -257,52 +213,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -351,6 +261,7 @@
 var _ = require('underscore');
 var querystring = require('querystring');
 var pageScan = require('./requests/pageScan');
+var PageScanOptions = require('./requests/pageScanOptions');
 &nbsp;
 <span class="fstat-no" title="function not covered" >function deleteCapture(filename, data) {</span>
 <span class="cstat-no" title="statement not covered" >     var postData = querystring.stringify({</span>
@@ -417,53 +328,7 @@ var pageScan = require('./requests/pageScan');
 <span class="cstat-no" title="statement not covered" >     socket.on('queue/page', <span class="fstat-no" title="function not covered" >function (data) {</span></span>
 <span class="cstat-no" title="statement not covered" >          console.log('postApiCall--&gt;', data);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >          var options = {</span>
-               "uid": data.uid,
-               "url": data.url,
-               "page": data.page,
-               "type": data.type,
-               "temp_id": data.temp_id,
-               "token": data.token,
-               "options": {
-                    "save": {
-                         "captures": false,
-                         "scan": true,
-                         "resources": true,
-                         "metaData": true,
-                         "links": true
-                         // "captures": data.saveCaptures,
-                         // "scan": data.saveScan,
-                    },
-                    "check": {
-                         // "links":data.checkLinks,
-                         // "resources":data.checkResources,
-                         // "security":data.checkSecurity,
-                         // "meta":data.checkMeta
-                         "links": true,
-                         "resources": true,
-                         "security": true,
-                         "meta": true
-                    },
-                    "type": 'page',
-                    "filterLimit": 10,
-                    "digDepthLimit": 1,
-                    "excludeExternalLinks": false,
-                    "honorRobotExclusions": true,
-                    "excludedSchemes": false,
-                    "saveSelectors": false,
-                    "linkInformation": {
-                         "selector": false,
-                         "element": false,
-                         "location": false,
-                         "redirects": false,
-                         "status": false,
-                         "url": false,
-                         "href": false,
-                         "parent": false
-                    },
-                    "acceptedSchemes": ['http']
-               }
-          };
+<span class="cstat-no" title="statement not covered" >          var options = new PageScanOptions(data);</span>
 <span class="cstat-no" title="statement not covered" >          pageScan(options);</span>
           // var options = {
           //      hostname: process.env.API_HOST || 'localhost',
@@ -513,7 +378,7 @@ module.exports = requests;
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 11 2017 10:07:27 GMT-0500 (EST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 20 2017 12:08:05 GMT-0400 (EDT)</div>
 </div>
 <script src="../prettify.js"></script>
 <script>

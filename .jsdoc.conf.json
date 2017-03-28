@@ -17,8 +17,7 @@
     "theme": "cosmo",
     "linenums": true,
     "collapseSymbols": false,
-    "inverseNav": true
-    
+    "inverseNav": true,
     "protocol": "html://",
     "methodHeadingReturns": false
   },

@@ -1,65 +1,20 @@
+
+
+
 $('.modal-close,.modal-overlay').on('click', function () {
      $('.open-modal').removeClass('modal-show');
 });
+
 $('.modal-trigger').on('click', function (el) {
      var modal = el.currentTarget.attributes['data-modal'].value;
      console.log('modal', el, modal);
      $('#' + modal).addClass('modal-show');
-
 });
-
-var count = 0;
-var submittedWaiting = false;
-
-function styleForm(form, tempId) {
-     $(form).addClass('loading');
-     $('.row.header').after('<div class="row js_temp_request_' + tempId + ' loading-temp"><div class="col-sm-4">Scan Initiated</div></div>');
-     submittedWaiting = true;
-}
 
 function errorMessage(form, text) {
      $(form).children('jsErrorMessage').text(text).show();
 }
 var sentMessages = {};
-
-function onSubmit(form) {
-
-     console.log('onSubmit');
-
-     console.log('onSubmit');
-
-     $(form).addClass('loading waiting-callback');
-
-     if (submittedWaiting) {
-          errorMessage(form, 'You already have a run in progress, please wait for it to complete before starting another one.');
-          return false;
-     }
-
-     var data = $(form).serializeArray(); //  <-----------
-     var arr = {};
-     $.map(data, function (n) {
-          arr[n['name']] = n['value'];
-     });
-     count++;
-     console.log('onSubmit', arr.request, arr);
-     sentMessages[count] = arr.url;
-     socket.emit('queue/' + arr.request, {
-          temp_id: count,
-          uid: arr.uid,
-          url: arr.url,
-          page: arr.page,
-          type: arr.type,
-          token: arr.token,
-          saveCaptures: arr["save-captures"],
-          saveScan: arr["save-scan"],
-          checkLinks: arr["check-links"],
-          checkResources: arr["check-resources"],
-          checkSecurity: arr["check-security"],
-          checkMeta: arr["check-meta"]
-     });
-     styleForm(form, count);
-     return false; //don't submit
-}
 
 jQuery(function ($) {
      /* Billing */
@@ -135,10 +90,6 @@ jQuery(function ($) {
 
      socket.on('connect', function () {
           $('.disconnected.alert').slideUp();
-          if (true) {
-               console.log('REMOVE THIS TO GET TO WORK AGAIN');
-               return;
-          }
           socket.emit('getAlerts', {
                uid: window.uid,
                token: window.apiToken,
@@ -169,36 +120,51 @@ jQuery(function ($) {
           }
      });
 
-     socket.on('alerts/' + window.uid, function (e) {
-          console.log('these are alerts', e);
-          _.each(e.page, function (message) {
-               if (typeof message.temp_id !== 'undefined') {
-                    /* Most likely already saved, can get url */
-                    /* Get url from somewhere! */
-                    $('.js_temp_request_' + message.temp_id).remove();
-                    submittedWaiting = false;
-                    message.url = {
-                         url: sentMessages[message.temp_id]
-                    };
-               }
-               if (message.status === 'complete' || message.status === 'failed') {
-                    /* do this as an array */
-                    socket.emit('get:scan', {
-                         message: message,
-                         uid: window.uid,
-                         apiToken: window.apiToken
-                    });
-               } else if (message.status === 'error') {
-                    var messages = JSON.parse(message.message);
-                    _.each(messages, function (message) {
-                         var alert = $(message.parent).children('.alert').clone();
-                         alert.children('.message-text').text(message.message);
-                         alert.prependTo(message.parent).show();
-                    });
-               } else {
-                    item.updateItems(message);
+    socket.on('update/'+window.uid,function(update){
+      console.log('UPDATE!',update);
+      socket.emit('getUpdates', {
+           uid: window.uid,
+           apiToken: window.apiToken,
+           currentPage: window.currentPage
+      });
+    });
 
-               }
+    socket.on('updates/' + window.uid + '/' + window.apiToken, function (e) {
+          // console.log('item',e);
+          console.log('these are updates', e);
+          _.each(e.page, function (message) {
+            console.log('message',message);
+          //      if (typeof message.temp_id !== 'undefined') {
+          //           /* Most likely already saved, can get url */
+          //           /* Get url from somewhere! */
+          //           $('.js_temp_request_' + message.temp_id).remove();
+          //           submittedWaiting = false;
+          //           message.url = {
+          //                url: sentMessages[message.temp_id]
+          //           };
+          //      }
+          //      if (message.status === 'complete' || message.status === 'failed') {
+          //           /* do this as an array */
+          //           socket.emit('get:scan', {
+          //                message: message,
+          //                uid: window.uid,
+          //                apiToken: window.apiToken
+          //           });
+          //      } else if (message.status === 'error') {
+          //        if(typeof message.parent === 'string'){
+          //          var messages = JSON.parse(message.message);
+          //          _.each(messages, function (message) {
+          //            var alert = $(message.parent).children('.alert').clone();
+          //            alert.children('.message-text').text(message.message);
+          //            alert.prependTo(message.parent).show();
+          //          });
+          //        } else if(typeof ){
+          //
+          //        }
+          //      } else {
+          //           item.updateItems(message);
+          //
+          //      }
           });
 
           var pages = {};
@@ -221,10 +187,7 @@ jQuery(function ($) {
 
      $('.jsDisabled ').hide();
      $('.jsEnabled ').show();
-     if (true) {
-          console.log('remove this to get to work');
-          return;
-     }
+
      socket.emit('getScans', {
           uid: window.uid,
           apiToken: window.apiToken
@@ -237,7 +200,3 @@ jQuery(function ($) {
      });
 
 });
-
-if (onSubmit) {
-
-}

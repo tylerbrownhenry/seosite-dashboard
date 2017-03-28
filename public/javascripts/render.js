@@ -12,7 +12,7 @@ var Dropdown = React.createClass({
         //this.setState({ expanded: false });
     },
     handleItemClick: function(e) {
-        console.log('this',this,e)
+        // console.log('this',this,e)
         this.setState({
             expanded: false,
             value: e.target.innerText
@@ -26,7 +26,7 @@ var Dropdown = React.createClass({
         var that = this;
         var dropdown = undefined;
         if (this.state.expanded) {
-            console.log('this',this.props);
+            // console.log('this',this.props);
             var options = [];
                _.each(this.props.options,function(item){
                     options.push(<div onClick={that.handleItemClick} className="item">{item}</div>);
@@ -387,7 +387,7 @@ var ContentRow = React.createClass({
         }));
     },
     render: function() {
-        console.log('this resource',this.props.item);
+        // console.log('this resource',this.props.item);
         return (
             <div className={"col-sm-12"}>
                 <div className={"row styled " + (this.props.item.status !== 200 ? ' error ':' ') + (this.props.item.cached === false ? ' error ':' ') + (this.props.item.gzip === false ? ' error ':' ') + (this.props.item.minified === false ? ' error ':' ') }>
@@ -450,20 +450,20 @@ var SelectedItem = React.createClass({
         };
     },
     closeRow: function(){
-        console.log('this!',this.props.closeRow);
+        // console.log('this!',this.props.closeRow);
         this.props.closeRow(this);
         // handlScan('summary',this.props.requestId);
     },
     createSummaryRow : function(){
-        console.log('this.props.item',this.props.item);
+        // console.log('this.props.item',this.props.item);
         return(<SummaryRow></SummaryRow>)
     },
     createStatisticRow: function(){
-        console.log('this.props.item',this.props.item);
+        // console.log('this.props.item',this.props.item);
         return(<StatisticRow></StatisticRow>)
     },
     filterOptions: function(filterKey,key,selection,regenFunc){
-        console.log('test',filterKey,key,selection,regenFunc,this.state);
+        // console.log('test',filterKey,key,selection,regenFunc,this.state);
         this.setState({
             [filterKey]: selection
         });
@@ -475,7 +475,7 @@ var SelectedItem = React.createClass({
         var links = [];
         var that = this;
         _.each(this.props.item.links,function(link){
-            console.log('link',link);
+            // console.log('link',link);
             var selector,tag,tagName,internal,contentType,statusCode,statusMessage,samePage,broken,brokenReason,excluded,excludedReason;
 
             if(link.results){
@@ -493,17 +493,17 @@ var SelectedItem = React.createClass({
                 brokenReason: link.results.brokenReason;
             }
 
-            console.log('this.state.linkFilter',that)
+            // console.log('this.state.linkFilter',that)
             if(that && that.state && that.state.linkFilter){
-                console.log('here');
+                // console.log('here');
                 if(that.state.linkFilter === 'Show Errors Only'){
-                        console.log('filter on here here',link);
+                        // console.log('filter on here here',link);
                     if(statusCode === 200){
-                        console.log('good here',link);
+                        // console.log('good here',link);
                         return;
                     }
                     if(internal !== true){
-                        console.log('interal here',link);
+                        // console.log('interal here',link);
                         return
                     }
                 }
@@ -533,7 +533,7 @@ var SelectedItem = React.createClass({
         var metaData = [];
         var that = this;
 
-        console.log('this.props.item.meta',this.props.item.meta);
+        // console.log('this.props.item.meta',this.props.item.meta);
         var data = this.props.item.meta;
         _.each(_.keys(data),function(key){
             var item = data[key];
@@ -547,7 +547,7 @@ var SelectedItem = React.createClass({
             }
             metaData.push(<MetaRow item={item} label={key}></MetaRow>);
         })
-        console.log('metaData',metaData);
+        // console.log('metaData',metaData);
         return metaData;
 
     },
@@ -567,7 +567,7 @@ var SelectedItem = React.createClass({
             }
             resources.push(<ContentRow item={resource}></ContentRow>);
         })
-        console.log('resources',resources);
+        // console.log('resources',resources);
         return resources;
 
     },
@@ -633,7 +633,7 @@ var Rect = React.createClass({
       return this.props.height !== this.state.height;
     },
     componentWillMount: function() {
-      console.log('will mount');
+      // console.log('will mount');
     },
     componentWillReceiveProps: function(nextProps) {
       this.setState({milliseconds: 0, height: this.props.height});
@@ -663,7 +663,7 @@ var Rect = React.createClass({
     var TodoList = React.createClass({
         render: function() {
             var createItem = function(item) {
-                console.log('item',item);
+                // console.log('item',item);
                           item.completedTime = item.completedTime || item.requestDate;
                 item.message = item.message || item.failedReason;
                 if(item.url && item.url.url){
@@ -714,25 +714,25 @@ var Rect = React.createClass({
 
     var TodoListItem = React.createClass({
         deleteThis: function(){
-            console.log('this!',this)
+            // console.log('this!',this)
             handlScan('delete',this.props.requestId);
         },
         retryThis: function(){
-            console.log('this!',this)
+            // console.log('this!',this)
             handlScan('retry',this.props.requestId);
         },
         gotoSummary: function(){
-            console.log('this!',this.props.expandRow);
+            // console.log('this!',this.props.expandRow);
             this.props.expandRow(this);
 
             // handlScan('summary',this.props.requestId);
         },
         cancelThis: function(){
-            console.log('this!',this)
+            // console.log('this!',this)
             handlScan('cancel',this.props.requestId);
         },
         performAction: function(event,name) {
-            console.log('performAction',event,'name',name,'this',this);
+            // console.log('performAction',event,'name',name,'this',this);
             // event.preventDefault(); // Let's stop this event.
             // event.stopPropagation(); // Really this time.
             this.setState(prevState => ({
@@ -741,7 +741,7 @@ var Rect = React.createClass({
         },
 
         openToolbar: function(event) {
-            console.log('expand row--',event);
+            // console.log('expand row--',event);
             // event.preventDefault(); // Let's stop this event.
             // event.stopPropagation(); // Really this time.
             this.setState(prevState => ({
@@ -749,7 +749,7 @@ var Rect = React.createClass({
             }));
         },
         expandRow: function(){
-            console.log('expand row');
+            // console.log('expand row');
             this.setState(prevState => ({
               rowExpanded: !prevState.rowExpanded
             }));
@@ -763,7 +763,7 @@ var Rect = React.createClass({
             return {toolbarOpen:false};
         },
         setTime: function(){
-            console.log('this',this.props);
+            // console.log('this',this.props);
             this.setState({
                 shortDate: formatDate(this.props.completedTime,true),
                 longDate: formatDate(this.props.completedTime)
@@ -973,7 +973,7 @@ var Bar = React.createClass({
 
   render: function() {
     var props = this.props;
-    console.log('props',props);
+    // console.log('props',props);
     var data = props.data.data.map(function(d) {
       return d.y;
     });
@@ -1026,7 +1026,7 @@ var i = 0;
 
     var InfiniteList = React.createClass({
         getInitialState: function() {
-              console.log('getInitialState');
+              // console.log('getInitialState');
             return {
                 elements: [],
                 animating: false,
@@ -1060,7 +1060,7 @@ var i = 0;
                     />
         },
         closeRow: function(){
-            console.log('test');
+            // console.log('test');
             this.setState({
                 animating: true,
                 rowExpanded: false
@@ -1080,10 +1080,10 @@ var i = 0;
                         item={that.state.selectedItem.props}/>
         },
         expandRow: function(item){
-            console.log('you better emit it!',item.props.requestId);
+            // console.log('you better emit it!',item.props.requestId);
             var that = this;
             socket.on('scanData/'+ window.uid + '/'+ window.apiToken +'/' + item.props.requestId,function(links){
-                console.log('links',links,'item',item);
+                // console.log('links',links,'item',item);
                 item.props.links = links;
                 that.setState({
                     selectedItem: that.buildSummary(item.props,that)
@@ -1106,7 +1106,7 @@ var i = 0;
         },
         updateItems: function(newItems) {
             function toDoItem(newItem,that){
-                console.log('this.expandRow',newItem,that);
+                // console.log('this.expandRow',newItem,that);
                 newItem.completedTime = newItem.completedTime || newItem.requestDate;
                 newItem.message = newItem.message || newItem.failedReason;
                 if(typeof newItem.url !== 'undefined' && typeof newItem.url.url !== 'undefined'){
@@ -1141,7 +1141,7 @@ var i = 0;
             }
 
 
-            console.log('newItems',newItems);
+            // console.log('newItems',newItems);
             var that = this;
             this.setState({
                 isInfiniteLoading: true
@@ -1149,43 +1149,43 @@ var i = 0;
 
             var newItem = new Item(newItems);
             var allItems = that.state.elements;
-            console.log('newItem',newItem,'allItems',allItems);
+            // console.log('newItem',newItem,'allItems',allItems);
 
             var existing = _.find(allItems,function(item){
                 if(newItem.temp_id !== null && item.props.temp_id === newItem.temp_id){
-                console.log('exisint',item,newItem);
+                // console.log('exisint',item,newItem);
                     return true;
                 } else if(newItem.i_id !== null && item.props.i_id === newItem.i_id){
-                console.log('exisint',item,newItem);
+                // console.log('exisint',item,newItem);
                     return true;
                 } else if(newItem.requestId !== null && item.props.requestId === newItem.requestId){
-                console.log('exisint',item,newItem);
+                // console.log('exisint',item,newItem);
                     return true;
                 } else if(newItem.requestId !== null && item.props.i_id === newItem.requestId){
                     return true;
                 } else {
-                    console.log('exisint',item.props.requestId,newItem.requestId);
+                    // console.log('exisint',item.props.requestId,newItem.requestId);
                 }
             });
             if(existing){
                 _.each(allItems,function(item,idx){
                     if(newItem.temp_id !== null && item.props.temp_id === newItem.temp_id){
                         allItems[idx] = toDoItem(newItem,this);
-                        console.log('exisint yep',item);
+                        // console.log('exisint yep',item);
                     } else if(newItem.i_id !== null && item.props.i_id === newItem.i_id){
                         allItems[idx] = toDoItem(newItem,this);
-                        console.log('exisint yep',item);
+                        // console.log('exisint yep',item);
                     } else if(newItem.requestId !== null && item.props.requestId === newItem.requestId){
                         allItems[idx] = toDoItem(newItem,this);
-                        console.log('exisint yep',item);
+                        // console.log('exisint yep',item);
                     } else if(newItem.requestId !== null && item.props.i_id === newItem.requestId){
                         allItems[idx] = toDoItem(newItem,this);
-                        console.log('exisint yep',item);
+                        // console.log('exisint yep',item);
                     } else {
-                        console.log('exisint nope',item,newItem);
+                        // console.log('exisint nope',item,newItem);
                     }
                 });
-                console.log('existing',existing,'that.state.elements',allItems);
+                // console.log('existing',existing,'that.state.elements',allItems);
             } else {
                 newItem =  toDoItem(newItem,this)
                 allItems = [newItem].concat(allItems);
@@ -1202,29 +1202,23 @@ var i = 0;
                 elements: allItems
             });
         },
-        handleInfiniteLoad: function() {
-            console.log('handleInfiniteLoad');
-            var that = this;
+        // handleInfiniteLoad: function() {
+            // console.log('handleInfiniteLoad');
+            // var that = this;
 
-        },
-        elementInfiniteLoad: function() {
-            return <div className="infinite-list-item">
-                <div className={"row styled interactive padded complete"}>
-                    Loading...
-                </div>
-            </div>;
-        },
+        // },
+        // elementInfiniteLoad: function() {
+        //     return <div className="infinite-list-item">
+        //         <div className={"row styled interactive padded complete"}>
+        //             Loading...
+        //         </div>
+        //     </div>;
+        // },
         render: function() {
             return (
                 <div>
                 <Infinite elementHeight={81}
                 className={(this.state.rowExpanded)? "col-sm-3 animate-all hide-mobile" + ((this.state.animating)?' animating ': ' ') : "col-sm-12 animate-all" + ((this.state.animating)?' animating ': ' ') }
-                preloadBatchSize={Infinite.containerHeightScaleFactor(10)}
-                infiniteLoadBeginEdgeOffset={true}
-                onInfiniteLoad={this.handleInfiniteLoad}
-                timeScrollStateLastsForAfterUserScrolls={1000}
-                isInfiniteLoading={this.state.isInfiniteLoading}
-                loadingSpinnerDelegate={this.elementInfiniteLoad()}
                 useWindowAsScrollContainer>
                 {this.state.elements}
                 </Infinite>
