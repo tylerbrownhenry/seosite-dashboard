@@ -5,20 +5,20 @@ var _ = require('underscore'),
      Scan = require('../models/scan'),
      plans = require('../config/secrets').stripeOptions.planData,
      fs = require('fs'),
+     utils = require('../utils'),
      path = require('path');
 
 exports.getActivity = function (req, res) {
      console.log('dashboard-controller getActivity', req.user);
      var user = req.user[0];
-     Permission.queryOne("label").eq(user.plan)
-          .exec(function (err, permissions) {
+     utils.findBy(Permission,{label:user.plan},function (err, permissions) {
                console.log('Permission queryOne', permissions);
                if (permissions) {
-                    Request.queryOne("uid").eq(user.uid)
-                         .exec(function (err, data) {
+                    utils.findBy(Request,{uid:user.uid},
+                         function (err, data) {
                               console.log('Request queryOne', data);
-                              Scan.scan('uid').eq(user.uid)
-                                   .exec(function (err, data) {
+                              utils.findBy({uid:user.uid},
+                                   function (err, data) {
                                         console.log('Scan data', data);
                                         var scans = {
                                              message: '',
@@ -95,7 +95,7 @@ exports.getDefault = function (req, res) {
           free: require('./../../app/api-requests/permissions/free'),
           paid: require('./../../app/api-requests/permissions/paid')
      };
-     Permission.queryOne("label").eq(user.plan).exec(function (err, permissions) {
+     utils.findBy(Permission,{label:user.plan},function (err, permissions) {
           console.log('Permission queryOne', permissions, err);
           if (permissions) {
                // res.render(req.render, {user: req.user,plan:plan});
