@@ -11,13 +11,13 @@ var _ = require('underscore'),
 exports.getActivity = function (req, res) {
      console.log('dashboard-controller getActivity', req.user);
      var user = req.user[0];
-     utils.findBy(Permission,{label:user.plan},function (err, permissions) {
+     utils.findSomeBy(Permission,{label:user.plan},function (err, permissions) {
                console.log('Permission queryOne', permissions);
                if (permissions) {
-                    utils.findBy(Request,{uid:user.uid},
+                    utils.findSomeBy(Request,{uid:user.uid},
                          function (err, data) {
                               console.log('Request queryOne', data);
-                              utils.findBy({uid:user.uid},
+                              utils.findSomeBy({uid:user.uid},
                                    function (err, data) {
                                         console.log('Scan data', data);
                                         var scans = {
@@ -51,7 +51,7 @@ exports.getActivity = function (req, res) {
 
                                         res.render(req.render, {
                                              user: user,
-                                             permissions: permissions,
+                                             permissions: permissions[0],
                                              scans: scans,
                                              issues: issues
                                         });
@@ -95,13 +95,13 @@ exports.getDefault = function (req, res) {
           free: require('./../../app/api-requests/permissions/free'),
           paid: require('./../../app/api-requests/permissions/paid')
      };
-     utils.findBy(Permission,{label:user.plan},function (err, permissions) {
-          console.log('Permission queryOne', permissions, err);
+     utils.findSomeBy(Permission,{label:user.plan},function (err, permissions) {
+          console.log('Permission queryOne -->', permissions, err);
           if (permissions) {
                // res.render(req.render, {user: req.user,plan:plan});
                res.render(req.render, {
                     templates: templates,
-                    permissions: permissions,
+                    permissions: permissions[0],
                     user: user,
                     form: form,
                     error: error,
