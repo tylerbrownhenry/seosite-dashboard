@@ -29,8 +29,8 @@ process.on('uncaughtException', function (err) {
 var io = require('socket.io').listen(server);
 
 if (process.env.NODE_ENV !== 'dev') {
-     io.set('transports', ['xhr-polling']);
-     io.set('polling duration', 10);
+    //  io.set('transports', ['xhr-polling']);
+    //  io.set('polling duration', 10);
 }
 
 io.sockets.on('connection', function (socket) {
