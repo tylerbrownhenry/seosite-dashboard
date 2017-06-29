@@ -2,7 +2,8 @@ var dynamoose = require('dynamoose');
 
 var scanSchema = new dynamoose.Schema({
      requestId: {
-          type: String
+          type: String,
+          hashKey: true
      },
      uid: {
           type: String
@@ -11,6 +12,9 @@ var scanSchema = new dynamoose.Schema({
           type: Object
      },
      resources: {
+          type: Object
+     },
+     issues: {
           type: Object
      },
      emails: {
@@ -23,10 +27,15 @@ var scanSchema = new dynamoose.Schema({
           type: String
      },
      url: {
-          type: Object
+          type: Object,
+          default: {}
      },
      redirects: {
           type: Number
+     },
+     completedTime: {
+          type: String,
+          default: +new Date()
      },
      message: {
           type: String
@@ -34,9 +43,9 @@ var scanSchema = new dynamoose.Schema({
      status: {
           type: String
      },
-     thumb: {
-          type: String
-     }
+     thumb: String
 });
 
-module.exports = dynamoose.model('Scan', scanSchema);
+module.exports = dynamoose.model('Scan', scanSchema,{
+  create: true, // Create table in DB, if it does not exist,
+});

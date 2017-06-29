@@ -1,6 +1,8 @@
 var dynamoose = require('dynamoose');
 var userSchema = require('./schema/user');
-var user = dynamoose.model('User', userSchema);
+var user = dynamoose.model('User', userSchema,{
+  create: true, // Create table in DB, if it does not exist,
+});
 module.exports = user;
 
 // var bcrypt = require('bcrypt-nodejs');

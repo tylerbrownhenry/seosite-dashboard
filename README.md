@@ -1,7 +1,15 @@
 Set config vars to
 key:API_HOST value:https://limitless-cove-68401.herokuapp.com/
 
+Testing Webhooks Locally:
+ npm install -g stripe-local
 
+ Then
+ stripe-local --key sk_test_lffMuPNEqBHdXBkrrwkm6tAu --url http://localhost:3000/stripe/events
+
+
+Card that saves but fails to charge:
+4000000000000341
 
 # Node Stripe Membership SaaS
 

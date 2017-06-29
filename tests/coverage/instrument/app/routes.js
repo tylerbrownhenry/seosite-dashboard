@@ -12,6 +12,7 @@ var StripeWebhook = require('stripe-webhook-middleware'),
      secrets = require('./config/secrets');
 // controllers
 var users = require('./controllers/users-controller'),
+     scan = require('./controllers/scan-controller'),
      main = require('./controllers/main-controller'),
      //  queue = require('./controllers/queue-controller'),
      dashboard = require('./controllers/dashboard-controller'),
@@ -25,7 +26,7 @@ var stripeWebhook = new StripeWebhook({
      stripeApiKey: secrets.stripeOptions.apiKey,
      respond: true
 });
-console.log('test');
+
 module.exports = function (app) {
 
      // homepage and dashboard
@@ -46,6 +47,7 @@ module.exports = function (app) {
           }),
           isUnauthenticated,
           sessions.postLogin);
+
      app.get('/logout',
           setRedirect({
                auth: '/',
@@ -91,16 +93,17 @@ module.exports = function (app) {
           passwords.postForgotPassword);
 
      // reset tokens
-     app.get('/reset/:token',
+     app.get('/reset/:token/:uid',
           setRedirect({
                auth: '/dashboard',
+              //  success: '/dashboard',
                failure: '/forgot'
           }),
           isUnauthenticated,
           setRender('reset'),
           passwords.getToken);
 
-     app.post('/reset/:token',
+     app.post('/reset/:token/:uid',
           setRedirect({
                auth: '/dashboard',
                success: '/dashboard',
@@ -116,6 +119,14 @@ module.exports = function (app) {
           }),
           isAuthenticated,
           dashboard.getDefault);
+
+     app.get('/scan',
+          setRender('main/index'),
+          setRedirect({
+               auth: '/'
+          }),
+          isAuthenticated,
+          scan.getDefault);
 
      app.get('/summary',
           setRender('dashboard/summary'),
@@ -156,6 +167,14 @@ module.exports = function (app) {
           }),
           isAuthenticated,
           dashboard.getProfile);
+
+     app.get('/users',
+          setRender('dashboard/users'),
+          setRedirect({
+               auth: '/'
+          }),
+          isAuthenticated,
+          dashboard.getUsers);
 
      app.post('/user',
           setRedirect({

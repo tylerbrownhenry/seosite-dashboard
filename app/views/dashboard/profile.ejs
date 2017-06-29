@@ -32,7 +32,7 @@
       <div class="form-group">
         <label for="name" class="col-sm-3 control-label">Plan</label>
         <div class="col-sm-4">
-          <p class="form-control-static"><%=plans[user.plan].name%> - $<%=plans[user.plan].price%></p>
+          <p class="form-control-static"><%=plans[subscription.plan].name%> - $<%=plans[subscription.plan].price%></p>
         </div>
       </div>
     <!--       <div class="form-group">
@@ -61,6 +61,10 @@
         <div class="col-sm-4"><input type="text" name="location" id="location" value="<%=user.location%>" class="form-control"></div>
       </div>
 
+      <div class="form-group">
+        <label for="timezone" class="col-sm-3 control-label">Timezone</label>
+        <div class="col-sm-4"><select class="form-control timezone-select" value="<%=user.timezone%>" data-live-search="true"></select></div>
+      </div>
 
       <div class="form-group">
         <label for="website" class="col-sm-3 control-label">Website</label>

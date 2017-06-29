@@ -22,8 +22,8 @@ var alertSchema = new dynamoose.Schema({
       type: String
     },
     requestDate: {
-      type: Date,
-      default: Date.now()
+      type: String,
+      default: +new Date()
     },
     temp_id: {
       type: String,
@@ -39,4 +39,6 @@ var alertSchema = new dynamoose.Schema({
     }
 });
 
-module.exports = dynamoose.model('Alert', alertSchema);
+module.exports = dynamoose.model('Alert', alertSchema,{
+  create: true, // Create table in DB, if it does not exist,
+});

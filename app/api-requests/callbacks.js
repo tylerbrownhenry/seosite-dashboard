@@ -13,7 +13,7 @@ var socket = {},
 
 function sendStatus(req) {
      console.log('callbacks -> sendStatus req',req);
-     socket.emit('update/' + req.uid);
+     socket.emit('statusUpdate/' + req.uid);
 }
 
 function broadcastAll(message) {
@@ -114,41 +114,18 @@ function callbacks(_socket) {
      });
 
      socket.on('getScans', function (e) {
-          console.log('e');
-          if (!e || !e.uid) {
-               return;
-          }
-          utils.findSomeBy(Request, {
-               uid: e.uid
-          }, function (err, data) {
-               console.log('Request data', data);
-               var requests = data;
-               utils.findSomeBy(Scan, {
-                    uid: e.uid
-               }, function (err, data) {
-                    console.log('Scan data', data);
-                    var scans = {
-                         message: '',
-                         list: []
-                    };
-                    if (err === null) {
-                         scans.message = 'Request found!';
-                         scans.list = _.uniq(_.union(data, requests), false, function (item) {
-                              return item.requestId;
-                         });
-                    } else {
-                         scans.message = err;
-                    }
-                    scans.list.sort(function (a, b) {
-                         return a.requestDate - b.requestDate;
-                    });
-                    socket.emit('setScans/' + e.uid + '/' + e.apiToken, scans);
-               });
-          });
+          // console.log('e');
+          // if (!e || !e.uid) {
+              //  return;
+          // }
+          // utils.getScans(Request,Scan,e,function(err,scans){
+          //   if(err){
+          //     /* Emit an error or something */
+          //   } else {
+          //     socket.emit('setScans/' + e.uid + '/' + e.apiToken, scans);
+          //   }
+          // });
      });
-
-
-
 
      socket.on('getUpdates', function (e) {
           console.log('callbacks --> getUpdates e', e);
@@ -172,6 +149,7 @@ function callbacks(_socket) {
                _.each(messages, function (message) {
                     console.log('message', message.page, e.currentPage, message.page === e.currentPage);
                     if (message.page === e.currentPage) {
+                      console.log('this page');
                          currentPageMessages.push(message);
                          messageToDelete.push({
                               id: message.id

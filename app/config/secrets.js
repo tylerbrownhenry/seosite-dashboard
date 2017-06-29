@@ -14,22 +14,34 @@ module.exports = {
           apiKey: process.env.STRIPE_KEY || '',
           stripePubKey: process.env.STRIPE_PUB_KEY || '',
           defaultPlan: 'free',
-          plans: ['free', 'silver', 'gold', 'platinum'],
+          plans: ['free', 'monthlypersonal', 'annualpersonal', 'monthlysmallbusiness','annualsmallbusiness','monthlycorporate','annualcorporate'],
           planData: {
                'free': {
                     name: 'Free',
                     price: 0
                },
-               'silver': {
-                    name: 'Silver',
+               'monthlypersonal': {
+                    name: 'Monthly Personal',
                     price: 9
                },
-               'gold': {
-                    name: 'Gold',
+               'monthlysmallbusiness': {
+                    name: 'Monthly Small Business',
+                    price: 9
+               },
+               'monthlycorporate': {
+                    name: 'Monthly Coporate',
+                    price: 9
+               },
+               'annualpersonal': {
+                    name: 'Annual Personal',
                     price: 19
                },
-               'platinum': {
-                    name: 'Platinum',
+               'annualsmallbusiness': {
+                    name: 'Annual Small Business',
+                    price: 29
+               },
+               'annualcorporate': {
+                    name: 'Annual Corporate',
                     price: 29
                }
           }

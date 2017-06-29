@@ -1,4 +1,5 @@
 var dynamoose = require('dynamoose');
+
 var requestSchema = new dynamoose.Schema({
      requestId: {
           type: String,
@@ -10,11 +11,15 @@ var requestSchema = new dynamoose.Schema({
      uid: {
           type: String
      },
+     page: {
+          type: String
+     },
      url: {
           type: String
      },
      requestDate: {
-          type: Date
+          type: String,
+          default:+new Date()
      },
      options: {
           type: Object
@@ -42,4 +47,6 @@ var requestSchema = new dynamoose.Schema({
           updatedAt: 'updatedTs'
      }
 });
-module.exports = dynamoose.model('Request', requestSchema);
+module.exports = dynamoose.model('Request', requestSchema,{
+  create: true, // Create table in DB, if it does not exist,
+});

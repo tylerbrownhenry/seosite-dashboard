@@ -1,0 +1,9 @@
+"use strict";
+var __cov_32a4f6eztOgr$t2Pc7FfaQ = (Function('return this'))();
+if (!__cov_32a4f6eztOgr$t2Pc7FfaQ.__coverage__) { __cov_32a4f6eztOgr$t2Pc7FfaQ.__coverage__ = {}; }
+__cov_32a4f6eztOgr$t2Pc7FfaQ = __cov_32a4f6eztOgr$t2Pc7FfaQ.__coverage__;
+if (!(__cov_32a4f6eztOgr$t2Pc7FfaQ['app/controllers/stripe/subscription-handler.js'])) {
+   __cov_32a4f6eztOgr$t2Pc7FfaQ['app/controllers/stripe/subscription-handler.js'] = {"path":"app/controllers/stripe/subscription-handler.js","s":{"1":0},"b":{},"f":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"fnMap":{"1":{"name":"(anonymous_1)","line":4,"loc":{"start":{"line":4,"column":13},"end":{"line":4,"column":23}}},"2":{"name":"(anonymous_2)","line":7,"loc":{"start":{"line":7,"column":14},"end":{"line":7,"column":24}}},"3":{"name":"(anonymous_3)","line":10,"loc":{"start":{"line":10,"column":13},"end":{"line":10,"column":23}}},"4":{"name":"(anonymous_4)","line":13,"loc":{"start":{"line":13,"column":18},"end":{"line":13,"column":28}}},"5":{"name":"(anonymous_5)","line":16,"loc":{"start":{"line":16,"column":24},"end":{"line":16,"column":34}}},"6":{"name":"(anonymous_6)","line":19,"loc":{"start":{"line":19,"column":21},"end":{"line":19,"column":31}}}},"statementMap":{"1":{"start":{"line":3,"column":0},"end":{"line":22,"column":2}}},"branchMap":{}};
+}
+__cov_32a4f6eztOgr$t2Pc7FfaQ = __cov_32a4f6eztOgr$t2Pc7FfaQ['app/controllers/stripe/subscription-handler.js'];
+__cov_32a4f6eztOgr$t2Pc7FfaQ.s['1']++;module.exports={updatePlan:function(){__cov_32a4f6eztOgr$t2Pc7FfaQ.f['1']++;},cancelPlan:function(){__cov_32a4f6eztOgr$t2Pc7FfaQ.f['2']++;},listPlans:function(){__cov_32a4f6eztOgr$t2Pc7FfaQ.f['3']++;},invoiceDetails:function(){__cov_32a4f6eztOgr$t2Pc7FfaQ.f['4']++;},projectSwitchPlanCost:function(){__cov_32a4f6eztOgr$t2Pc7FfaQ.f['5']++;},_adminRefreshPlans:function(){__cov_32a4f6eztOgr$t2Pc7FfaQ.f['6']++;}};

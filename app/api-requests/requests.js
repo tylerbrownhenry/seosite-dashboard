@@ -11,19 +11,6 @@ function requests(socket) {
           var options = new PageScanOptions(data);
           pageScan(options).then(function (response) {
               console.log('requests.js queue/page --> success', response);
-              // promise.reject({
-              //      success: false,
-              //      status: 'error',
-              //      type: 'userInput',
-              //      _debug: 'checkOptions',
-              //      message: [{
-              //           parent: 'options',
-              //           title: 'Doh! ',
-              //           message: 'Empty request'
-              //      }]
-              // });
-              //
-              // /'token', 'url', 'uid'
               socket.emit('update/'+data.token+'/'+data.uid,response);
           }).catch(function (error) {
               console.log('requests.js queue/page --> error', error);

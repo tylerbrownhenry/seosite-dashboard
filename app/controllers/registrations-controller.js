@@ -36,7 +36,7 @@ exports.postSignup = function (req, res, next) {
           return res.redirect('/signup');
      }
      // calls next middleware to authenticate with passport
-     console.log('postSignup');
+     console.log('postSignup',req.body.timezone);
      passport.authenticate('signup', {
           successRedirect: '/dashboard',
           failureRedirect: '/signup',

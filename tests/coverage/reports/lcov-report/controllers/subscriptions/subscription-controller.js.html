@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for controllers/subscriptions/subscription-controller.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">controllers/subscriptions/subscription-controller.js</span></h1>
+    <h2>
+        Statements: <span class="metric">6.06% <small>(6 / 99)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 75)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">6.06% <small>(6 / 99)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">controllers/subscriptions/</a> &#187; subscription-controller.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var utils = require('../../utils'),
+     secrets = require('../../config/secrets').stripeOptions,
+     Stripe = require('stripe'),
+     stripe;
+&nbsp;
+<span class="fstat-no" title="function not covered" >function createCustomer(email, cb) {</span>
+<span class="cstat-no" title="statement not covered" >     stripe = new Stripe(secrets.apiKey);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     console.log('actions-stripe:createCustomer :user', email);</span>
+<span class="cstat-no" title="statement not covered" >     stripe.customers.create({</span>
+          email: email
+     }, <span class="fstat-no" title="function not covered" >function (err, customer) {</span>
+<span class="cstat-no" title="statement not covered" >          console.log('actions-stripe:createCustomer:create err', err, 'customer', customer);</span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+<span class="cstat-no" title="statement not covered" >               return cb(err);</span>
+          }
+<span class="cstat-no" title="statement not covered" >          return cb(null, customer.id);</span>
+     });
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function setCard(customer, oid, email, cb) {</span>
+<span class="cstat-no" title="statement not covered" >     console.log('customer', customer);</span>
+<span class="cstat-no" title="statement not covered" >     stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >     var cardHandler = <span class="fstat-no" title="function not covered" >function (err, _customer) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+<span class="cstat-no" title="statement not covered" >               return cb(err);</span>
+          }
+<span class="cstat-no" title="statement not covered" >          var card = _customer.cards ? _customer.cards.data[0] : _customer.sources.data[0];</span>
+<span class="cstat-no" title="statement not covered" >          utils.updateSubscription(oid, {</span>
+               last4: card.last4
+          }, <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >              console.log('err',err);</span>
+<span class="cstat-no" title="statement not covered" >               if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    return cb(err);</span>
+               }
+<span class="cstat-no" title="statement not covered" >               return cb(null);</span>
+          });
+     };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     stripe.customers.update(customer.customerId, {</span>
+          source: {
+               object: 'card',
+               number: customer['card-num'],
+               cvc: customer['card-cvs'],
+               exp_month: customer['card-month'],
+               exp_year: customer['card-year'],
+               email: email
+          }
+     }, cardHandler);
+}
+&nbsp;
+module.exports = {
+     setCard: setCard,
+     cancelStrip: <span class="fstat-no" title="function not covered" >function (customerId, cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          if (customerId) {</span>
+<span class="cstat-no" title="statement not covered" >               stripe.customers.del(</span>
+                    customerId
+               ).then(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log('success');</span>
+<span class="cstat-no" title="statement not covered" >                    cb();</span>
+               }, <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log('err', err);</span>
+<span class="cstat-no" title="statement not covered" >                    return cb(err);</span>
+               });
+          } else {
+<span class="cstat-no" title="statement not covered" >               cb();</span>
+          }
+     },
+     updateEmail: <span class="fstat-no" title="function not covered" >function (customerId, email, cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          if (!customerId) {</span>
+<span class="cstat-no" title="statement not covered" >               return cb();</span>
+          }
+<span class="cstat-no" title="statement not covered" >          stripe.customers.update(customerId, {</span>
+               email: email
+          }, <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >               cb(err);</span>
+          });
+     },
+     findUserPlane: <span class="fstat-no" title="function not covered" >function (oid) {</span>
+&nbsp;
+     },
+     createCustomer: <span class="fstat-no" title="function not covered" >function (user, next) {</span>
+<span class="cstat-no" title="statement not covered" >          createCustomer(user, <span class="fstat-no" title="function not covered" >function (err, user) {</span></span>
+<span class="cstat-no" title="statement not covered" >               if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    return next(err);</span>
+               }
+<span class="cstat-no" title="statement not covered" >               next(null, user);</span>
+          });
+     },
+     listPlans: <span class="fstat-no" title="function not covered" >function (cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          stripe.plans.list({</span>
+                    limit: 100
+               },
+<span class="fstat-no" title="function not covered" >               function (err, plans) {</span>
+<span class="cstat-no" title="statement not covered" >                    cb(err, plans);</span>
+               }
+          );
+     },
+     switchSubscription: <span class="fstat-no" title="function not covered" >function(currentSubscriptionId,newPlan,cb){</span>
+<span class="cstat-no" title="statement not covered" >       stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >       stripe.subscriptions.update(</span>
+         currentSubscriptionId,
+         { plan:newPlan},
+<span class="fstat-no" title="function not covered" >         function(err, res) {</span>
+<span class="cstat-no" title="statement not covered" >           console.log('res',res);</span>
+<span class="cstat-no" title="statement not covered" >           if(!err){</span>
+<span class="cstat-no" title="statement not covered" >             cb(null,res);</span>
+           } else {
+<span class="cstat-no" title="statement not covered" >             cb(err);</span>
+           }
+         }
+       );
+     },
+     projectUpgradeCost: <span class="fstat-no" title="function not covered" >function (custumerId, subscriptionId, plan, cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          var proration_date = Math.floor(Date.now() / 1000);</span>
+<span class="cstat-no" title="statement not covered" >          stripe.invoices.retrieveUpcoming(</span>
+               custumerId,
+               subscriptionId, {
+                    subscription_plan: plan, // Switch to new plan
+                    subscription_proration_date: proration_date
+               },
+<span class="fstat-no" title="function not covered" >               function (err, res) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (!err) {</span>
+<span class="cstat-no" title="statement not covered" >                         cb(null, {</span>
+                              nextPaymentAttempt: (res.next_payment_attempt) ? res.next_payment_attempt : null,
+                              amountDue: (res.amount_due) ? res.amount_due : null,
+                         });
+                    } else {
+<span class="cstat-no" title="statement not covered" >                         cb(err);</span>
+                    }
+               }
+          );
+     },
+     getUpcomingInvoice: <span class="fstat-no" title="function not covered" >function (id, cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          stripe.invoices.retrieveUpcoming(</span>
+               id,
+<span class="fstat-no" title="function not covered" >               function (err, res) {</span>
+<span class="cstat-no" title="statement not covered" >                 console.log('res',res);</span>
+<span class="cstat-no" title="statement not covered" >                    if (!err) {</span>
+<span class="cstat-no" title="statement not covered" >                         cb(null, {</span>
+                              nextPaymentAttempt: (res.next_payment_attempt) ? res.next_payment_attempt : null,
+                              amount: (res.amount) ? res.amount_due : null,
+                              attempted: (res.attempted) ? res.attempted : null,
+                              attemptCount: (res.attempt_count) ? res.attempt_count : null,
+                              paid: (res.paid) ? res.paid : null
+                         });
+                    } else {
+<span class="cstat-no" title="statement not covered" >                         cb(err);</span>
+                    }
+               }
+          );
+     },
+     getSubscription: <span class="fstat-no" title="function not covered" >function (id, cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          stripe.subscriptions.retrieve(id,</span>
+<span class="fstat-no" title="function not covered" >               function (err, res) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (!err) {</span>
+<span class="cstat-no" title="statement not covered" >                         cb(null, {</span>
+                              plan: (res.plan) ? res.plan.id : null,
+                              frequency: (res.plan &amp;&amp; res.plan.metadata &amp;&amp; res.plan.metadata.rotate) ? res.plan.metadata.rotate : null,
+                              planAmount: (res.plan &amp;&amp; res.plan.amount) ? res.plan.amount : null,
+                              planName: (res.plan &amp;&amp; res.plan.name) ? res.plan.name : null,
+                              periodEnd: (res.current_period_end) ? res.current_period_end : null,
+                              periodStart: (res.current_period_start) ? res.current_period_start : null,
+                              status: (res.status) ? res.status : null,
+                              created: (res.created) ? res.created : null,
+                              cancelAtPeriodEnd: (res.cancel_at_period_end) ? res.cancel_at_period_end : null,
+                              canceledAt: (res.canceled_at) ? res.canceled_at : null,
+                         });
+                    } else {
+<span class="cstat-no" title="statement not covered" >                         cb(err);</span>
+                    }
+               });
+     },
+     cancelSubscription: <span class="fstat-no" title="function not covered" >function (id, cb, at_period_end) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          if (typeof at_period_end === 'undefined') {</span>
+<span class="cstat-no" title="statement not covered" >               at_period_end = true</span>
+          }
+<span class="cstat-no" title="statement not covered" >          stripe.subscriptions.del(id, {</span>
+                    at_period_end: at_period_end
+               },
+<span class="fstat-no" title="function not covered" >               function (err, confirmation) {</span>
+<span class="cstat-no" title="statement not covered" >                    cb(err, confirmation);</span>
+               }
+          );
+     },
+     listSubscriptions: <span class="fstat-no" title="function not covered" >function (cb) {</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+<span class="cstat-no" title="statement not covered" >          stripe.subscriptions.list({</span>
+                    limit: 100
+               },
+<span class="fstat-no" title="function not covered" >               function (err, subscriptions) {</span>
+<span class="cstat-no" title="statement not covered" >                    cb(err, subscriptions);</span>
+               });
+     },
+     setPlan: <span class="fstat-no" title="function not covered" >function (plan, oid, email, subscription, cb) {</span>
+<span class="cstat-no" title="statement not covered" >          console.log('actions-stripe: setPlan plan:', plan, 'oid', oid, 'email', email, 'subscription', subscription);</span>
+<span class="cstat-no" title="statement not covered" >          stripe = new Stripe(secrets.apiKey);</span>
+          /**
+           * updates the User's information with changes to account
+           * @param  {error||null} err           error message
+           * @param  {string} subscription       unique Id for new subscription
+           * @return {function}                  what to do after saving or having an error
+           */
+<span class="fstat-no" title="function not covered" >          function subscriptionHandler(err, res) {</span>
+<span class="cstat-no" title="statement not covered" >               console.log('actions-stripe:subscriptionHandler', err, res);</span>
+<span class="cstat-no" title="statement not covered" >               if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    return cb(err);</span>
+               }
+<span class="cstat-no" title="statement not covered" >               utils.updateSubscription(oid, {</span>
+                    plan: plan,
+                    subscriptionId: subscription.id
+               }, <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log('actions-stripe:subscriptionHandler callback', err);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                         return cb(err);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    return cb(null);</span>
+               });
+          };
+&nbsp;
+<span class="fstat-no" title="function not covered" >          function createSubscription(subscription, plan) {</span>
+<span class="cstat-no" title="statement not covered" >               console.log('actions-stripe:createSubscription', subscription.customerId, plan);</span>
+<span class="cstat-no" title="statement not covered" >               stripe.subscriptions.create({</span>
+                    customer: subscription.customerId,
+                    plan: plan,
+               }, subscriptionHandler);
+          };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (!subscription.last4) {</span>
+<span class="cstat-no" title="statement not covered" >               console.log('actions-stripe: last4', subscription);</span>
+<span class="cstat-no" title="statement not covered" >               setCard(subscription, oid, email, <span class="fstat-no" title="function not covered" >function (err) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                         return cb(err);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    createSubscription(subscription, plan);</span>
+               });
+          } else {
+<span class="cstat-no" title="statement not covered" >               console.log('actions-stripe: no stripe_token -&gt;', subscription);</span>
+<span class="cstat-no" title="statement not covered" >               if (subscription.subscriptionId) {</span>
+                    // update subscription
+<span class="cstat-no" title="statement not covered" >                    stripe.customers.updateSubscription(</span>
+                         subscription.customerId,
+                         subscription.subscriptionId, {
+                              plan: plan
+                         },
+                         subscriptionHandler
+                    );
+               } else {
+<span class="cstat-no" title="statement not covered" >                    console.log('actions-stripe:no stripe_token no subscription', subscription, 'plan', plan);</span>
+<span class="cstat-no" title="statement not covered" >                    createSubscription(subscription, plan);</span>
+               }
+          }
+     }
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 24 2017 10:56:26 GMT-0400 (EDT)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+<!-- <table>
+  <tr>
+    <% for(var i=0; i<plans.types.length; i++) {%>
+    <td><%= plans.type[i].desc %></td>
+    <% } %>
+  </tr>
+  <tr>
+    <% for(var o=0; o<plan.types.length; o++) {%>
+    <td>
+      <ul>
+        <% for(var e=0; e<plans.plans[plan.type[o].key].length; e++ %>
+          <li> <%= plans.plans[plan.type[o].key][e].desc %><br>
+                <% if(plans.plans[plan.type[o].key][e].key !== plans.currentPlan.key){ %>
+                <a onclick="upgradeToThisPlan(<%=plans.plans[plan.type[o].key][e].key %>);">Switch to this plan</a>
+                <% } else { %>
+                  Current Plan
+                  <% if(plans.currentPlan.cancelled !== true){ %>
+                    <a onclick="cancelPlan(<%=plans.plans[plan.type[o].key][e].key %>);">Cancel</a>
+                    <% } else {  %>
+                      <a onclick="reactivate(<%=plans.plans[plan.type[o].key][e].key %>);">Reactivate</a>
+                    <% }%>
+                <% }%>
+          </li>
+        <% } %>
+      </ul>
+    </td>
+    <% } %>
+  </tr>
+</table> -->

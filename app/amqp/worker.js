@@ -1,7 +1,7 @@
 var errorHandler = require('./errorHandler');
 var sendStatus = require('../api-requests/callbacks').sendStatus;
 
-function processAlerts(msg, ch) {
+function processUpdates(msg, ch) {
      console.log('app/amqp/worker.js msg', JSON.parse(msg.content));
      ch.ack(msg);
      sendStatus(JSON.parse(msg.content));
@@ -63,23 +63,7 @@ module.exports.start = function (amqpConn) {
           ch.prefetch(10);
           init('update', function (e) {
               console.log('queueFunc!');
-               processAlerts(e, ch)
+               processUpdates(e, ch)
           }, 'update', true, ch);
-          // init('alerts', function (e) {
-          //     console.log('queueFunc!');
-          //      processAlerts(e, ch)
-          // }, 'alerts', true, ch);
-          // init('alert', function (e) {
-          //     console.log('queueFunc!');
-          //      processAlerts(e, ch)
-          // }, 'alert', true, ch);
-          // init('alerts', function (e) {
-          //     console.log('queueFunc!');
-          //      processAlerts(e, ch)
-          // }, 'alert', true, ch);
-          // init('alert', function (e) {
-          //     console.log('queueFunc!');
-          //      processAlerts(e, ch)
-          // }, 'alerts', true, ch);
      });
 };

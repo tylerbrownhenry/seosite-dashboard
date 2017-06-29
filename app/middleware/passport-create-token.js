@@ -7,9 +7,7 @@ secrets = require('../config/secrets');
  * @return {String}       an encoded string
  */
 function createToken(email) {
-     email = JSON.stringify(email);
-     console.log('test passport createToken', email, secrets.apiToken);
-     return jwt.sign(email, secrets.apiToken, {
+     return jwt.sign({email:email}, secrets.apiToken, {
           expiresIn: '14d' // expires in 2 weeks
      });
 }

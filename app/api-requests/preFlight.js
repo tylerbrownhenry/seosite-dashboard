@@ -1,6 +1,7 @@
 var User = require('./../models/user'),
      q = require('q'),
      _log = require('./../debug'),
+     utils = require('../utils'),
      _ = require('underscore');
 
 var permissions = {
@@ -32,11 +33,10 @@ function captureRequestValidate() {
      return promise.promise;
 }
 
-function pageRequestValidate(usr, request) {
-     console.log('user', usr[0], 'request', request, 'permissions', permissions);
+function pageRequestValidate(user, request) {
      var promise = q.defer();
-     var user = usr[0];
      var perm = permissions[user.plan];
+     _log('user', user, 'request', request,'perm',perm);
      var problems = [];
      if (perm.restrictions.type[request.type] === false) {
           problems.push({
@@ -73,61 +73,61 @@ function pageRequestValidate(usr, request) {
      //            message: 'Your have performed the maximum number of requests (' + perm.limits.daily.requests + ') your current plan allows for the day.'
      //       });
      //  }
-     if (request.filterLevel >= perm.restrictions.filterLimit) {
-          problems.push({
-               parent: 'filterLimit',
-               hint: 'upgrade',
-               message: 'You have selected a filter level of "' + request.filterLevel + '". Your current plan allows a maximum filter level of "' + perm.restictions.filterLimit + '".'
-          });
-     }
-     if (request.digDepth >= perm.restrictions.digDepth) {
-          problems.push({
-               parent: 'digDepth',
-               hint: 'upgrade',
-               message: 'You have selected a dig depth of "' + request.digDepth + '". Your current plan allows a maximum dig depth of "' + perm.restictions.digLimit + '".'
-          });
-     }
-     if (request.honorRobotExclusions === false && perm.restrictions.honorRobotExclusions.canDisable === false) {
-          problems.push({
-               parent: 'honorRobotExclusions',
-               hint: 'upgrade',
-               message: 'Your current plan does not allow disabling honor robot exclusions '
-          });
-     }
-     if (request.excludeExternalLinks === true && perm.restrictions.excludeExternalLinks.canDisable === false) {
-          problems.push({
-               parent: 'excludeExternalLinks',
-               hint: 'upgrade',
-               message: 'Your current plan does not allow enabling of including external links.'
-          });
-     }
+     //  if (request.filterLevel >= perm.restrictions.filterLimit) {
+     //       problems.push({
+     //            parent: 'filterLimit',
+     //            hint: 'upgrade',
+     //            message: 'You have selected a filter level of "' + request.filterLevel + '". Your current plan allows a maximum filter level of "' + perm.restictions.filterLimit + '".'
+     //       });
+     //  }
+     //  if (request.digDepth >= perm.restrictions.digDepth) {
+     //       problems.push({
+     //            parent: 'digDepth',
+     //            hint: 'upgrade',
+     //            message: 'You have selected a dig depth of "' + request.digDepth + '". Your current plan allows a maximum dig depth of "' + perm.restictions.digLimit + '".'
+     //       });
+     //  }
+     //  if (request.honorRobotExclusions === false && perm.restrictions.honorRobotExclusions.canDisable === false) {
+     //       problems.push({
+     //            parent: 'honorRobotExclusions',
+     //            hint: 'upgrade',
+     //            message: 'Your current plan does not allow disabling honor robot exclusions '
+     //       });
+     //  }
+     //  if (request.excludeExternalLinks === true && perm.restrictions.excludeExternalLinks.canDisable === false) {
+     //       problems.push({
+     //            parent: 'excludeExternalLinks',
+     //            hint: 'upgrade',
+     //            message: 'Your current plan does not allow enabling of including external links.'
+     //       });
+     //  }
      // if(typeof request.excludedSchemes !== 'undefined' && perm.restrictions.excludedSchemes.canUse === false){
      //     problems.push({response: false, selection: 'excludeExternalLinks', message:'Your current plan does not allow change excluded schemas.'});
      // }
 
-     if (request.acceptedSchemes.indexOf('https') !== -1 && perm.restrictions.acceptedSchemes['https'] === false) {
-          problems.push({
-               parent: 'acceptedSchemes',
-               hint: 'upgrade',
-               message: 'Your current plan does not allow acceptedSchemes ' + request.acceptedSchemes + '.'
-          });
-     }
-     var failed = false;
-     var linkInfo = [];
-     _.each(_.keys(request.linkInformation), function (infoSelect) {
-          if (perm.restrictions.linkInformation[infoSelect] === false && request.linkInformation[infoSelect] === true) {
-               failed = true;
-               linkInfo.push(infoSelect);
-          }
-     });
-     if (failed === true) {
-          problems.push({
-               parent: 'linkInformation',
-               hint: 'upgrade',
-               subSelections: linkInfo,
-               message: 'Your current plan does not allow fetching this link information.'
-          });
-     }
+     //  if (request.acceptedSchemes.indexOf('https') !== -1 && perm.restrictions.acceptedSchemes['https'] === false) {
+     //       problems.push({
+     //            parent: 'acceptedSchemes',
+     //            hint: 'upgrade',
+     //            message: 'Your current plan does not allow acceptedSchemes ' + request.acceptedSchemes + '.'
+     //       });
+     //  }
+     //  var failed = false;
+     //  var linkInfo = [];
+     //  _.each(_.keys(request.linkInformation), function (infoSelect) {
+     //       if (perm.restrictions.linkInformation[infoSelect] === false && request.linkInformation[infoSelect] === true) {
+     //            failed = true;
+     //            linkInfo.push(infoSelect);
+     //       }
+     //  });
+     //  if (failed === true) {
+     //       problems.push({
+     //            parent: 'linkInformation',
+     //            hint: 'upgrade',
+     //            subSelections: linkInfo,
+     //            message: 'Your current plan does not allow fetching this link information.'
+     //       });
+     //  }
      if (problems.length > 0) {
           var subSelections = [];
           var messages = [];
@@ -138,22 +138,21 @@ function pageRequestValidate(usr, request) {
                     hint: _e.hint,
                     title: _e.title
                });
-               if (typeof _e.subSelections !== 'undefined') {
-                    _.each(_e.subSelections, function (__e) {
-                         subSelections.push({
-                              parent: _e.parent,
-                              selection: __e,
-                              message: _e.message
-                         });
-                    });
-               }
+               //  if (typeof _e.subSelections !== 'undefined') {
+               //       _.each(_e.subSelections, function (__e) {
+               //            subSelections.push({
+               //                 parent: _e.parent,
+               //                 selection: __e,
+               //                 message: _e.message
+               //            });
+               //       });
+               //  }
           });
           promise.reject({
                success: false,
                status: 'error',
                type: 'global',
                _debug: 'pageRequestValidate',
-               subSelections: subSelections,
                message: messages
           });
      } else {
@@ -163,17 +162,18 @@ function pageRequestValidate(usr, request) {
 }
 
 var approvedRequestTypes = {
-     site: siteRequestValidate,
-     page: pageRequestValidate,
-     summary: pageRequestValidate,
-     freeSummary: pageRequestValidate,
-     link: linkRequestValidate,
-     capture: captureRequestValidate
+     //  site: siteRequestValidate,
+     //  page: pageRequestValidate,
+     //  summary: pageRequestValidate,
+     request: pageRequestValidate,
+     //  freeSummary: pageRequestValidate,
+     //  link: linkRequestValidate,
+     //  capture: captureRequestValidate
 };
 
-function validate(user, request, permissions) {
+function validate(user, request) {
      if (typeof approvedRequestTypes[request.type] !== 'undefined') {
-          return approvedRequestTypes[request.type](user, request, permissions);
+          return approvedRequestTypes[request.type](user, request);
      } else {
           var promise = q.defer();
           promise.reject({
@@ -194,7 +194,7 @@ function validate(user, request, permissions) {
 function _authorize(req) {
      var promise = q.defer();
      try {
-          User.scan({
+          User.get({
                uid: req.uid,
                apiToken: req.token
           }, function (err, user) {
@@ -213,7 +213,7 @@ function _authorize(req) {
                          type: 'global',
                          message: [{
                               parent: 'form',
-                              title: 'Rats... ',
+                              title: 'Invalid Token',
                               message: 'Failed to authenticate token.'
                          }]
                     });
@@ -228,7 +228,7 @@ function _authorize(req) {
                               _debug: 'User.findOne',
                               message: [{
                                    parent: 'form',
-                                   title: 'Shucks... ',
+                                   title: 'Invalid Token',
                                    message: 'Invalid user/token combination.'
                               }]
                          });
@@ -268,8 +268,8 @@ function checkOptions(req) {
                _debug: 'checkOptions',
                message: [{
                     parent: 'options',
-                    title: 'Doh! ',
-                    message: 'Empty request'
+                    title: 'Empty Request',
+                    message: 'We need more information for this request'
                }]
           });
      } else {
@@ -319,14 +319,44 @@ function checkApiCall(req, params) {
           checkRequirements(params, req).then(function () {
                _log('server.js checkRequirements success');
                _authorize(req).then(function (user) {
-                    _log('server.js _authorize success');
+                    _log('server.js _authorize success',permissions,user);
                     var options = req.options;
-                    validate(user, options, permissions[user.plan]).then(function () {
-                         _log('server.js checkRequestPermissions success');
-                         promise.resolve(user, options);
-                    }).catch(function (err) {
-                         _log('server.js checkApiCall checkRequestPermissions err', err);
-                         promise.reject(err);
+                    utils.checkAvailActivity(user.oid,permissions[user.plan],options.type, function (err,decision) {
+                      console.log('checkAvailActivity--',decision);
+                          if(err){
+                            promise.reject({
+                                 page: req.page,
+                                 status: 'error',
+                                 type: 'global',
+                                 _debug: 'checkRequirements',
+                                 success: false,
+                                 message: [{
+                                      title: 'Activity Error',
+                                      message: 'Error fetching user history.'
+                                 }]
+                            });
+                            return
+                          } else if(decision === false){
+                            promise.reject({
+                                 page: req.page,
+                                 status: 'error',
+                                 type: 'global',
+                                 _debug: 'checkRequirements',
+                                 success: false,
+                                 message: [{
+                                      title: 'Activity',
+                                      message: 'You have reached your usage limit. For the day or month.'
+                                 }]
+                            });
+                            return
+                          }
+                         validate(user, options).then(function () {
+                              _log('server.js checkRequestPermissions success');
+                              promise.resolve(user, options);
+                         }).catch(function (err) {
+                              _log('server.js checkApiCall checkRequestPermissions err', err);
+                              promise.reject(err);
+                         });
                     });
                }).catch(function (err) {
                     _log('server.js checkApiCall _authorize err', err);

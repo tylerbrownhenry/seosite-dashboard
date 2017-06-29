@@ -1,14 +1,14 @@
 var LocalStrategy = require('passport-local').Strategy,
      User = require('./../models/user'),
      Activity = require('./../models/user'),
+     Subscription = require('./../models/subscription'),
      utils = require('./../utils'),
      sh = require("shorthash"),
      secrets = require('../config/secrets'),
      bcrypt = require('bcrypt-nodejs'),
      crypto = require('crypto'),
-     findOrCreateUser = require('./passport-create-user');
+     findOrCreateUser = require('./passport-create-user'),
      createToken = require('./passport-create-token');
-
 
 /**
  * compares the encrypts the input password with the saved password
@@ -34,13 +34,32 @@ module.exports = function (passport) {
      });
 
      passport.deserializeUser(function (input, done) {
-          console.log('make sure UID:', input, 'EXISTS')
-          utils.findUser({
-                    uid: input.uid
+          console.log('make sure UID:', input, 'EXISTS');
+          if(input && input[0]){
+            input = input[0];
+          }
+          utils.findOneUser({
+                  uid: input.uid
                },
                function (err, user) {
-                    console.log('user found!', user, err);
-                    done(err, user);
+                   console.log('user',user);
+                    if (err || !user) {
+                         done(err);
+                    } else {
+                         utils.findBy(Subscription, {
+                              customerId: user.customerId
+                         }, function (err, subscription) {
+                              console.log('user found!', user, err);
+                              if (err || !subscription) {
+                                   done(err);
+                              } else {
+                                   done(err, {
+                                        identity: user,
+                                        subscription: subscription
+                                   });
+                              }
+                         });
+                    }
                });
      });
 
@@ -50,13 +69,13 @@ module.exports = function (passport) {
                passReqToCallback: true
           },
           function (req, email, password, done) {
-               console.log('test passport login', password);
+               console.log('test passport login', req);
 
                utils.findUser({
                          'email': email
                     },
                     function (err, data) {
-                         console.log('user', data);
+                         console.log('-->user', data);
                          if (err) {
                               return done(err);
                          }
@@ -97,7 +116,7 @@ module.exports = function (passport) {
           function (req, email, password, done) {
                console.log('test passport signup ', password, 'req', req.body, password);
                process.nextTick(function () {
-                    findOrCreateUser(req, email, password, done)
+                    findOrCreateUser(req, email, password, null, done)
                });
           }));
 }

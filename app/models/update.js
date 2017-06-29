@@ -29,4 +29,6 @@ var updateSchema = new dynamoose.Schema({
     }
 });
 
-module.exports = dynamoose.model('Update', updateSchema);
+module.exports = dynamoose.model('Update', updateSchema,{
+  create: true, // Create table in DB, if it does not exist,
+});

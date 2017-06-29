@@ -6,7 +6,7 @@ sinon = require('sinon'),
      Request = require('./../../../../app/models/index').request,
      User = require('./../../../../app/models/user'),
      dynamoose = require('dynamoose');
-
+return ;
 describe('app/api-requests/requests/pageScan', function () {
      var stub;
      beforeEach(function () {

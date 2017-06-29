@@ -1,15 +1,26 @@
-var dynamoose = require('dynamoose');;
-var secrets = require('../../config/secrets');
+var dynamoose = require('dynamoose'),
+secrets = require('../../config/secrets');
+
 var userSchema = new dynamoose.Schema({
      email: {
           type: String,
           unique: true,
           lowercase: true
      },
+     status: {
+       type: String,
+       default: 'active'
+     },
      password: String,
      isAdmin: {
           type: Boolean,
           default: false
+     },
+     customerId: {
+          type: String,
+     },
+     timezone: {
+       type:String
      },
      role: {
           type: String,
@@ -17,7 +28,6 @@ var userSchema = new dynamoose.Schema({
      },
      oid: {
           type: String,
-          hashKey: true
      },
      uid: {
           type: String,
@@ -43,28 +53,13 @@ var userSchema = new dynamoose.Schema({
           type: String,
           default: ''
      },
-     plan: {
-          type: String,
-          default: secrets.stripeOptions.defaultPlan
-     },
-     last4: {
-          type: String,
-     },
-     customerId: {
-          type: String,
-     },
-     subscriptionId: {
-          type: String,
-     },
      apiToken: {
           type: String,
      },
-     resetPasswordToken: {
+     created: {
           type: String,
-     },
-     resetPasswordExpires: {
-          type: Date,
-     },
+          default: +new Date()
+     }
 });
 
 module.exports = userSchema;

@@ -11,43 +11,10 @@ function Option(data) {
           "temp_id": data.temp_id,
           "token": data.token,
           "options": {
-               "save": {
-                    "captures": false,
-                    "scan": true,
-                    "resources": true,
-                    "metaData": true,
-                    "links": true
-                    // "captures": data.saveCaptures,
-                    // "scan": data.saveScan,
-               },
-               "check": {
-                    // "links":data.checkLinks,
-                    // "resources":data.checkResources,
-                    // "security":data.checkSecurity,
-                    // "meta":data.checkMeta
-                    "links": true,
-                    "resources": true,
-                    "security": true,
-                    "meta": true
-               },
-               "type": 'page',
-               "filterLimit": 10,
-               "digDepthLimit": 1,
-               "excludeExternalLinks": false,
-               "honorRobotExclusions": true,
-               "excludedSchemes": false,
-               "saveSelectors": false,
-               "linkInformation": {
-                    "selector": false,
-                    "element": false,
-                    "location": false,
-                    "redirects": false,
-                    "status": false,
-                    "url": false,
-                    "href": false,
-                    "parent": false
-               },
-               "acceptedSchemes": ['http']
+               "captures": data.captures,
+               "links": data.links,
+               "security": data.security,
+               "type": data.type,
           }
      };
 }

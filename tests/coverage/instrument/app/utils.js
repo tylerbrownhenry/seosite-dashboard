@@ -1,8 +1,15 @@
-var bcrypt = require('bcrypt-nodejs');
-var crypto = require('crypto');
-var User = require('./models/user');
-var Activity = require('./models/activity');
-var Permission = require('./models/permission');
+var bcrypt = require('bcrypt-nodejs'),
+     crypto = require('crypto'),
+     User = require('./models/user'),
+     Subscription = require('./models/subscription'),
+     _ = require('underscore'),
+     Activity = require('./models/activity'),
+     ejs = require('ejs'),
+     secrets = require('./config/secrets');
+     nodemailer = require('nodemailer'),
+     mailgunApiTransport = require('nodemailer-mailgunapi-transport'),
+     PasswordResetToken = require('./models/passwordResetToken'),
+     Permission = require('./models/permission');
 
 function encrypt(password, callback) {
      bcrypt.genSalt(10, function (err, salt) {
@@ -45,6 +52,7 @@ function gravatar(size, email) {
  * @param  {Function} callback callback accepts two paramaters, err and activity data
  */
 function updateActivity(oid, type, callback) {
+     console.log('--UPDATE ACTIVITY OID', oid);
      var updates = {
           $ADD: {}
      };
@@ -53,6 +61,74 @@ function updateActivity(oid, type, callback) {
      Activity.update({
           oid: oid
      }, updates, function (err) {
+          if (err) {
+               if (typeof callback === 'function') {
+                    return callback(err);
+               }
+          }
+          if (typeof callback === 'function') {
+               return callback(null);
+          }
+     });
+}
+
+function updateActivityEmail(oid, email, callback) {
+     var updates = {
+          $ADD: {}
+     };
+     Activity.update({
+          oid: oid
+     }, {
+          email: email
+     }, function (err) {
+          if (err) {
+               if (typeof callback === 'function') {
+                    return callback(err);
+               }
+          }
+          if (typeof callback === 'function') {
+               return callback(null);
+          }
+     });
+}
+
+/**
+ * finds a password reset token
+ * @param  {String}   token    random hash
+ * @param  {Function} callback callback accepts two paramaters, err and activity data
+ */
+function findPasswordResetToken(token, callback) {
+     PasswordResetToken.get({
+          token: token,
+     }, function (err, resp) {
+          console.log('findPasswordResetToken', resp, err);
+          if (err) {
+               if (typeof callback === 'function') {
+                    return callback(err);
+               }
+          }
+          if (typeof callback === 'function') {
+               return callback(null, resp);
+          }
+     });
+}
+
+/**
+ * updates a password reset token
+ * @param  {String}   uid      user ID
+ * @param  {String}   token    random hash
+ * @param  {String}   expires  when token is no longer valid
+ * @param  {Function} callback callback accepts two paramaters, err and activity data
+ */
+function savePasswordResetToken(opts, callback) {
+     console.log('UPDATE ACTIVITY OID-->', opts);
+     PasswordResetToken.update({
+          token: opts.token,
+     }, {
+          uid: opts.uid,
+          expires: opts.expires
+     }, function (err) {
+          console.log('opts', err);
           if (err) {
                if (typeof callback === 'function') {
                     return callback(err);
@@ -79,6 +155,7 @@ function checkActivity(oid, callback) {
                }
           }
           if (typeof callback === 'function') {
+               console.log('ACTIVITY', activity);
                return callback(null, activity);
           }
      });
@@ -110,20 +187,24 @@ function checkPermissions(plan, callback) {
  * @param  {String}   type     type of request to check
  * @param  {Function} callback callback accepts two paramaters, err and decision as a Boolean
  */
-function checkAvailActivity(oid, plan, type, callback) {
+function checkAvailActivity(oid, permission, type, callback) {
      checkActivity(oid, function (err, activity) {
           if (err) {
                return callback(err);
           }
-          checkPermissions(plan, function (err, permission) {
-               if (err) {
-                    return callback(err);
-               }
-               var dailyAvail = (activity[type + '-day-count'] < permission.limits.daily[type]);
-               var monthlyAvail = (activity[type + '-month-count'] < permission.limits.monthly[type]);
-               var decision = (dailyAvail === true && monthlyAvail === true);
-               callback(null, decision);
-          })
+          // checkPermissions(plan, function (err, permission) {
+          if (err) {
+               return callback(err);
+          }
+          console.log("activity[type + '-day-count']", activity[type + '-day-count']);
+          console.log("permission.limits.daily[type]", permission.limits.daily[type]);
+          console.log("type", type);
+
+          var dailyAvail = (activity[type + '-day-count'] < permission.limits.daily[type]);
+          var monthlyAvail = (activity[type + '-month-count'] < permission.limits.monthly[type]);
+          var decision = (dailyAvail === true && monthlyAvail === true);
+          callback(null, decision);
+          // })
      })
 }
 
@@ -134,7 +215,7 @@ function checkAvailActivity(oid, plan, type, callback) {
  */
 function findUser(args, callback) {
      try {
-          console.log('User', args)
+          console.log('1User', args)
           User.scan(args).exec(function (err, user) {
                if (err) {
                     if (typeof callback === 'function') {
@@ -162,19 +243,21 @@ function findUser(args, callback) {
  */
 function findOneUser(args, callback) {
      try {
-          console.log('User', args)
-          User.scan(args).exec(function (err, user) {
+          console.log('2User', args)
+          User.get(args, function (err, user) {
+               console.log('user', user, 'err', err);
                if (err) {
                     if (typeof callback === 'function') {
                          return callback(err);
                     }
                } else {
                     if (typeof callback === 'function') {
-                         return callback(null, user[0]);
+                         return callback(null, user);
                     }
                }
           });
      } catch (err) {
+          console.log('err', err);
           if (typeof callback === 'function') {
                return callback({
                     message: 'There was an issue finding user'
@@ -206,6 +289,94 @@ function updateUser(args, updates, callback) {
           if (typeof callback === 'function') {
                return callback({
                     message: 'There was an issue updating user'
+               });
+          }
+     }
+}
+
+/**
+ * update a subscription in dynamo
+ * @param  {Object}   oid     identifier(s) for the subscription
+ * @param  {Object}   updates  what and how to update
+ * @param  {Function} callback callback accepts one paramater, err
+ */
+function updateSubscription(request, updates, callback) {
+     try {
+          if (typeof oid === 'string') {
+               request = {
+                    oid: oid
+               };
+          }
+          Subscription.update(request, updates, function (err) {
+               console.log('ERR---UPDATE', err, callback);
+               if (err) {
+                    if (typeof callback === 'function') {
+                         return callback(err);
+                    }
+               }
+               if (typeof callback === 'function') {
+                    return callback(null);
+               }
+          });
+     } catch (err) {
+          console.log('err', err);
+          if (typeof callback === 'function') {
+               return callback({
+                    message: 'There was an issue updating subscription'
+               });
+          }
+     }
+}
+
+/**
+ * find a subscription in dyanmo table
+ * @param  {Object}   args  identifier(s) for item
+ * @param  {Function} cb    callback accepts two paramaters, err and item data
+ */
+function findSubscription(args, cb) {
+     try {
+          Subscription.get(args, function (err, subscription) {
+               if (err) {
+                    if (typeof cb === 'function') {
+                         return cb(err);
+                    }
+               } else {
+                    if (typeof cb === 'function') {
+                         return cb(null, subscription);
+                    }
+               }
+          });
+     } catch (err) {
+          if (typeof cb === 'function') {
+               return cb({
+                    message: 'There was an issue finding' + model
+               });
+          }
+     }
+}
+
+/**
+ * deletes an item from dynamo
+ * @param  {Object}   model dynamoDb model
+ * @param  {Object}   opts  identifier for item
+ * @param  {Function} cb    callback accepts one paramaters, err
+ */
+function deleteItem(model, opts, cb) {
+     try {
+          model.delete(opts, function (err) {
+               if (err) {
+                    if (typeof cb === 'function') {
+                         return cb(err);
+                    }
+               }
+               if (typeof cb === 'function') {
+                    return cb(null);
+               }
+          });
+     } catch (err) {
+          if (typeof cb === 'function') {
+               return cb({
+                    message: 'There was an issue deleting item'
                });
           }
      }
@@ -267,6 +438,49 @@ function findBy(model, args, cb) {
      }
 }
 
+function getAllUsers(callback) {
+  User.scan().exec()
+    .then(callback)
+    .catch(callback);
+}
+
+function getScans(Request, Scan, e, callback) {
+     console.log('REQUEST', e, callback);
+     findSomeBy(Request, {
+          uid: e.uid
+     }, function (err, data) {
+          if (err !== null) {
+               callback(err);
+          }
+          console.log('Request data', data);
+          var requests = data;
+          findSomeBy(Scan, {
+               uid: e.uid
+          }, function (err, data) {
+               if (err !== null) {
+                    callback(err);
+               }
+               console.log('Scan data', data);
+               var scans = {
+                    message: '',
+                    list: []
+               };
+               if (err === null) {
+                    scans.message = 'Request found!';
+                    scans.list = _.uniq(_.union(data, requests), false, function (item) {
+                         return item.requestId;
+                    });
+               } else {
+                    scans.message = err;
+               }
+               scans.list.sort(function (a, b) {
+                    return a.requestDate - b.requestDate;
+               });
+               callback(null, scans);
+          });
+     });
+}
+
 /**
  * finds item(s) in dyanmo table
  * @param  {String}   model dynamoose model
@@ -313,7 +527,6 @@ function deleteBy(model, args, cb) {
                if (typeof callback === 'function') {
                     return callback(null);
                }
-
           });
      } catch (err) {
           return callback({
@@ -322,14 +535,56 @@ function deleteBy(model, args, cb) {
      }
 }
 
+/**
+ * wrapper for sending an email
+ * @param  {String}   title   title for email message
+ * @param  {String}   text    body text of email
+ * @param  {String}   email   email to send email to
+ * @param  {String}   subject subject line for email
+ * @param  {Function} cb      callback
+ */
+function sendEmail(title, text, email, subject, cb) {
+
+     var transporter = nodemailer.createTransport(mailgunApiTransport(secrets.mailgun));
+     var path = require('path');
+     var Styliner = require('styliner');
+     var styliner = new Styliner(__dirname + '/email');
+     var p = path.join(__dirname + '/email/layout.ejs');
+     ejs.renderFile(p, {
+          title: title,
+          text: text
+     }, function (e, html) {
+          styliner.processHTML(html)
+               .then(function (processedSource) {
+                    var mailOptions = {
+                         to: email,
+                         from: 'noreply@myseodr.com',
+                         subject: subject,
+                         html: processedSource
+                    };
+                    transporter.sendMail(mailOptions, cb);
+               })
+     });
+}
+
 module.exports.encrypt = encrypt;
 module.exports.findBy = findBy;
+module.exports.sendEmail = sendEmail;
 module.exports.findSomeBy = findSomeBy;
 module.exports.updateActivity = updateActivity;
+// module.exports.findActivity = findActivity;
+module.exports.updateActivityEmail = updateActivityEmail;
 module.exports.checkActivity = checkActivity;
 module.exports.checkAvailActivity = checkAvailActivity;
 module.exports.gravatar = gravatar;
-module.exports.findUser = findUser; /* Deprecate */
+module.exports.savePasswordResetToken = savePasswordResetToken;
+module.exports.findPasswordResetToken = findPasswordResetToken;
+module.exports.findUser = findUser; /* When not searching by email */
 module.exports.findOneUser = findOneUser;
 module.exports.updateUser = updateUser;
+module.exports.updateSubscription = updateSubscription;
+module.exports.findSubscription = findSubscription;
 module.exports.deleteUser = deleteUser;
+module.exports.deleteItem = deleteItem;
+module.exports.getScans = getScans;
+module.exports.getAllUsers = getAllUsers;

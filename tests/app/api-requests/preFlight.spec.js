@@ -1,7 +1,7 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var expect = chai.expect;
-var preFlight = require('../../../app/api-requests/preFlight');
+// var preFlight = require('../../../app/api-requests/preFlight');
 
 // module.exports = {
 //      _preFlight: _preFlight,

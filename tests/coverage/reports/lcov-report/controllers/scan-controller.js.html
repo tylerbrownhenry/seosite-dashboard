@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for controllers/scan-controller.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">controllers/scan-controller.js</span></h1>
+    <h2>
+        Statements: <span class="metric">11.11% <small>(2 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">11.11% <small>(2 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">controllers/</a> &#187; scan-controller.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+var _ = require('underscore'),
+     Request = require('../models/request'),
+    //  Permission = require('../models/permission'),
+     permissions = {
+       free: require('../api-requests/permissions/free'),
+       paid: require('../api-requests/permissions/paid')
+     },
+     Scan = require('../models/scan'),
+     Activity = require('../models/activity'),
+     plans = require('../config/secrets').stripeOptions.planData,
+     fs = require('fs'),
+     utils = require('../utils'),
+     path = require('path');
+&nbsp;
+exports.getDefault = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+<span class="cstat-no" title="statement not covered" >     console.log('dashboard-controller Permission');</span>
+<span class="cstat-no" title="statement not covered" >     var user = req.user;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     var form = {},</span>
+          error = null,
+          formFlash = req.flash('form'),
+          errorFlash = req.flash('error');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     if (formFlash.length) {</span>
+<span class="cstat-no" title="statement not covered" >          form.email = formFlash[0].email;</span>
+     }
+<span class="cstat-no" title="statement not covered" >     if (errorFlash.length) {</span>
+<span class="cstat-no" title="statement not covered" >          error = errorFlash[0];</span>
+     }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >     utils.getScans(Request, Scan, user, <span class="fstat-no" title="function not covered" >function (err, scans) {</span></span>
+<span class="cstat-no" title="statement not covered" >       console.log('scans',scans.list.length);</span>
+<span class="cstat-no" title="statement not covered" >          if (err !== null) {</span>
+<span class="cstat-no" title="statement not covered" >               res.render('errors', {</span>
+                    msg: 'We had problems locating your plan type, please try again later.'
+               });
+          }
+          // utils.findSomeBy(Permission, {
+          //      label: user.plan
+          // }, function (err, permissions) {
+          //      console.log('Permission queryOne --&gt;', permissions, err);
+          //      if (permissions) {
+                    // res.render(req.render, {user: req.user,plan:plan});
+<span class="cstat-no" title="statement not covered" >                    utils.findSomeBy(Activity, {</span>
+                         oid: user.oid
+                    }, <span class="fstat-no" title="function not covered" >function (err, activity) {</span>
+<span class="cstat-no" title="statement not covered" >                         console.log('ACTIVITY', activity);</span>
+<span class="cstat-no" title="statement not covered" >                         if (activity) {</span>
+<span class="cstat-no" title="statement not covered" >                              res.render(req.render, {</span>
+                                   permissions: permissions[user.plan],
+                                   activity: activity[0],
+                                   user: user,
+                                   form: form,
+                                   error: error,
+                                   scans: scans,
+                                   plans: plans
+                              });
+                         } else {
+<span class="cstat-no" title="statement not covered" >                              res.render('errors', {</span>
+                                   msg: 'We had problems locating your history please try again later.'
+                              });
+                         }
+                    });
+&nbsp;
+              //  } else {
+              //       res.render('errors', {
+              //            msg: 'We had problems locating your plan type, please try again later.'
+              //       });
+              //  }
+          // });
+     });
+&nbsp;
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 24 2017 10:56:26 GMT-0400 (EDT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

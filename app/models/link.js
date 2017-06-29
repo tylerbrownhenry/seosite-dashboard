@@ -11,7 +11,8 @@ var linkSchema = new dynamoose.Schema({
           type: String
      },
      found: {
-          type: Date
+          type: String,
+          default:+new Date()
      },
      _id: {
           type: String,
@@ -26,9 +27,6 @@ var linkSchema = new dynamoose.Schema({
      requestId: {
           type: String
      },
-     scanned: {
-          type: Date
-     },
      status: {
           type: String,
           default: 'pending'
@@ -41,4 +39,6 @@ var linkSchema = new dynamoose.Schema({
      }
 });
 
-module.exports = dynamoose.model('Link', linkSchema);
+module.exports = dynamoose.model('Link', linkSchema,{
+  create: true, // Create table in DB, if it does not exist,
+});

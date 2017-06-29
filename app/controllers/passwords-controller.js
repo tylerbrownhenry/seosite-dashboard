@@ -1,19 +1,20 @@
 'use strict';
 
-var nodemailer = require('nodemailer');
-var mailgunApiTransport = require('nodemailer-mailgunapi-transport');
-var async = require('async');
-var crypto = require('crypto');
-var User = require('../models/user');
-var utils = require('../utils');
-var secrets = require('../config/secrets');
+     var PasswordResetToken = require('../models/passwordResetToken'),
+     async = require('async'),
+     q = require('Q'),
+     _ = require('underscore'),
+     crypto = require('crypto'),
+     User = require('../models/user'),
+     utils = require('../utils'),
+     secrets = require('../config/secrets');
 
 // edit password
 
 exports.postNewPassword = function (req, res, next) {
      req.assert('password', 'Password must be at least 6 characters long.').len(6);
      req.assert('confirm', 'Passwords must match.').equals(req.body.password);
-     console.log('USER checking if uid exists', req.user, req.body.password);
+     console.log('USER checking if uid exists-', req.user, req.body.password);
 
      var errors = req.validationErrors();
 
@@ -27,14 +28,12 @@ exports.postNewPassword = function (req, res, next) {
                return res.redirect(req.redirect.failure);
           }
           console.log('HASH', hash);
-          utils.findUser({
-               uid: req.user[0].uid
-          }, function (err) {
+          utils.findUserByUid(req.user.uid, function (err) {
                if (err) {
                     return next(err);
                }
                utils.updateUser({
-                    uid: req.user[0].uid
+                    uid: req.user.uid
                }, {
                     $PUT: {
                          password: hash
@@ -69,6 +68,7 @@ exports.getForgotPassword = function (req, res) {
      if (errorFlash.length) {
           error = errorFlash[0];
      }
+     console.log('form.email', form.email);
      res.render(req.render, {
           title: 'Forgot Password',
           form: form,
@@ -103,40 +103,35 @@ exports.postForgotPassword = function (req, res, next) {
                utils.findUser({
                     email: req.body.email.toLowerCase()
                }, function (err, user) {
-                    if (!user) {
+                    if (!user || !user[0]) {
                          req.flash('form', {
                               email: req.body.email
                          });
                          req.flash('error', 'No account with that email address exists.');
                          return res.redirect(req.redirect.failure);
                     }
-                    utils.updateUser({
-                         email: req.body.email.toLowerCase()
-                    }, {
-                         $PUT: {
-                              resetPasswordToken: token,
-                              resetPasswordExpires: Date.now() + 3600000
-                         }
+                    console.log('UPDATE', user[0]);
+                    user = user[0];
+                    utils.savePasswordResetToken({
+                         uid: user.uid,
+                         token: token,
+                         expires: Date.now() + 3600000
                     }, function (err) {
                          done(err, token, user);
                     });
                });
           },
-          function (token, user, done) {
-               var transporter = nodemailer.createTransport(mailgunApiTransport(secrets.mailgun));
+          function (token, user, done, e) {
+               var title = "Password Reset";
+               var text = 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.<br><br>' +
+                    'Please click on the following link, or paste this into your browser to complete the process:<br><br>' +
+                    'http://' + req.headers.host + '/reset/' + token + '/' + user.uid + '<br><br>' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.';
 
-               var mailOptions = {
-                    to: user.email,
-                    from: 'noreply@node-stripe-membership.herokuapp.com',
-                    subject: 'Reset your password on node-stripe-membership.herokuapp.com',
-                    text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                         'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-               };
-               transporter.sendMail(mailOptions, function (err) {
+                    console.log('utils',_.keys(utils));
+               utils.sendEmail(title,text,user.email,'Reset your password on MySeoDr.com',function (err) {
                     req.flash('info', {
-                         msg: 'An e-mail has been sent to ' + user.email + ' with further instructions.'
+                         msg: 'An e-mail has been sent to ' + user.email + ' with further instructions.' + 'http://' + req.headers.host + '/reset/' + token + '/' + user.uid
                     });
                     done(err, 'done');
                });
@@ -151,6 +146,7 @@ exports.postForgotPassword = function (req, res, next) {
 
 exports.getToken = function (req, res) {
      if (req.isAuthenticated()) {
+         console.log('heya!');
           return res.redirect(req.redirect.failure);
      }
      var form = {},
@@ -164,23 +160,34 @@ exports.getToken = function (req, res) {
      if (errorFlash.length) {
           error = errorFlash[0];
      }
-
-     User.get({
-               resetPasswordToken: req.params.token
-          })
-          .where('resetPasswordExpires').gt(Date.now())
-          .exec(function (err, user) {
-               if (!user) {
-                    req.flash('error', 'Password reset token is invalid or has expired.');
-                    return res.redirect(req.redirect.failure);
+     console.log('1 getToken',req.params.token);
+     utils.findPasswordResetToken(req.params.token, function (err, response) {
+          console.log('log',((response.uid !== req.params.uid ) || (Date.now() > response.expires)));
+          console.log('Date.now()', Date.now(),response.uid !== req.params.uid,response,response.uid, response.expires,req.params.uid,Date.now() > response.expires);
+          console.log(!response);
+          console.log(!response || response && ((response.uid !== req.params.uid ) || (Date.now() > response.expires)));
+          console.log(response && ((response.uid !== req.params.uid ) || (Date.now() > response.expires)));
+          console.log(((response.uid !== req.params.uid ) || (Date.now() > response.expires)));
+          if (typeof response === 'undefined' || (response.uid !== req.params.uid ) || (Date.now() > response.expires)) {
+            console.log('WHY?')
+               if (response) {
+                    utils.deleteItem(PasswordResetToken, {
+                         token: req.params.token
+                    });
                }
-               res.render(req.render, {
-                    title: 'Password Reset',
-                    token: req.params.token,
-                    form: form,
-                    error: error
-               });
+               req.flash('error', 'Password reset token is invalid or has expired.');
+               return res.redirect(req.redirect.failure);
+          }
+            // error = "Password reset!";
+          // }
+          res.render(req.render, {
+               title: 'Password Reset',
+               token: req.params.token,
+               uid: req.params.uid,
+               form: form,
+               error: error
           });
+     });
 };
 
 exports.postToken = function (req, res, next) {
@@ -193,14 +200,32 @@ exports.postToken = function (req, res, next) {
           req.flash('errors', errors);
           return res.redirect(req.redirect.failure);
      }
-
+     console.log('req', req);
      async.waterfall([
                function (done) {
-                    User.get({
-                              resetPasswordToken: req.params.token
-                         })
-                         .where('resetPasswordExpires').gt(Date.now())
-                         .exec(function (err, user) {
+                 console.log('2 getToken',req.params.token);
+
+                    utils.findPasswordResetToken(req.params.token, function (err, response) {
+                         console.log('1111 -- password-controller');
+                          try{
+
+                         if (!response || response && response.uid !== req.params.uid || Date.now() > response.expires) {
+                           console.log('tes3t',response.expires, Date.now(),'response.uid !== req.params.uid',response.uid !== req.params.uid,response.uid,req.params.uid,Date.now() > response.expires);
+                              req.flash('error', 'Password reset token is invalid or has expired.');
+                              return res.redirect(req.redirect.failure);
+                         }
+                         if (response) {
+                           console.log('test4');
+                              utils.deleteItem(PasswordResetToken, {
+                                   token: req.params.token
+                              });
+                         }
+                       } catch (e) {
+                         console.log('e',e);
+                       }
+                         console.log('test');
+                         utils.findUserByUid(req.params.uid, function (err, user) {
+                              console.log('2222- password-controller',err,'user',user);
                               if (!user) {
                                    req.flash('error', 'Password reset token is invalid or has expired.');
                                    return res.redirect(req.redirect.failure);
@@ -210,16 +235,14 @@ exports.postToken = function (req, res, next) {
                                         req.flash('errors', err);
                                         return res.redirect(req.redirect.failure);
                                    }
+                                   console.log('3333- password-controller');
                                    utils.updateUser({
-                                             resetPasswordToken: hash
+                                             uid: req.params.uid
                                         }, {
-                                             $PUT: {
-                                                  password: req.body.password,
-                                                  resetPasswordToken: undefined,
-                                                  resetPasswordExpires: undefined
-                                             }
+                                             password: hash
                                         },
                                         function (err) {
+                                          console.log('err',err);
                                              if (err) {
                                                   return next(err);
                                              }
@@ -234,23 +257,20 @@ exports.postToken = function (req, res, next) {
                                         });
                               });
                          });
+                    });
                },
                function (user, done) {
-                    var transporter = nodemailer.createTransport(mailgunApiTransport(secrets.mailgun));
+                 var title = "Your password has been changed";
+                 var text = 'Hello,<br><br>' +
+                      'This is a confirmation that the password for your account ' + user.email + ' has just been changed.<br><br>';
 
-                    var mailOptions = {
-                         to: user.email,
-                         from: 'noreply@node-stripe-membership.herokuapp.com',
-                         subject: 'Your node-stripe-membership.herokuapp.com password has been changed',
-                         text: 'Hello,\n\n' +
-                              'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-                    };
-                    transporter.sendMail(mailOptions, function (err) {
-                         req.flash('success', {
-                              msg: 'Success! Your password has been changed.'
-                         });
-                         done(err);
-                    });
+                 utils.sendEmail(title,text,user.email,title,function (err) {
+                      req.flash('success', {
+                           msg: 'Success! Your password has been changed.'
+                      });
+                      done(err);
+                 });
+
                }
           ],
           function (err) {
