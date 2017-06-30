@@ -9,6 +9,7 @@ dynamoose.AWS.config.update({
 var sh = require("shorthash"),
      findOrCreateUser = require('../app/middleware/passport-create-user'),
      postProfile = require('../app/controllers/users-controller').postProfile,
+     subscriptionController = require('../app/controllers/subscriptions/subscription-controller'),
      _ = require('underscore'),
      Q = require('Q'),
      _console = require('../app/console'),
@@ -63,37 +64,69 @@ var uid = 'ZBhQwO',
           }
      };
 var res = {
+  redirect:function(){}
+};
+
+  var s_res = {
      redirect: function (input) {
           console.log('redirect to:', input);
           utils.findUserByUid(uid, function (err, n_user) {
-               console.log('n_user', n_user);
-               if (f_user.name !== n_user.name) {
-                    if (f_user.website !== n_user.website) {
-                         if (f_user.timezone !== n_user.timezone) {
-                           console.log('user updated!');
-                         }
-                    }
-               }
+            console.log('n_user',n_user);
+            utils.findEmail(n_user.email,function(err,email){
+              console.log('should exist, new email',email);
+            })
+            utils.findEmail(f_user.email,function(err,email){
+              console.log('should no longer exist, old email ',err,email);
+            })
+            utils.checkActivity(n_user.oid,function(err,activity){
+              console.log('should have updated activity email',activity);
+            })
+            subscriptionController.getCustomer(custId,function(err,subscription){
+              console.log('should have updated customer email',subscription);
+            })
           });
      }
 }
 var f_user = {};
 /* Updating Subsription WithOut A Credit Card Fails, Then Updating The Card Passes */
 shortHandDeleteUser(req, function () {
-     _console.log('Updating User createUser:', user);
+     _console.log('Updating User Email createUser:', user);
      createUser(req, function (err, user) {
-          _console.log('Updating Subscription User:', user);
+          _console.log('Updating User Email User:', user);
           custId = user.customerId;
           validateUser(user, true).then(function (valid) {
-               _console.log('Updating Subscription Validate User:', valid);
+               _console.log('Updating User Email Validate User:', valid);
                if (valid) {
                     utils.findUserByUid(uid, function (err, _user) {
                          console.log('f_user', f_user);
                          f_user = _user;
-                         req.body.name = 'Tyler';
-                         req.body.website = 'http://www.mysite.com';
-                         req.body.timezone = 'EST';
-                         postProfile(req, res, function (e) {
+                         req.body.email = 'newemail@yahoo.com';
+                         req.body.email = 'newemail@yahoo.com';
+                         var _req = {
+                           flash: function (label, msg) {
+                                console.log('flash:label:', label, 'msg:', label);
+                           },
+                           redirect: {
+                                failure: 'failed',
+                                success: 'success'
+                           },
+                           user: {
+                             identity:{
+                               uid: uid,
+                               email:'tyler@milmerry.com'
+                             },
+                             subscription:{
+                               customerId:custId
+                             }
+                           },
+                           body:{
+                             uid: uid,
+                             oid:oid,
+                             customerId:custId,
+                             email:'new@email.com'
+                           }
+                         }
+                         postProfile(_req, s_res, function (e) {
                               console.log('next:', e);
                          });
                     });

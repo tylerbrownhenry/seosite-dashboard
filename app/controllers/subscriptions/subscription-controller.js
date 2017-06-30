@@ -1,5 +1,5 @@
 var utils = require('../../utils'),
-    _console = require('../../console'),
+     _console = require('../../console'),
      secrets = require('../../config/secrets').stripeOptions,
      Stripe = require('stripe'),
      stripe;
@@ -19,10 +19,10 @@ function createCustomer(email, cb) {
 }
 
 function setCard(customer, oid, email, cb) {
-     _console.log('subscription-controller.js setCard --> customer', customer,oid);
+     _console.log('subscription-controller.js setCard --> customer', customer, oid);
      stripe = new Stripe(secrets.apiKey);
      var cardHandler = function (err, _customer) {
-       _console.log('subscription-controller.js cardHandler: customer:',_customer);
+          _console.log('subscription-controller.js cardHandler: customer:', _customer);
           if (err) {
                return cb(err);
           }
@@ -30,11 +30,14 @@ function setCard(customer, oid, email, cb) {
           utils.updateSubscription(customer.customerId, {
                last4: card.last4
           }, function (err) {
-              _console.log('subscription-controller.js cardHandler updateSubscription: err',err);
+               _console.log('subscription-controller.js cardHandler updateSubscription: err', err);
                if (err) {
                     return cb(err);
                }
-               return cb(null);
+               var emailContent = utils.formatEmailContent('card-added', {});
+               utils.sendEmail(emailContent.title, emailContent.text, email, emailContent.subject, function (err) {
+                    return cb(null);
+               });
           });
      };
 
@@ -53,7 +56,7 @@ function setCard(customer, oid, email, cb) {
 module.exports = {
      setCard: setCard,
      cancelStripe: function (customerId, cb) {
-          _console.log('subscription-controller.js: cancelStripe: customerId',customerId);
+          _console.log('subscription-controller.js: cancelStripe: customerId', customerId);
           stripe = new Stripe(secrets.apiKey);
           if (customerId) {
                stripe.customers.del(
@@ -83,13 +86,13 @@ module.exports = {
      findUserPlan: function (oid) {
 
      },
-     getCustomer: function(customerId,cb){
-       _console.log('subscription-controller.js getCustomer: customerId',customerId);
-       stripe = new Stripe(secrets.apiKey);
-       stripe.customers.retrieve(customerId, function (err,res) {
-            _console.log('subscription-controller.js getCustomer retrieve: err',err,'res',res);
-            cb(err,res);
-       });
+     getCustomer: function (customerId, cb) {
+          _console.log('subscription-controller.js getCustomer: customerId', customerId);
+          stripe = new Stripe(secrets.apiKey);
+          stripe.customers.retrieve(customerId, function (err, res) {
+               _console.log('subscription-controller.js getCustomer retrieve: err', err, 'res', res);
+               cb(err, res);
+          });
      },
      createCustomer: function (user, next) {
           createCustomer(user, function (err, user) {
@@ -109,20 +112,21 @@ module.exports = {
                }
           );
      },
-     switchSubscription: function(currentSubscriptionId,newPlan,cb){
-       stripe = new Stripe(secrets.apiKey);
-       stripe.subscriptions.update(
-         currentSubscriptionId,
-         { plan:newPlan},
-         function(err, res) {
-           _console.log('subscription-controller.js switchSubscription: res',res);
-           if(!err){
-             cb(null,res);
-           } else {
-             cb(err);
-           }
-         }
-       );
+     switchSubscription: function (currentSubscriptionId, newPlan, cb) {
+          stripe = new Stripe(secrets.apiKey);
+          stripe.subscriptions.update(
+               currentSubscriptionId, {
+                    plan: newPlan
+               },
+               function (err, res) {
+                    _console.log('subscription-controller.js switchSubscription: res', res);
+                    if (!err) {
+                         cb(null, res);
+                    } else {
+                         cb(err);
+                    }
+               }
+          );
      },
      projectUpgradeCost: function (custumerId, subscriptionId, plan, cb) {
           stripe = new Stripe(secrets.apiKey);
@@ -150,7 +154,7 @@ module.exports = {
           stripe.invoices.retrieveUpcoming(
                id,
                function (err, res) {
-                    _console.log('subscription-controller.js getUpcomingInvoice: res',res);
+                    _console.log('subscription-controller.js getUpcomingInvoice: res', res);
                     if (!err) {
                          cb(null, {
                               nextPaymentAttempt: (res.next_payment_attempt) ? res.next_payment_attempt : null,
@@ -169,7 +173,7 @@ module.exports = {
           stripe = new Stripe(secrets.apiKey);
           stripe.subscriptions.retrieve(id,
                function (err, res) {
-                    _console.log('subscription-controller.js: getSubscription: retrieve res:',res);
+                    _console.log('subscription-controller.js: getSubscription: retrieve res:', res);
                     if (!err) {
                          cb(null, {
                               plan: (res.plan) ? res.plan.id : null,
@@ -188,7 +192,7 @@ module.exports = {
                     }
                });
      },
-     cancelSubscription: function (id, cb, at_period_end) {
+     cancelSubscription: function (id, cb, at_period_end, planName, email,periodEnd) {
           stripe = new Stripe(secrets.apiKey);
           if (typeof at_period_end === 'undefined') {
                at_period_end = true
@@ -197,9 +201,25 @@ module.exports = {
                     at_period_end: at_period_end
                },
                function (err, confirmation) {
-                    cb(err, confirmation);
-               }
-          );
+                    console.log('cancelSubscription id', id, 'confirmation:', confirmation);
+                    if (typeof planName !== 'undefined' && typeof email !== 'undefined') {
+                        var template = (at_period_end)?'subscription-cancelled-at-period-end':'subscription-cancelled-now';
+                         var emailContent = utils.formatEmailContent(template, {
+                              subscriptionId: planName,
+                              periodEnd: periodEnd
+                         });
+                         utils.updateSubscription(confirmation.customer,{
+                           cancelAtPeriodEnd: (confirmation.cancel_at_period_end) ? confirmation.cancel_at_period_end : null,
+                           canceledAt: (confirmation.canceled_at) ? confirmation.canceled_at : null
+                         },function(err,res){
+                             utils.sendEmail(emailContent.title, emailContent.text, email, emailContent.subject, function (err) {
+                                  return cb(err, confirmation);
+                             });
+                       })
+                    } else {
+                         return cb(err, confirmation);
+                    }
+               });
      },
      listSubscriptions: function (cb) {
           stripe = new Stripe(secrets.apiKey);
@@ -220,19 +240,32 @@ module.exports = {
            * @return {function}                  what to do after saving or having an error
            */
           function subscriptionHandler(err, res) {
-               _console.log('subscription-controller.js setPlan subscriptionHandler err', err, res);
+               _console.log('subscription-controller.js setPlan subscriptionHandler err', err, res, plan);
                if (err) {
                     return cb(err);
                }
                utils.updateSubscription(res.customer, {
                     plan: plan,
-                    subscriptionId: subscription.id
+                    subscriptionId: res.id,
+                    plan: (res.plan) ? res.plan.id : null,
+                    frequency: (res.plan && res.plan.interval) ? res.plan.interval : null,
+                    planAmount: (res.plan && res.plan.amount) ? res.plan.amount : null,
+                    planName: (res.plan && res.plan.name) ? res.plan.name : null,
+                    periodEnd: (res.current_period_end) ? res.current_period_end : null,
+                    periodStart: (res.current_period_start) ? res.current_period_start : null,
+                    status: (res.status) ? res.status : null,
+                    created: (res.created) ? res.created : null
                }, function (err) {
                     _console.log('subscription-controller.js subscriptionHandler callback err', err);
                     if (err) {
                          return cb(err);
                     }
-                    return cb(null);
+                    var emailContent = utils.formatEmailContent('subscription-added', {
+                         planName: res.plan.name
+                    });
+                    utils.sendEmail(emailContent.title, emailContent.text, email, emailContent.subject, function (err) {
+                         return cb(null);
+                    });
                });
           };
 

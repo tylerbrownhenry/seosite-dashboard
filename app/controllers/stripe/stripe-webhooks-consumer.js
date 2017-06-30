@@ -4,7 +4,7 @@ var utils = require('../../utils'),
 module.exports = function (ref, cb) {
 
      var subObj = ref.stripeEvent.data.object;
-     console.log('stripe-webhooks-consumer ref:', subObj, ref.stripeEvent.type);
+     console.log('stripe-webhooks-consumer ref:', subObj, ref.stripeEvent);
 
      // http://benfoster.io/blog/stripe-failed-payments-how-to
 
@@ -22,14 +22,16 @@ module.exports = function (ref, cb) {
      if (ref.stripeEvent.type === 'invoice.payment_succeeded') {
           console.log('stripe-webhook -> invoice.payment_succeeded', subObj);
           subscriptionController.getSubscription(subObj.subscription, function (err, res) {
+               // console.log('stripe-webhook -> invoice.payment_succeeded getSub err',err,'res')
                utils.findSubscription({
                     customerId: subObj.customer
                }, function (err, subscription) {
                     utils.updateSubscription({
                          customerId: subObj.customer
                     }, {
-                         periodStart: res.periodStart,
-                         periodEnd: res.periodEnd,
+                         periodStart: subObj.period_start,
+                         /* using some on subObj for input for unit tests, and because not all data is on the input */
+                         periodEnd: subObj.period_end,
                          frequency: res.frequency,
                          cancelAtPeriodEnd: res.cancelAtPeriodEnd,
                          status: res.status
@@ -40,14 +42,74 @@ module.exports = function (ref, cb) {
                                    periodEnd: utils.formatDateFromEpoch(res.periodEnd)
                               });
                               utils.sendEmail(emailContent.title, emailContent.text, activity.email, emailContent.subject, function (err) {
-                                   // cb(err)
+                                   if (typeof cb === 'function') {
+                                        cb(err)
+                                   }
                               });
                          })
                     });
-                    //  });
                });
           });
      }
+     if (ref.stripeEvent.type === 'invoice.payment_failed') {
+          console.log('payment failed');
+          utils.findSubscription({
+               customerId: subObj.customer
+          }, function (err, subscription) {
+               console.log('subscription', subscription);
+               utils.checkActivity(subscription.oid, function (err, activity) {
+                    console.log('activity', activity);
+                    if (subObj.next_payment_attempt !== null) {
+                         var emailContent = utils.formatEmailContent('invoice.payment_failed', {
+                              attempt_count: utils.formatDateFromEpoch(subObj.attempt_count),
+                              next_payment_attempt: utils.formatDateFromEpoch(subObj.next_payment_attempt)
+                         });
+                         utils.sendEmail(emailContent.title, emailContent.text, activity.email, emailContent.subject, function (err) {
+                              if (typeof cb === 'function') {
+                                   cb(err)
+                              }
+                         });
+                    } else {
+                         /* Final payment failed */
+                         utils.updateSubscription({
+                              customerId: subObj.customer
+                         }, {
+                              periodStart: null,
+                              /* using some on subObj for input for unit tests, and because not all data is on the input */
+                              periodEnd: null,
+                              frequency: null,
+                              cancelAtPeriodEnd: null,
+                              plan: 'free',
+                              status: 'inactive'
+                         }, function (err) {
+                              utils.findSubscription({
+                                   customerId: subObj.customer
+                              }, function (err, subscription) {
+                                   subscriptionController.cancelSubscription(subscription.subscriptionId, function (err, confirmation) {
+                                     console.log('subscription called',err,confirmation);
+                                        var emailContent = utils.formatEmailContent('invoice.payment_failed_last', {});
+                                        utils.sendEmail(emailContent.title, emailContent.text, activity.email, emailContent.subject, function (err) {
+                                             if (typeof cb === 'function') {
+                                                  cb(err)
+                                             }
+                                        });
+                                   },false);
+                              });
+                         })
+                    }
+               });
+          });
+     }
+     if (ref.stripeEvent.type === 'invoice.payment_succeeded') {
+
+     }
+     if (ref.stripeEvent.type === 'invoice.payment_succeeded') {
+
+     }
+     if (ref.stripeEvent.type === 'invoice.payment_succeeded') {
+
+     }
+
 }
 //       console.log('webhook -> invoice payment succeeded');
 //       var subRef = {

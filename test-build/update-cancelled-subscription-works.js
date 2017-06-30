@@ -9,9 +9,12 @@ dynamoose.AWS.config.update({
 var sh = require("shorthash"),
      findOrCreateUser = require('../app/middleware/passport-create-user'),
      postProfile = require('../app/controllers/users-controller').postProfile,
+     subscriptionController = require('../app/controllers/subscriptions/subscription-controller'),
+     cancelSubscription = require('../app/controllers/subscriptions/subscription-controller').cancelSubscription,
      _ = require('underscore'),
      Q = require('Q'),
      _console = require('../app/console'),
+     Email = require('../app/models/email'),
      utils = require('../app/utils'),
      shortHandDeleteUser = require('./helper').shortHandDeleteUser,
      createUser = require('./helper').createUser,
@@ -63,41 +66,45 @@ var uid = 'ZBhQwO',
           }
      };
 var res = {
+     redirect: function () {}
+};
+
+var s_res = {
      redirect: function (input) {
           console.log('redirect to:', input);
           utils.findUserByUid(uid, function (err, n_user) {
-               console.log('n_user', n_user);
-               if (f_user.name !== n_user.name) {
-                    if (f_user.website !== n_user.website) {
-                         if (f_user.timezone !== n_user.timezone) {
-                           console.log('user updated!');
-                         }
-                    }
-               }
+
           });
      }
 }
 var f_user = {};
-/* Updating Subsription WithOut A Credit Card Fails, Then Updating The Card Passes */
 shortHandDeleteUser(req, function () {
-     _console.log('Updating User createUser:', user);
+     _console.log('Updating SubAccount User Email createUser:', user);
      createUser(req, function (err, user) {
-          _console.log('Updating Subscription User:', user);
+          _console.log('Updating SubAccount User Email User:', user);
           custId = user.customerId;
           validateUser(user, true).then(function (valid) {
-               _console.log('Updating Subscription Validate User:', valid);
-               if (valid) {
-                    utils.findUserByUid(uid, function (err, _user) {
-                         console.log('f_user', f_user);
-                         f_user = _user;
-                         req.body.name = 'Tyler';
-                         req.body.website = 'http://www.mysite.com';
-                         req.body.timezone = 'EST';
-                         postProfile(req, res, function (e) {
-                              console.log('next:', e);
+               _console.log('Updating SubAccount User Email Validate User:', valid);
+               addACreditCard(user, cardNum, function (res) {
+                    _console.log('Updating Subscription addACreditCard res', res);
+                    if (res === true) {
+                         addASubscription(custId, false, user, newPlan).then(function (err) {
+                              if (err === null) {
+                                   _console.log('Updating Subscription with credit card succeeds res', err);
+                                   utils.findSubscription({customerId:custId},function(err,res){
+                                      _console.log('found it!',res);
+                                       cancelSubscription(res.subscriptionId, function (err,confirmation) {
+                                         utils.findSubscription({customerId:custId},function(err,res){
+                                            _console.log('final found it!',res);
+                                            _console.log('res.canceledAt should be a date',res.canceledAt);
+                                            _console.log('res.cancelAtPeriodEnd should be true',res.cancelAtPeriodEnd);
+                                          });
+                                       },true,res.plan,fakeEmail,res.periodEnd);
+                                   });
+                              }
                          });
-                    });
-               }
+                    }
+               });
           });
      });
 });

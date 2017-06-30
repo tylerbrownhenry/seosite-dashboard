@@ -32,16 +32,19 @@ var subscriptionSchema = new dynamoose.Schema({
           type: String
      },
      cancelAtPeriodEnd: {
-          type: String
+          type: Boolean
+     },
+     canceledAt: {
+          type: Number
      },
      status: {
           type: String
      },
      periodStart: {
-          type: String
+          type: Number
      },
      periodEnd: {
-          type: String
+          type: Number
      }
 });
 

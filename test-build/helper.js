@@ -169,7 +169,7 @@ function createUser(req, cb, parentOid) {
 }
 
 function shortHandDeleteUser(req, cb) {
-     _console.log('shortHandDeleteUser -->');
+     _console.log('shortHandDeleteUser -->',req.user.uid);
      utils.findUserByUid(req.user.uid, function (err, user) {
           _console.log('user', user, req.user);
           userController._deleteAccount(req.user.customerId, req.user, function (err) {

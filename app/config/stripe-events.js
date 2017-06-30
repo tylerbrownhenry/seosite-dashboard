@@ -202,6 +202,13 @@ knownEvents['invoice.payment_succeeded'] = function (req, res, next) {
      return res.status(200).end();
 };
 
+knownEvents['invoice.payment_failed'] = function (req, res, next) {
+      /* Email Customer */
+     console.log('stripe-events.js - > invoice.payment_failed');
+     stripeWebhooksConsumer(req);
+     return res.status(200).end();
+};
+
 
 
 module.exports = function (req, res, next) {
