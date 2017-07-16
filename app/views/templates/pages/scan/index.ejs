@@ -1,0 +1,139 @@
+<div id="summary">
+    <div class="container-fluid">
+        <form class="form-horizontal" onsubmit='return submitForm(this)' style="width: 400px;margin: 0 auto;text-align: left;padding:50px;">
+          <div class="form-group hidden">
+            <label>User ID</label>
+            <input class="form-control" type="text" name="uid" value="<%= locals.user.uid %>">
+          </div>
+          <div class="form-group hidden">
+            <label>User Api Token</label>
+            <input class="form-control" type="text" name="token" value="<%= locals.user.apiToken %>">
+          </div>
+          <div class="form-group hidden">
+            <label>Current Page (For Callback Notifications)</label>
+            <input class="form-control" type="text" name="page" value="<%= locals.path %>">
+          </div>
+          <div class="form-group hidden">
+            <label>Type of Request</label>
+            <input class="form-control" type="text" name="request" value="page">
+          </div>
+          <div class="form-group hidden">
+            <label>Type (?)<!-- Not Sure if need --></label>
+            <input class="form-control" type="text" name="type" value="page:scan">
+          </div>
+          <div class="form-group hidden">
+            <label class="form-check-label">
+              <input class="form-check-input" name="save-captures" type="checkbox">
+              Save Captures?
+            </label>
+          </div>
+          <div class="form-group hidden">
+            <label class="form-check-label">
+              <input class="form-check-input" name="check-security" type="checkbox">
+              Check Meta Security?
+            </label>
+          </div>
+          <div class="form-group hidden">
+            <label class="form-check-label">
+              <input class="form-check-input" name="check-meta" type="checkbox">
+              Check Meta Data?
+            </label>
+          </div>
+          <div class="form-group hidden">
+            <label class="form-check-label">
+              <input class="form-check-input" name="check-resources" type="checkbox">
+              Check Resources?
+            </label>
+          </div>
+          <div class="form-group hidden">
+            <label class="form-check-label">
+              <input class="form-check-input" name="check-links" type="checkbox">
+              Check Links?
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Url To Search</label>
+            <input type="text" name="url" class="form-control" value="">
+          </div>
+
+          <div class="form-group">
+          <button type="submit">Submit</button>
+          </div>
+
+        </form>
+
+    </div>
+
+    <div class="container-fluid container-max">
+       < % include ../../partials/request-loop %>
+   </div>
+
+
+    <h3>Updates</h3>
+    <div class="container-fluid container-max">
+        <table class="updates table"></table>
+    </div>
+
+    <h3>Scans</h3>
+    < %= scans.list.length %>
+    <div class="container-fluid container-max">
+        <table class="scans table">
+            < % for(var i=0; i<scans.list.length; i++) {%>
+              < % if(scans.list[i].url && scans.list[i].url.url){%>
+                 <tr class="< %= scans.list[i].requestId %>"><td>Scan</td><td>Url:< %= scans.list[i].url.url %></td><td>Completed :< %= scans.list[i].completedTime %></td><td><button>summary</button><button>resources</button><button>meta</button><button>links</button><button>issues</button><button>security</button></td></tr>
+              < % } else { %>
+                 <tr><td>Request</td><td>Url:< %=scans.list[i].url %></td><td>Failed:< %=scans.list[i].failedReason %> Request Time:< %=scans.list[i].requestDate %></td><td></td></tr>
+              < % } %>
+            < % } %>
+        </table>
+    </div>
+
+    <h3>User Activity</h3>
+    <div class="container-fluid container-max">
+        <table class="activity table">
+
+          <tr><td>Requests Today</td><td>Count:< %= activity["request-day-count"] %></td><td>Count Refreshed On:< %= activity["request-day-reset"] %></td></tr>
+          <tr><td>Requests This Month</td><td>Count:< %= activity["request-month-count"] %></td><td>Count Refreshed On:< %= activity["request-month-reset"] %></td></tr>
+
+          <!-- <tr><td>Captures Today</td><td>Count:< %= activity["capture-day-count"] %></td><td>Count Refreshed On:< %= activity["capture-day-reset"] %></td></tr>
+          <tr><td>Captures This Month</td><td>Count:< %= activity["capture-month-count"] %></td><td>Count Refreshed On:< %= activity["capture-month-reset"] %></td></tr>
+
+          <tr><td>Issues Found Today</td><td>Count:< %= activity["issue-day-count"] %></td><td>Count Refreshed On:< %= activity["issue-day-reset"] %></td></tr>
+          <tr><td>Issues Found This Month</td><td>Count:< %= activity["issue-month-count"] %></td><td>Count Refreshed On:< %= activity["issue-month-reset"] %></td></tr>
+
+          <tr><td>Resources Found Today</td><td>Count:< %= activity["resource-day-count"] %></td><td>Count Refreshed On:< %= activity["resource-day-reset"] %></td></tr>
+          <tr><td>Resources Found This Month</td><td>Count:< %= activity["resource-month-count"] %></td><td>Count Refreshed On:< %= activity["resource-month-reset"] %></td></tr>
+
+          <tr><td>Links Found Today</td><td>Count:< %= activity["link-day-count"] %></td><td>Count Refreshed On:< %= activity["link-day-reset"] %></td></tr>
+          <tr><td>Links Found This Month</td><td>Count:< %= activity["link-month-count"] %></td><td>Count Refreshed On:< %= activity["link-month-reset"] %></td></tr>
+
+          <tr><td>Sites Found Today</td><td>Count:< %= activity["site-day-count"] %></td><td>Count Refreshed On:< %= activity["site-day-reset"] %></td></tr>
+          <tr><td>Sites Found This Month</td><td>Count:< %= activity["site-month-count"] %></td><td>Count Refreshed On:< %= activity["site-month-reset"] %></td></tr>
+
+          <tr><td>Pages Found Today</td><td>Count:< %= activity["page-day-count"] %></td><td>Count Refreshed On:< %= activity["page-day-reset"] %></td></tr>
+          <tr><td>Pages Found This Month</td><td>Count:< %= activity["page-month-count"] %></td><td>Count Refreshed On:< %= activity["page-month-reset"] %></td></tr> -->
+
+          <!-- <tr><td>Pages Found All Time</td><td>Count:< %= activity["page-all-count"] %></td><td></td></tr>
+          <tr><td>Sites Found All Time</td><td>Count:< %= activity["site-all-count"] %></td><td></td></tr>
+          <tr><td>Links Found All Time</td><td>Count:< %= activity["link-all-count"] %></td><td></td></tr>
+          <tr><td>Resource Found All Time</td><td>Count:< %= activity["resource-all-count"] %></td><td></td></tr>
+          <tr><td>Issues Found All Time</td><td>Count:< %= activity["issue-all-count"] %></td><td></td></tr> -->
+
+        </table>
+      </div>
+      <h3>User Permission</h3>
+      <div class="container-fluid container-max">
+          <table class="activity table">
+            <tr><td>Daily Request Limit</td><td>< %= permissions.limits.daily.request %></td></tr>
+            <tr><td>Monthly Request Limit</td><td>< %= permissions.limits.monthly.request %></td></tr>
+            <!-- <tr><td>Daily Links Limit</td><td>< %= permissions.limits.daily.links %></td></tr>
+            <tr><td>Monthly Links Limit</td><td>< %= permissions.limits.monthly.links %></td></tr>
+            <tr><td>Daily Pages Limit</td><td>< %= permissions.limits.daily.page %></td></tr>
+            <tr><td>Monthly Pages Limit</td><td>< %= permissions.limits.monthly.page %></td></tr>
+            <tr><td>Daily Requests Limit</td><td>< %= permissions.limits.daily.requests %></td></tr>
+            <tr><td>Monthly Requests Limit</td><td>< %= permissions.limits.monthly.requests %></td></tr>
+            <tr><td>Daily Site Limit</td><td>< %= permissions.limits.daily.site %></td></tr>
+            <tr><td>Monthly Site Limit</td><td>< %= permissions.limits.monthly.site %></td></tr> -->
+          </table>
+      </div>
+</div>

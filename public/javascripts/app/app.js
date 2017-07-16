@@ -10,6 +10,7 @@ jQuery(function ($) {
           $.map(data, function (n) {
                arr[n['name']] = n['value'];
           });
+          console.log('form',form,arr);
           socket.emit('queue/' + arr.request, {
                uid: arr.uid,
                url: arr.url,

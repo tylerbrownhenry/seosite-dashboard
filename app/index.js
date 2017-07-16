@@ -27,14 +27,8 @@ var AWS = require('aws-sdk'),
      };
 
 var app = express();
-// setup db
-// mongoose.connect(secrets.db);
-// mongoose.connection.on('error', function (e) {
-//      console.error('MongoDB Connection Error. Make sure MongoDB is running.', e);
-// });
 
 // express setup
-
 if (app.get('env') === 'production') {
      app.locals.production = true;
      staticDir = path.join(__dirname + '/../public');
@@ -44,7 +38,7 @@ if (app.get('env') === 'production') {
 }
 
 // This is where all the magic happens!
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/templates'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.locals._ = lodash;

@@ -8,11 +8,11 @@ dynamoose.AWS.config.update({
 
 var sh = require("shorthash"),
      findOrCreateUser = require('../app/middleware/passport-create-user'),
-     postProfile = require('../app/controllers/users-controller').postProfile,
+     postProfile = require('../app/controllers/pags/user/users-controller').postProfile,
      subscriptionController = require('../app/controllers/subscriptions/subscription-controller'),
      _ = require('underscore'),
      Q = require('Q'),
-     _console = require('../app/console'),
+     _console = require('../app/debug/console'),
      utils = require('../app/utils'),
      shortHandDeleteUser = require('./helper').shortHandDeleteUser,
      createUser = require('./helper').createUser,

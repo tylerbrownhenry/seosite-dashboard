@@ -56,7 +56,6 @@ module.exports.start = function (amqpConn) {
           ch.on("close", function () {
                console.log("[AMQP] channel closed");
           });
-
           pubChannel = ch;
           while (true) {
                var m = offlinePubQueue.shift();

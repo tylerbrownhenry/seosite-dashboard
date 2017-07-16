@@ -16,7 +16,8 @@ function whenConnected(amqpConn,done) {
     }
 }
 /**
- * initilizes rabbitmq
+ * initalize rabbitMQ
+ * @param  {Function} done callback when finished starting
  */
 function start(done) {
      /* Local queue I thought? In case not connected?*/

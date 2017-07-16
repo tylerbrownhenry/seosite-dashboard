@@ -13,6 +13,6 @@ var customerSchema = new dynamoose.Schema({
      }
 });
 
-module.exports = dynamoose.model('_Customer', customerSchema, {
+module.exports = dynamoose.model('Customer', customerSchema, {
      create: true, // Create table in DB, if it does not exist,
 });

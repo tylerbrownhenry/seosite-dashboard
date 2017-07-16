@@ -15,6 +15,13 @@ function Option(data) {
                "links": data.links,
                "security": data.security,
                "type": data.type,
+               "save": {
+                 "resources":true,
+                 "links":true,
+                 "security":true,
+                 "metaData":true,
+                 "captures":true
+               }
           }
      };
 }

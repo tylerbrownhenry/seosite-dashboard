@@ -48,6 +48,6 @@ var subscriptionSchema = new dynamoose.Schema({
      }
 });
 
-module.exports = dynamoose.model('__Subscription', subscriptionSchema, {
+module.exports = dynamoose.model('Subscription', subscriptionSchema, {
      create: true, // Create table in DB, if it does not exist,
 });

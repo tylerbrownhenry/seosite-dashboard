@@ -62,7 +62,7 @@ module.exports = function (app) {
                auth: '/dashboard'
           }),
           isUnauthenticated,
-          setRender('signup'),
+          setRender('pages/signup'),
           registrations.getSignup);
 
      app.post('/signup',

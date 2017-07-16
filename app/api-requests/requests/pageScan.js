@@ -13,7 +13,7 @@ var sh = require('shorthash'),
        paid: require('../permissions/paid')
      },
      _preFlight = require('../preFlight')._preFlight,
-     _log = require('../../debug');
+     _log = require('../../debug/debug');
 
 /**
  * Checks that a user has provided the correct options needed for making a page
@@ -75,7 +75,7 @@ function pageScan(options) {
                          } else {
 
                               _log('pageScanRequest saved', 'success');
-                              publisher.publish("", "summary", new Buffer(JSON.stringify(message))).then(function (e) {
+                              publisher.publish("", "page:scan", new Buffer(JSON.stringify(message))).then(function (e) {
                                    _log('pagescanrequest publish success', 'success');
                                    utils.updateActivity(user.oid, 'request',function(err,data){
                                       console.log('UPDATE ACTIVITY',err,data);

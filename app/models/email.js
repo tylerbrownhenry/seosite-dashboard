@@ -17,6 +17,6 @@ var emailSchema = new dynamoose.Schema({
      }
 });
 
-module.exports = dynamoose.model('_Email', emailSchema, {
+module.exports = dynamoose.model('Email', emailSchema, {
      create: true, // Create table in DB, if it does not exist,
 });

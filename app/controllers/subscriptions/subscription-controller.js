@@ -1,5 +1,5 @@
 var utils = require('../../utils'),
-     _console = require('../../console'),
+     _console = require('../../debug/console'),
      secrets = require('../../config/secrets').stripeOptions,
      Stripe = require('stripe'),
      stripe;
@@ -101,6 +101,30 @@ module.exports = {
                }
                next(null, user);
           });
+     },
+     checkPlanPermissions: function(plan,permission,expected,cb){
+        console.log('plan',plan,plan.metadata);
+        var permissions = {
+          'can:white:label': true,
+          'limit:daily:scan': true,
+          'limit:monthly:scan': true,
+          'embed:max': true
+        }
+        if(expected === true){
+          expected = 'true';
+        }
+        if(expected === false){
+          expected = 'false';
+        }
+        if(!permissions[permission]){
+          console.warn('Not an expected permission request',permission);
+        }
+        console.log('typeof',typeof pan, plan.metadata, permission, expected === true, plan.metadata[permission] === true);
+        if(typeof plan === 'object' && plan.metadata[permission] === expected){
+          cb(true);
+        } else {
+          cb(false)
+        }
      },
      listPlans: function (cb) {
           stripe = new Stripe(secrets.apiKey);

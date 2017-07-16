@@ -5,22 +5,29 @@ var StripeWebhook = require('stripe-webhook-middleware'),
      isAuthenticated = require('./middleware/auth').isAuthenticated,
      isUnauthenticated = require('./middleware/auth').isUnauthenticated,
      apiIsUnauthenticated = require('./middleware/auth').apiIsUnauthenticated,
-     apiCallback = require('./controllers/api-callback-controller.js'),
      setRender = require('middleware-responder').setRender,
      setRedirect = require('middleware-responder').setRedirect,
      stripeEvents = require('./config/stripe-events'),
      secrets = require('./config/secrets');
 // controllers
-var users = require('./controllers/users-controller'),
-     scan = require('./controllers/scan-controller'),
-     main = require('./controllers/main-controller'),
-     //  queue = require('./controllers/queue-controller'),
-     dashboard = require('./controllers/dashboard-controller'),
-     summary = require('./controllers/summary-controller'),
-     issues = require('./controllers/issues-controller'),
-     passwords = require('./controllers/passwords-controller'),
-     registrations = require('./controllers/registrations-controller'),
-     sessions = require('./controllers/sessions-controller');
+var users = require('./controllers/pages/user/users-controller'),
+     main = require('./controllers/pages/main-controller'),
+     /*
+      Scan Controllers
+      */
+      //  queue = require('./controllers/scan/deleting--notsure--queue-controller'),
+     scan = require('./controllers/pages/scan/scan-controller'),
+     apiCallback = require('./controllers/pages/scan/api-callback-controller.js'),
+     summary = require('./controllers/pages/scan/summary-controller'),
+     issues = require('./controllers/pages/scan/issues-controller'),
+
+     dashboard = require('./controllers/pages/dashboard-controller'),
+     passwords = require('./controllers/pages/user/passwords-controller'),
+     registrations = require('./controllers/pages/user/registrations-controller'),
+     sessions = require('./controllers/pages/user/sessions-controller'),
+
+     createHash = require('./controllers/embed/embed-controller').createHash,
+     embedScan = require('./controllers/embed/embed-controller').embedScan;
 
 var stripeWebhook = new StripeWebhook({
      stripeApiKey: secrets.stripeOptions.apiKey,
@@ -62,7 +69,7 @@ module.exports = function (app) {
                auth: '/dashboard'
           }),
           isUnauthenticated,
-          setRender('signup'),
+          setRender('pages/signup'),
           registrations.getSignup);
 
      app.post('/signup',
@@ -80,14 +87,14 @@ module.exports = function (app) {
                auth: '/dashboard'
           }),
           isUnauthenticated,
-          setRender('forgot'),
+          setRender('pages/forgot-password'),
           passwords.getForgotPassword);
 
      app.post('/forgot',
           setRedirect({
                auth: '/dashboard',
-               success: '/forgot',
-               failure: '/forgot'
+               success: 'pages/forgot-password',
+               failure: 'pages/forgot-password'
           }),
           isUnauthenticated,
           passwords.postForgotPassword);
@@ -97,10 +104,10 @@ module.exports = function (app) {
           setRedirect({
                auth: '/dashboard',
               //  success: '/dashboard',
-               failure: '/forgot'
+               failure: 'pages/forgot-password'
           }),
           isUnauthenticated,
-          setRender('reset'),
+          setRender('pages/reset-password'),
           passwords.getToken);
 
      app.post('/reset/:token/:uid',
@@ -113,7 +120,7 @@ module.exports = function (app) {
           passwords.postToken);
 
      app.get('/dashboard',
-          setRender('dashboard/index'),
+          setRender('pages/dashboard'),
           setRedirect({
                auth: '/'
           }),
@@ -121,7 +128,7 @@ module.exports = function (app) {
           dashboard.getDefault);
 
      app.get('/scan',
-          setRender('main/index'),
+          setRender('pages/scan/index'),
           setRedirect({
                auth: '/'
           }),
@@ -129,23 +136,23 @@ module.exports = function (app) {
           scan.getDefault);
 
      app.get('/summary',
-          setRender('dashboard/summary'),
+          setRender('pages/summary'),
           setRedirect({
                auth: '/'
           }),
           isAuthenticated,
           summary.getDefault);
-     //
-     //  app.get('/issues',
-     //       setRender('dashboard/issues'),
-     //       setRedirect({
-     //            auth: '/'
-     //       }),
-     //       isAuthenticated,
-     //       issues.getDefault);
+
+      app.get('/issues',
+           setRender('pages/issues'),
+           setRedirect({
+                auth: '/'
+           }),
+           isAuthenticated,
+           issues.getDefault);
 
      app.get('/billing',
-          setRender('dashboard/billing'),
+          setRender('pages/billing'),
           setRedirect({
                auth: '/'
           }),
@@ -153,7 +160,7 @@ module.exports = function (app) {
           dashboard.getBilling);
 
      app.get('/activity',
-          setRender('dashboard/activity'),
+          setRender('pages/activity'),
           setRedirect({
                auth: '/'
           }),
@@ -161,7 +168,7 @@ module.exports = function (app) {
           dashboard.getActivity);
 
      app.get('/profile',
-          setRender('dashboard/profile'),
+          setRender('pages/profile'),
           setRedirect({
                auth: '/'
           }),
@@ -169,12 +176,28 @@ module.exports = function (app) {
           dashboard.getProfile);
 
      app.get('/users',
-          setRender('dashboard/users'),
+          setRender('pages/admin/users'),
           setRedirect({
                auth: '/'
           }),
           isAuthenticated,
+          function(req,res,next){
+            next();
+            console.log('check that are admin req',req.user);
+          },
           dashboard.getUsers);
+
+    app.get('/tests',
+         setRender('pages/admin/admin-test'),
+         setRedirect({
+              auth: '/'
+         }),
+         isAuthenticated,
+         function(req,res,next){
+           next();
+           console.log('check that are admin req',req.user);
+         },
+         dashboard.getUsers);
 
      app.post('/user',
           setRedirect({
@@ -229,5 +252,13 @@ module.exports = function (app) {
      app.post('/callback',
           apiIsUnauthenticated,
           apiCallback
+     );
+
+     app.post('/embed/',
+       createHash
+     );
+
+     app.post('/embed/scan',
+       embedScan
      );
 };

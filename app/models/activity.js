@@ -11,23 +11,43 @@ var activitySchema = new dynamoose.Schema({
      "customerId": {
           type: String,
      },
-     "request-month-reset": {
+     "site:scan-month-reset": {
           type: String,
           default: +new Date()
      },
-     "request-day-reset": {
+     "site:scan-day-reset": {
           type: String,
           default: +new Date()
      },
-     "request-all-count": {
+     "site:scan-all-count": {
+       type: Number,
+       default: 0
+     },
+     "site:scan-day-count": {
           type: Number,
           default: 0
      },
-     "request-day-count": {
+     "site:scan-month-count": {
           type: Number,
           default: 0
      },
-     "request-month-count": {
+     "page:scan-month-reset": {
+       type: String,
+       default: +new Date()
+     },
+     "page:scan-day-reset": {
+       type: String,
+       default: +new Date()
+     },
+     "page:scan-all-count": {
+          type: Number,
+          default: 0
+     },
+     "page:scan-day-count": {
+          type: Number,
+          default: 0
+     },
+     "page:scan-month-count": {
           type: Number,
           default: 0
      }
@@ -41,6 +61,6 @@ var activitySchema = new dynamoose.Schema({
           updatedAt: 'updatedTs'
      }
 });
-module.exports = dynamoose.model('_Activity', activitySchema,{
+module.exports = dynamoose.model('Activity', activitySchema,{
   create: true, // Create table in DB, if it does not exist,
 });

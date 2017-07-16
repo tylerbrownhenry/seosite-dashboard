@@ -10,7 +10,7 @@ var sh = require("shorthash"),
      findOrCreateUser = require('../app/middleware/passport-create-user'),
      _ = require('underscore'),
      Q = require('Q'),
-     _console = require('../app/console'),
+     _console = require('../app/debug/console'),
      utils = require('../app/utils'),
      shortHandDeleteUser = require('./helper').shortHandDeleteUser,
      createUser = require('./helper').createUser,
@@ -51,7 +51,6 @@ var uid = 'ZBhQwO',
      };
 
 /* Creating and Deleting User */
-
      shortHandDeleteUser(req, function () {
           _console.log('Create/Delete User: deleteUser')
           createUser(req, function (err, user) {

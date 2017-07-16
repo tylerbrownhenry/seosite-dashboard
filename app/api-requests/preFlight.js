@@ -1,6 +1,6 @@
 var User = require('./../models/user'),
      q = require('q'),
-     _log = require('./../debug'),
+     _log = require('./../debug/debug'),
      utils = require('../utils'),
      _ = require('underscore');
 
@@ -38,13 +38,13 @@ function pageRequestValidate(user, request) {
      var perm = permissions[user.plan];
      _log('user', user, 'request', request,'perm',perm);
      var problems = [];
-     if (perm.restrictions.type[request.type] === false) {
-          problems.push({
-               parent: 'type',
-               hint: 'upgrade',
-               message: 'Your current plan does not allow requests of this type: ' + request.type + '.'
-          });
-     }
+    //  if (perm.restrictions.type[request.type] === false) {
+    //       problems.push({
+    //            parent: 'type',
+    //            hint: 'upgrade',
+    //            message: 'Your current plan does not allow requests of this type: ' + request.type + '.'
+    //       });
+    //  }
      //  if (user.activity[request.type + 's'].daily.count >= perm.limits.daily[request.type]) {
      //       problems.push({
      //            parent: 'form',
@@ -165,7 +165,7 @@ var approvedRequestTypes = {
      //  site: siteRequestValidate,
      //  page: pageRequestValidate,
      //  summary: pageRequestValidate,
-     request: pageRequestValidate,
+     'page:scan': pageRequestValidate,
      //  freeSummary: pageRequestValidate,
      //  link: linkRequestValidate,
      //  capture: captureRequestValidate
@@ -184,7 +184,7 @@ function validate(user, request) {
                _debug: 'validate',
                message: [{
                     parent: 'form',
-                    message: 'Cannot make a request of this type:' + request.type
+                    message: 'denied:request:type'
                }]
           });
           return promise.promise;
@@ -319,9 +319,9 @@ function checkApiCall(req, params) {
           checkRequirements(params, req).then(function () {
                _log('server.js checkRequirements success');
                _authorize(req).then(function (user) {
-                    _log('server.js _authorize success',permissions,user);
+                 _log('server.js _authorize success',permissions,user,req.options.type);
                     var options = req.options;
-                    utils.checkAvailActivity(user.oid,permissions[user.plan],options.type, function (err,decision) {
+                    utils.checkAvailActivity(user.oid,user.customerId,options.type, function (err,decision) {
                       console.log('checkAvailActivity--',decision);
                           if(err){
                             promise.reject({

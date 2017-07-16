@@ -7,13 +7,13 @@ dynamoose.AWS.config.update({
 });
 
 var sh = require("shorthash"),
-     findOrCreateUser = require('../app/controllers/users-controller').findOrCreateUser,
+     findOrCreateUser = require('../app/controllers/pags/user/users-controller').findOrCreateUser,
      _ = require('underscore'),
      Q = require('Q'),
      subscriptionController = require('../app/controllers/subscriptions/subscription-controller'),
-     userController = require('../app/controllers/users-controller'),
+     userController = require('../app/controllers/pags/user/users-controller'),
      utils = require('../app/utils'),
-     _console = require('../app/console'),
+     _console = require('../app/debug/console'),
      Subscription = require('../app/models/subscription'),
      Activity = require('../app/models/activity');
 
