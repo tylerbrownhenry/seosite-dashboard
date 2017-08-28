@@ -2,8 +2,20 @@ var dynamoose = require('dynamoose');
 
 var issueSchema = new dynamoose.Schema({
      tooManyLinks: {
-          type: Number
-          default: 0
+          type: Boolean,
+          default: false
+     },
+     noIssues: {
+          type: Boolean,
+          default: false
+     },
+     sitemap: {
+          type: Boolean,
+          default: false
+     },
+     robots: {
+          type: Boolean,
+          default: false
      },
      links: {
           type: Number,

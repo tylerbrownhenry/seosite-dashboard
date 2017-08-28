@@ -1,4 +1,5 @@
 var User = require('./../models/user'),
+     Activity = require('./../models/activity'),
      q = require('q'),
      _log = require('./../debug/debug'),
      utils = require('../utils'),
@@ -33,18 +34,18 @@ function captureRequestValidate() {
      return promise.promise;
 }
 
-function pageRequestValidate(user, request) {
+function pageRequestValidate(activity, request) {
      var promise = q.defer();
-     var perm = permissions[user.plan];
-     _log('user', user, 'request', request,'perm',perm);
+     var perm = permissions[activity.plan];
+     _log('activity', activity, 'request', request, 'perm', perm);
      var problems = [];
-    //  if (perm.restrictions.type[request.type] === false) {
-    //       problems.push({
-    //            parent: 'type',
-    //            hint: 'upgrade',
-    //            message: 'Your current plan does not allow requests of this type: ' + request.type + '.'
-    //       });
-    //  }
+     //  if (perm.restrictions.type[request.type] === false) {
+     //       problems.push({
+     //            parent: 'type',
+     //            hint: 'upgrade',
+     //            message: 'Your current plan does not allow requests of this type: ' + request.type + '.'
+     //       });
+     //  }
      //  if (user.activity[request.type + 's'].daily.count >= perm.limits.daily[request.type]) {
      //       problems.push({
      //            parent: 'form',
@@ -171,13 +172,13 @@ var approvedRequestTypes = {
      //  capture: captureRequestValidate
 };
 
-function validate(user, request) {
+function validate(activity, request) {
      if (typeof approvedRequestTypes[request.type] !== 'undefined') {
-          return approvedRequestTypes[request.type](user, request);
+          return approvedRequestTypes[request.type](activity, request);
      } else {
           var promise = q.defer();
           promise.reject({
-               page: request.page,
+               source: request.source,
                success: false,
                status: 'error',
                type: 'global',
@@ -194,22 +195,22 @@ function validate(user, request) {
 function _authorize(req) {
      var promise = q.defer();
      try {
-          User.get({
-               uid: req.uid,
+          Activity.get({
+               oid: req.oid,
                apiToken: req.token
-          }, function (err, user) {
-               console.log('scan response: ', err, 'user', user, typeof user);
-               //  if (user !== null) {
+          }, function (err, activity) {
+               console.log('scan response: ', err, 'activity', activity, typeof activity);
+               //  if (activity !== null) {
                console.log('1213')
-               // user = JSON.puser.toJSON();
+               // activity = JSON.activity.toJSON();
                //  }
                if (err) {
                     console.log('1213');
                     promise.reject({
-                         page: req.page,
+                         source: req.source,
                          success: false,
                          status: 'error',
-                         _debug: 'User.findOne',
+                         _debug: 'Activity.get',
                          type: 'global',
                          message: [{
                               parent: 'form',
@@ -219,33 +220,33 @@ function _authorize(req) {
                     });
                } else {
                     console.log('1223');
-                    if (typeof user === 'undefined' || user === null) {
+                    if (typeof activity === 'undefined' || activity === null) {
                          promise.reject({
-                              page: req.page,
+                              source: req.source,
                               success: false,
                               status: 'error',
                               type: 'global',
-                              _debug: 'User.findOne',
+                              _debug: 'Activity.get',
                               message: [{
                                    parent: 'form',
                                    title: 'Invalid Token',
-                                   message: 'Invalid user/token combination.'
+                                   message: 'Invalid activity/token combination.'
                               }]
                          });
                     } else {
                          console.log('123');
-                         promise.resolve(user);
+                         promise.resolve(activity);
                     }
                }
           });
      } catch (e) {
           console.log('test', e);
           promise.reject({
-               page: req.page,
+               source: req.source,
                success: false,
                status: 'error',
                type: 'global',
-               _debug: 'User.findOne',
+               _debug: 'activity.get',
                message: [{
                     parent: 'database',
                     title: 'Uh oh!',
@@ -261,7 +262,7 @@ function checkOptions(req) {
      var promise = q.defer();
      if (typeof req === 'undefined' || !req) {
           promise.reject({
-               page: null,
+               source: null,
                success: false,
                status: 'error',
                type: 'userInput',
@@ -300,7 +301,7 @@ function checkRequirements(requirements, input) {
                });
           });
           promise.reject({
-               page: input.page,
+               source: input.source,
                status: 'error',
                type: 'global',
                _debug: 'checkRequirements',
@@ -318,46 +319,66 @@ function checkApiCall(req, params) {
           _log('server.js checkOptions success');
           checkRequirements(params, req).then(function () {
                _log('server.js checkRequirements success');
-               _authorize(req).then(function (user) {
-                 _log('server.js _authorize success',permissions,user,req.options.type);
+               _authorize(req).then(function (activity) {
+                    _log('server.js _authorize success', permissions, activity, req.options.type);
                     var options = req.options;
-                    utils.checkAvailActivity(user.oid,user.customerId,options.type, function (err,decision) {
-                      console.log('checkAvailActivity--',decision);
-                          if(err){
-                            promise.reject({
-                                 page: req.page,
-                                 status: 'error',
-                                 type: 'global',
-                                 _debug: 'checkRequirements',
-                                 success: false,
-                                 message: [{
-                                      title: 'Activity Error',
-                                      message: 'Error fetching user history.'
-                                 }]
-                            });
-                            return
-                          } else if(decision === false){
-                            promise.reject({
-                                 page: req.page,
-                                 status: 'error',
-                                 type: 'global',
-                                 _debug: 'checkRequirements',
-                                 success: false,
-                                 message: [{
-                                      title: 'Activity',
-                                      message: 'You have reached your usage limit. For the day or month.'
-                                 }]
-                            });
-                            return
-                          }
-                         validate(user, options).then(function () {
-                              _log('server.js checkRequestPermissions success');
-                              promise.resolve(user, options);
-                         }).catch(function (err) {
-                              _log('server.js checkApiCall checkRequestPermissions err', err);
-                              promise.reject(err);
+                    utils.findSubscriptionByCustomer(activity.customerId).then(function (subscription) {
+                         if (typeof subscription === undefined) {
+                              promise.reject({
+                                   source: req.source,
+                                   status: 'error',
+                                   type: 'global',
+                                   _debug: 'findSubscriptionByCustomer',
+                                   success: false,
+                                   message: [{
+                                        title: 'Subscription Error',
+                                        message: 'Error fetching subscription.'
+                                   }]
+                              });
+                              return
+                         }
+                         console.log('options.type',options);
+                         utils._checkPlanActivity(options.type, activity, subscription.plan, function (err, decision) {
+                              console.log('checkAvailActivity--', decision);
+                              if (err) {
+                                   promise.reject({
+                                        source: req.source,
+                                        status: 'error',
+                                        type: 'global',
+                                        _debug: 'checkRequirements',
+                                        success: false,
+                                        message: [{
+                                             title: 'Activity Error',
+                                             message: 'Error fetching activity history.'
+                                        }]
+                                   });
+                                   return
+                              } else if (decision === false) {
+                                   promise.reject({
+                                        source: req.source,
+                                        status: 'error',
+                                        type: 'global',
+                                        _debug: 'checkRequirements',
+                                        success: false,
+                                        message: [{
+                                             title: 'Activity',
+                                             message: 'You have reached your usage limit. For the day or month.'
+                                        }]
+                                   });
+                                   return
+                              }
+                              validate(activity, options).then(function () {
+                                   _log('server.js checkRequestPermissions success');
+                                   promise.resolve(activity, options);
+                              }).catch(function (err) {
+                                   _log('server.js checkApiCall checkRequestPermissions err', err);
+                                   promise.reject(err);
+                              });
                          });
-                    });
+                    }).catch(function (err) {
+                         _log('server.js checkApiCall findSubscriptionByCustomer err', err);
+                         promise.reject(err);
+                    })
                }).catch(function (err) {
                     _log('server.js checkApiCall _authorize err', err);
                     promise.reject(err);
@@ -374,8 +395,8 @@ function checkApiCall(req, params) {
 }
 
 function _preFlight(req, needs, callback, errCallback) {
-     checkApiCall(req, needs).then(function (user) {
-          callback(user);
+     checkApiCall(req, needs).then(function (activity) {
+          callback(activity);
      }).catch(function (err) {
           errCallback(err);
      });

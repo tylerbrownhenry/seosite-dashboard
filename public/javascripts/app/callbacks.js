@@ -20,7 +20,7 @@ jQuery(function ($) {
 
      socket.on('updates/' + window.uid + '/' + window.apiToken, function (update) {
           console.log('UPDATE!', update);
-          _.each(update.page,function(update){
+          _.each(update.source,function(update){
               $('.updates').prepend("<tr style='background-color:#eee'><td>Status</td><td>RequestID:"+update.i_id+"</td><td>Status:"+update.status+'</td><td>Message:'+update.message+'</td></tr>');
           });
      });

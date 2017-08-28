@@ -5,8 +5,11 @@
 function Option(data) {
      return {
           "uid": data.uid,
+          "oid": data.oid,
           "url": data.url,
-          "page": data.page,
+          "source": data.source,
+          "requestType": data.requestType,
+          "scanGroup": data.scanGroup,
           "type": data.type,
           "temp_id": data.temp_id,
           "token": data.token,

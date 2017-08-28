@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">api-requests/requests/pageScan.js</span></h1>
     <h2>
-        Statements: <span class="metric">11.11% <small>(3 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">10.71% <small>(3 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">0% <small>(0 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">0% <small>(0 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">11.11% <small>(3 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">10.71% <small>(3 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">api-requests/requests/</a> &#187; pageScan.js</div>
@@ -139,20 +139,7 @@
 112
 113
 114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+115</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,26 +168,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -228,6 +201,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -294,7 +268,7 @@ var sh = require('shorthash'),
        paid: require('../permissions/paid')
      },
      _preFlight = require('../preFlight')._preFlight,
-     _log = require('../../debug');
+     _log = require('../../debug/debug');
 &nbsp;
 /**
  * Checks that a user has provided the correct options needed for making a page
@@ -306,33 +280,19 @@ var sh = require('shorthash'),
 <span class="fstat-no" title="function not covered" >function pageScan(options) {</span>
 <span class="cstat-no" title="statement not covered" >     var defer = q.defer();</span>
 <span class="cstat-no" title="statement not covered" >     _log('pageScan.js init options:', options);</span>
-<span class="cstat-no" title="statement not covered" >     _preFlight(options, ['options', 'token', 'url', 'uid'], <span class="fstat-no" title="function not covered" >function (user) {</span></span>
-<span class="cstat-no" title="statement not covered" >       console.log('PREFLIGHT USER',user)</span>
-          // utils.findUser({
-          //      uid: options.uid,
-          //      apiToken: options.token
-          // }, function (err, user) {
-          //      if (err) {
-          //           console.log('err', err);
-          //      }
-              //  console.log('permissions[user.plan]',permissions[user.plan]);
-              //  console.log('options.options',options.options);
-              //  var validateOptions(options.options,permissions[user.plan]);
-              //  utils.findSomeBy(Permission, {
-              //       label: user.plan
-              //  }, function (err, permissions) {
-                    // console.log('Permission queryOne --&gt;', permissions, err);
-                    // if (err) {
-                        //  console.log('err', err);
-                    // }
-&nbsp;
+<span class="cstat-no" title="statement not covered" >     _preFlight(options, ['options', 'token', 'url', 'uid', 'oid'], <span class="fstat-no" title="function not covered" >function (activity) {</span></span>
+<span class="cstat-no" title="statement not covered" >         console.log('PREFLIGHT USER',activity,options);</span>
 <span class="cstat-no" title="statement not covered" >                    _log('pageScanRequest _preFlight success');</span>
 <span class="cstat-no" title="statement not covered" >                    var message = {</span>
                          requestDate: +new Date(),
+                         oid: options.oid,
                          uid: options.uid,
                          url: options.url,
-                         page: options.page,
-                         options: options.options
+                         source: options.source,
+                         requestType: options.requestType,
+                         scanGroup: options.scanGroup,
+                         options: options.options,
+                         processes: 1
                     };
 <span class="cstat-no" title="statement not covered" >                    message.requestId = sh.unique(JSON.stringify(message));</span>
 <span class="cstat-no" title="statement not covered" >                    var request = new Request(message);</span>
@@ -341,7 +301,7 @@ var sh = require('shorthash'),
 <span class="cstat-no" title="statement not covered" >                         if (err) {</span>
 <span class="cstat-no" title="statement not covered" >                              _log('pageScanRequest save error', 'error');</span>
 <span class="cstat-no" title="statement not covered" >                              defer.reject({</span>
-                                   page: options.page,
+                                   source: options.source,
                                    success: false,
                                    status: 'error',
                                    statusType: 'failed',
@@ -355,15 +315,16 @@ var sh = require('shorthash'),
                               });
                          } else {
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                              _log('pageScanRequest saved', 'success');</span>
-<span class="cstat-no" title="statement not covered" >                              publisher.publish("", "summary", new Buffer(JSON.stringify(message))).then(<span class="fstat-no" title="function not covered" >function (e) {</span></span>
+<span class="cstat-no" title="statement not covered" >                              _log('pageScanRequest saved', 'success','message',message);</span>
+<span class="cstat-no" title="statement not covered" >                              console.log('message',message);</span>
+<span class="cstat-no" title="statement not covered" >                              publisher.publish("", "page:scan", new Buffer(JSON.stringify(message))).then(<span class="fstat-no" title="function not covered" >function (e) {</span></span>
 <span class="cstat-no" title="statement not covered" >                                   _log('pagescanrequest publish success', 'success');</span>
-<span class="cstat-no" title="statement not covered" >                                   utils.updateActivity(user.oid, 'request',<span class="fstat-no" title="function not covered" >function(err,data){</span></span>
+<span class="cstat-no" title="statement not covered" >                                   utils.updateActivity(activity.oid, 'request',<span class="fstat-no" title="function not covered" >function(err,data){</span></span>
 <span class="cstat-no" title="statement not covered" >                                      console.log('UPDATE ACTIVITY',err,data);</span>
                                    });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >                                   defer.resolve({</span>
-                                        page: options.page,
+                                        source: options.source,
                                         success: true,
                                         status: 'success',
                                         statusType: 'update',
@@ -379,7 +340,7 @@ var sh = require('shorthash'),
                               }).catch(<span class="fstat-no" title="function not covered" >function (err) {</span>
 <span class="cstat-no" title="statement not covered" >                                   _log('pagescanrequest publish error', 'error', err);</span>
 <span class="cstat-no" title="statement not covered" >                                   defer.reject({</span>
-                                        page: options.page,
+                                        source: options.source,
                                         success: false,
                                         status: 'error',
                                         statusType: 'failed',
@@ -411,7 +372,7 @@ module.exports = pageScan;
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 24 2017 10:56:26 GMT-0400 (EDT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 27 2017 23:00:38 GMT-0400 (EDT)</div>
 </div>
 <script src="../../prettify.js"></script>
 <script>

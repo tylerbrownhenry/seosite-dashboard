@@ -13,8 +13,11 @@ jQuery(function ($) {
           console.log('form',form,arr);
           socket.emit('queue/' + arr.request, {
                uid: arr.uid,
+               oid: arr.oid,
+               requestType: 'dashboard:scan',
                url: arr.url,
-               page: arr.page,
+               source: arr.source,
+               scanGroup: arr.scanGroup,
                token: arr.token,
                /* Options */
                type: arr.type,

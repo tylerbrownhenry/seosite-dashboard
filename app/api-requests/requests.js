@@ -6,8 +6,8 @@ var pageScan = require('./requests/pageScan'),
  * @param  {Object} socket connection Object for socket.io
  */
 function requests(socket) {
-     socket.on('queue/page', function (data) {
-          console.log('requests.js queue/page -->', data);
+     socket.on('queue/page:scan', function (data) {
+          console.log('requests.js queue/page -->', data,'---');
           var options = new PageScanOptions(data);
           pageScan(options).then(function (response) {
               console.log('requests.js queue/page --> success', response);

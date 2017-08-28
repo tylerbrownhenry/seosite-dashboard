@@ -12,8 +12,32 @@
     -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/dist/semantic.min.css"></link>
+    <script src="<%= CURRENT_HOST %>/stylesheets/dist/semantic.js"></script>
+
+    <style type="text/css">
+        body {
+            background-color: #FFFFFF;
+        }
+
+        .ui.menu .item img.logo {
+            margin-right: 1.5em;
+        }
+
+        .main.container {
+            margin-top: 7em;
+        }
+
+        .wireframe {
+            margin-top: 2em;
+        }
+
+        .ui.footer.segment {
+            margin: 5em 0em 0em;
+            padding: 5em 0em;
+        }
+    </style>
+
 
 </head>
 
@@ -37,112 +61,161 @@ Database connection
 
 
 <body>
-    <% if(locals.isAuthenticated){ %>
-        <div class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="container-fluid container-wide">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-                    <a class="navbar-brand" href="/dashboard">SeoDr</a>
-                </div>
 
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="js_page_/dashboard js_page_summary" <% if (locals.path=='/dashboard' ){%>class="active"
-                            <% } %>><span class="js_count"></span><a href="/dashboard">Home</a></li>
-                        <li class="js_page_/profile profile" <% if (locals.path=='/profile' ){%>class="active"
-                            <% } %>><span class="js_count"></span><a href="/profile">Profile</a></li>
-                        <li class="js_page_/billing billing" <% if (locals.path=='/billing' ){%>class="active"
-                            <% } %>><span class="js_count"></span><a href="/billing">Billing</a></li>
-                        <li class="js_page_/scan scan" <% if (locals.path=='/scan' ){%>class="active"
-                            <% } %>><span class="js_count"></span><a href="/scan">Scan</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li <% if (locals.path !=='/' ){%>class="active"
-                            <% } %>><a href="/logout">Sign Out</a></li>
-                        <li <% if (locals.path !=='/' ){%>class="active"
-                            <% } %>><a href="/users">Users</a></li>
-                        <li <% if (locals.path=='/' ){%>class="active"
-                            <% } %>><a href="/">Log in</a></li>
-                        <li <% if (locals.path=='/' ){%>class="active"
-                            <% } %>><a href="/signup">Sign Up</a></li>
-                        <li <% if (locals.path=='/' ){%>class="active"
-                            <% } %>><a href="/forgot">Forgot Password</a></li>
-                        <li <% if (locals.path=='/activity' ){%>class="active"
-                            <% } %>><a href="/activity">Activity</a></li>
-                    </ul>
-                </div>
+
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+
+
+            <!-- <div class="ui simple dropdown item"> -->
+            <a href="/dashboard" class="item js_page_/dashboard js_page_summary" <% if (locals.path=='/dashboard' ){%>class="active"
+              <% } %>><span class="js_count"></span>Home</a>
+            <a href="/profile" class="item js_page_/profile profile" <% if (locals.path=='/profile' ){%>class="active"
+              <% } %>><span class="js_count"></span>Profile</a>
+            <a href="/billing" class="item js_page_/billing billing" <% if (locals.path=='/billing' ){%>class="active"
+              <% } %>><span class="js_count"></span>Billing</a>
+            <a href="/scan" class="item js_page_/scan scan" <% if (locals.path=='/scan' ){%>class="active"
+              <% } %>><span class="js_count"></span>Scan</a>
+            <!-- </div> -->
+
+            <!-- <a href="#" class="header item">
+        <img class="logo" src="assets/images/logo.png">
+        Project Name
+      </a> -->
+            <!-- <a href="#" class="item">Home</a> -->
+            <!-- <div class="ui simple dropdown item">
+        Dropdown <i class="dropdown icon"></i>
+        <div class="menu">
+          <a class="item" href="#">Link Item</a>
+          <a class="item" href="#">Link Item</a>
+          <div class="divider"></div>
+          <div class="header">Header Item</div>
+          <div class="item">
+            <i class="dropdown icon"></i>
+            Sub Menu
+            <div class="menu">
+              <a class="item" href="#">Link Item</a>
+              <a class="item" href="#">Link Item</a>
             </div>
+          </div>
+          <a class="item" href="#">Link Item</a>
         </div>
-        <% } %>
-            <%- body %>
-                <% include messages/flash %>
-
-                    <!-- User Information -->
-                    <script>
-                        <% if(locals.user && locals.user.uid){ %>
-                        window.uid = '<%= user.uid %>';
-                        window.apiToken = '<%= user.apiToken %>';
-                        <% } %>
-                        window.CURRENT_HOST = '<%= CURRENT_HOST %>';
-                    </script>
-
-                    <!-- Concat Depends -->
-                    <script src="/javascripts/vendor/jquery.min.js"></script>
-                    <script src="/javascripts/vendor/react.min.js"></script>
-                    <script src="/javascripts/vendor/react-do.js"></script>
-                    <script src="/javascripts/vendor/react-infinite.min.js" type="text/jsx"></script>
-                    <script src="/javascripts/vendor/precompiledinsteadofthis____jsTransformer.js"></script>
-                    <script src="/javascripts/vendor/d3.min.js"></script>
-                    <script src="/javascripts/vendor/d3-timeline.min.js"></script>
-                    <script src="/javascripts/vendor/moment.min.js"></script>
-                    <script src="/javascripts/vendor/underscore.min.js"></script>
-                    <script src="/javascripts/vendor/bootstrap.min.js"></script>
-                    <script src="/javascripts/vendor/TweenMax.min.js"></script>
-                    <script src="/javascripts/vendor/ejs.js"></script>
-
-                    <!-- Local Scripts -->
-                    <script src="/javascripts/app/app.js"></script>
-                    <script src="/javascripts/app/callbacks.js"></script>
+      </div> -->
+        </div>
+    </div>
 
 
+    <% if(locals.isAuthenticated){ %>
+        <% if(locals && locals.customization === false || !locals.customization || locals.customization && !locals.customization.logo){ %>
+            LOGO!
+            <% } else if(locals && locals.customization && locals.customization.logo){ %>
+                <!-- <img src="<%= locals.customization.logo %>"></img> -->
+                <% } %>
+                    <!-- <div class="navbar navbar-default navbar-static-top" role="navigation"> -->
+                        <!-- <div class="container-fluid container-wide">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="/dashboard">SeoDr</a>
+                            </div>
 
-                    <!-- Only needed for signup and changing timezone -->
-                    <script src="/javascripts/vendor/moment-timezone-with-data.js"></script>
-                    <!-- Profile Page Only -->
-                    <script src="/javascripts/vendor/bootstrap-select.min.js"></script>
-                    <link rel="stylesheet" href="/stylesheets/bootstrap-select.min.css">
+                            <div class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="js_page_/dashboard js_page_summary" <% if (locals.path=='/dashboard' ){%>class="active"
+                                        <% } %>><span class="js_count"></span><a href="/dashboard">Home</a></li>
+                                    <li class="js_page_/profile profile" <% if (locals.path=='/profile' ){%>class="active"
+                                        <% } %>><span class="js_count"></span><a href="/profile">Profile</a></li>
+                                    <li class="js_page_/billing billing" <% if (locals.path=='/billing' ){%>class="active"
+                                        <% } %>><span class="js_count"></span><a href="/billing">Billing</a></li>
+                                    <li class="js_page_/scan scan" <% if (locals.path=='/scan' ){%>class="active"
+                                        <% } %>><span class="js_count"></span><a href="/scan">Scan</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li <% if (locals.path !=='/' ){%>class="active"
+                                        <% } %>><a href="/logout">Sign Out</a></li>
+                                    <li <% if (locals.path !=='/' ){%>class="active"
+                                        <% } %>><a href="/users">Users</a></li>
+                                    <li <% if (locals.path=='/' ){%>class="active"
+                                        <% } %>><a href="/">Log in</a></li>
+                                    <li <% if (locals.path=='/' ){%>class="active"
+                                        <% } %>><a href="/signup">Sign Up</a></li>
+                                    <li <% if (locals.path=='/' ){%>class="active"
+                                        <% } %>><a href="/forgot">Forgot Password</a></li>
+                                    <li <% if (locals.path=='/activity' ){%>class="active"
+                                        <% } %>><a href="/activity">Activity</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> -->
+                    <% } %>
+                        <%- body %>
+                            <% include messages/flash %>
 
-                    <script>
-                        <% if(locals && locals.user){ %>
-                        $(function($) {
-                            <% if (locals.path=='/' ){%>
-                            var timezone = moment.tz.guess();
-                            $('.timezone-select').val(timezone);
-                            <% } %>
-                            var timezone = moment.tz.names();
-                            for (var i = 0; i < timezone.length; i++) {
-                                $('.timezone-select').append('<option value="' + timezone[i] + '">' + timezone[i] + '</option>');
-                            }
-                            $('.timezone-select').selectpicker('val', "<%=user.timezone%>");
-                        });
-                        <% } %>
-                    </script>
+                                <!-- User Information -->
+                                <script>
+                                    <% if(locals.user && locals.user.uid){ %>
+                                    window.uid = '<%= user.uid %>';
+                                    window.apiToken = '<%= user.apiToken %>';
+                                    <% } %>
+                                    window.CURRENT_HOST = '<%= CURRENT_HOST %>';
+                                </script>
 
-                    <!-- Stripe -->
-                    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-                    <% if(locals.stripePubKey){ %>
-                        <script type="text/javascript">
-                            Stripe.setPublishableKey('<%= stripePubKey %>');
-                        </script>
-                        <% } %>
+                                <!-- Concat Depends -->
+                                <script src="/javascripts/vendor/jquery.min.js"></script>
+                                <script src="/javascripts/vendor/react.min.js"></script>
+                                <script src="/javascripts/vendor/react-do.js"></script>
+                                <script src="/javascripts/vendor/react-infinite.min.js" type="text/jsx"></script>
+                                <script src="/javascripts/vendor/precompiledinsteadofthis____jsTransformer.js"></script>
+                                <script src="/javascripts/vendor/d3.min.js"></script>
+                                <script src="/javascripts/vendor/d3-timeline.min.js"></script>
+                                <script src="/javascripts/vendor/moment.min.js"></script>
+                                <script src="/javascripts/vendor/underscore.min.js"></script>
+                                <script src="/javascripts/vendor/bootstrap.min.js"></script>
+                                <script src="/javascripts/vendor/TweenMax.min.js"></script>
+                                <script src="/javascripts/vendor/ejs.js"></script>
 
-                            <!-- Socket.io -->
-                            <script src="<%= CURRENT_HOST %>/socket.io/socket.io.js"></script>
+                                <!-- Local Scripts -->
+                                <script src="/javascripts/app/app.js"></script>
+                                <script src="/javascripts/app/callbacks.js"></script>
+
+
+
+                                <!-- Only needed for signup and changing timezone -->
+                                <script src="/javascripts/vendor/moment-timezone-with-data.js"></script>
+                                <!-- Profile Page Only -->
+                                <script src="/javascripts/vendor/bootstrap-select.min.js"></script>
+                                <link rel="stylesheet" href="/stylesheets/bootstrap-select.min.css">
+
+                                <script>
+                                    <% if(locals && locals.user){ %>
+                                    $(function($) {
+                                        <% if (locals.path=='/' ){%>
+                                        var timezone = moment.tz.guess();
+                                        $('.timezone-select').val(timezone);
+                                        <% } %>
+                                        var timezone = moment.tz.names();
+                                        for (var i = 0; i < timezone.length; i++) {
+                                            $('.timezone-select').append('<option value="' + timezone[i] + '">' + timezone[i] + '</option>');
+                                        }
+                                        $('.timezone-select').selectpicker('val', "<%=user.timezone%>");
+                                    });
+                                    <% } %>
+                                </script>
+
+                                <!-- Stripe -->
+                                <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+                                <% if(locals.stripePubKey){ %>
+                                    <script type="text/javascript">
+                                        Stripe.setPublishableKey('<%= stripePubKey %>');
+                                    </script>
+                                    <% } %>
+
+                                        <!-- Socket.io -->
+                                        <script src="<%= CURRENT_HOST %>/socket.io/socket.io.js"></script>
 
 </body>
 

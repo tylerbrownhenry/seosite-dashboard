@@ -103,7 +103,7 @@ module.exports = {
           });
      },
      checkPlanPermissions: function(plan,permission,expected,cb){
-        console.log('plan',plan,plan.metadata);
+        console.log('plan--',plan,plan.metadata);
         var permissions = {
           'can:white:label': true,
           'limit:daily:scan': true,

@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/tasks/collections/internal.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">components/tasks/collections/internal.js</span></h1>
+    <h2>
+        Statements: <span class="metric">42.86% <small>(12 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">50% <small>(1 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">7.69% <small>(1 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">42.86% <small>(12 / 28)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">components/tasks/collections/</a> &#187; internal.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*******************************
+    Internal Task Collection
+*******************************/
+&nbsp;
+/* These tasks create packaged files from **dist** components
+   Not intended to be called directly by a user because
+   these do not build fresh from **src**
+*/
+&nbsp;
+module.exports = function(gulp) {
+&nbsp;
+  var
+    // node dependencies
+    fs         = require('fs'),
+    chmod      = require('gulp-chmod'),
+    concat     = require('gulp-concat'),
+    concatCSS  = require('gulp-concat-css'),
+    clone      = require('gulp-clone'),
+    dedupe     = require('gulp-dedupe'),
+    gulpif     = require('gulp-if'),
+    header     = require('gulp-header'),
+    less       = require('gulp-less'),
+    minifyCSS  = require('gulp-clean-css'),
+    plumber    = require('gulp-plumber'),
+    print      = require('gulp-print'),
+    rename     = require('gulp-rename'),
+    replace    = require('gulp-replace'),
+    uglify     = require('gulp-uglify'),
+&nbsp;
+    // user config
+    config     = require('./../config/user'),
+    docsConfig = require('./../config/docs'),
+&nbsp;
+    // install config
+    tasks      = require('./../config/tasks'),
+    release    = require('./../config/project/release'),
+&nbsp;
+    // shorthand
+    globs      = config.globs,
+    assets     = config.paths.assets,
+    output     = config.paths.output,
+&nbsp;
+    banner     = tasks.banner,
+    filenames  = tasks.filenames,
+    log        = tasks.log,
+    settings   = tasks.settings
+  ;
+&nbsp;
+  /*--------------
+      Packaged
+  ---------------*/
+&nbsp;
+  gulp.task('package uncompressed css', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignored + '.css')</span>
+      .pipe(plumber())
+      .pipe(dedupe())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concatCSS(filenames.concatenatedCSS, settings.concatCSS))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(header(banner, settings.header))
+        .pipe(gulp.dest(output.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  gulp.task('package compressed css', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignored + '.css')</span>
+      .pipe(plumber())
+      .pipe(dedupe())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concatCSS(filenames.concatenatedMinifiedCSS, settings.concatCSS))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(minifyCSS(settings.concatMinify))
+        .pipe(header(banner, settings.header))
+        .pipe(gulp.dest(output.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  gulp.task('package uncompressed js', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignored + '.js')</span>
+      .pipe(plumber())
+      .pipe(dedupe())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concat(filenames.concatenatedJS))
+        .pipe(header(banner, settings.header))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(gulp.dest(output.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  gulp.task('package compressed js', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignored + '.js')</span>
+      .pipe(plumber())
+      .pipe(dedupe())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concat(filenames.concatenatedMinifiedJS))
+        .pipe(uglify(settings.concatUglify))
+        .pipe(header(banner, settings.header))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(gulp.dest(output.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  /*--------------
+        RTL
+  ---------------*/
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if(config.rtl) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    gulp.task('package uncompressed rtl css', <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >      return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignoredRTL + '.rtl.css')</span>
+        .pipe(dedupe())
+        .pipe(replace(assets.uncompressed, assets.packaged))
+        .pipe(concatCSS(filenames.concatenatedRTLCSS, settings.concatCSS))
+          .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+          .pipe(header(banner, settings.header))
+          .pipe(gulp.dest(output.packaged))
+          .pipe(print(log.created))
+      ;
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    gulp.task('package compressed rtl css', <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >      return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignoredRTL + '.rtl.css')</span>
+        .pipe(dedupe())
+        .pipe(replace(assets.uncompressed, assets.packaged))
+        .pipe(concatCSS(filenames.concatenatedMinifiedRTLCSS, settings.concatCSS))
+          .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+          .pipe(minifyCSS(settings.concatMinify))
+          .pipe(header(banner, settings.header))
+          .pipe(gulp.dest(output.packaged))
+          .pipe(print(log.created))
+      ;
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    gulp.task('package uncompressed docs css', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignored + '.css')</span>
+        .pipe(dedupe())
+        .pipe(plumber())
+        .pipe(replace(assets.uncompressed, assets.packaged))
+        .pipe(concatCSS(filenames.concatenatedCSS, settings.concatCSS))
+          .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+          .pipe(gulp.dest(output.packaged))
+          .pipe(print(log.created))
+      ;
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    gulp.task('package compressed docs css', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      return gulp.src(output.uncompressed + '/**/' + globs.components + globs.ignored + '.css')</span>
+        .pipe(dedupe())
+        .pipe(plumber())
+        .pipe(replace(assets.uncompressed, assets.packaged))
+        .pipe(concatCSS(filenames.concatenatedMinifiedCSS, settings.concatCSS))
+          .pipe(minifyCSS(settings.concatMinify))
+          .pipe(header(banner, settings.header))
+          .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+          .pipe(gulp.dest(output.packaged))
+          .pipe(print(log.created))
+      ;
+    });
+&nbsp;
+  }
+&nbsp;
+  /*--------------
+        Docs
+  ---------------*/
+&nbsp;
+  var
+    docsOutput = docsConfig.paths.output
+  ;
+&nbsp;
+  gulp.task('package uncompressed docs css', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(docsOutput.uncompressed + '/**/' + globs.components + globs.ignored + '.css')</span>
+      .pipe(dedupe())
+      .pipe(plumber())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concatCSS(filenames.concatenatedCSS, settings.concatCSS))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(gulp.dest(docsOutput.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  gulp.task('package compressed docs css', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(docsOutput.uncompressed + '/**/' + globs.components + globs.ignored + '.css')</span>
+      .pipe(dedupe())
+      .pipe(plumber())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concatCSS(filenames.concatenatedMinifiedCSS, settings.concatCSS))
+        .pipe(minifyCSS(settings.concatMinify))
+        .pipe(header(banner, settings.header))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(gulp.dest(docsOutput.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  gulp.task('package uncompressed docs js', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(docsOutput.uncompressed + '/**/' + globs.components + globs.ignored + '.js')</span>
+      .pipe(dedupe())
+      .pipe(plumber())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concat(filenames.concatenatedJS))
+        .pipe(header(banner, settings.header))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(gulp.dest(docsOutput.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+  gulp.task('package compressed docs js', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return gulp.src(docsOutput.uncompressed + '/**/' + globs.components + globs.ignored + '.js')</span>
+      .pipe(dedupe())
+      .pipe(plumber())
+      .pipe(replace(assets.uncompressed, assets.packaged))
+      .pipe(concat(filenames.concatenatedMinifiedJS))
+        .pipe(uglify(settings.concatUglify))
+        .pipe(header(banner, settings.header))
+        .pipe(gulpif(config.hasPermission, chmod(config.permission)))
+        .pipe(gulp.dest(docsOutput.packaged))
+        .pipe(print(log.created))
+    ;
+  });
+&nbsp;
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 27 2017 23:00:38 GMT-0400 (EDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

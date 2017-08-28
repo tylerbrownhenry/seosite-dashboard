@@ -25,33 +25,19 @@ var sh = require('shorthash'),
 function pageScan(options) {
      var defer = q.defer();
      _log('pageScan.js init options:', options);
-     _preFlight(options, ['options', 'token', 'url', 'uid'], function (user) {
-       console.log('PREFLIGHT USER',user)
-          // utils.findUser({
-          //      uid: options.uid,
-          //      apiToken: options.token
-          // }, function (err, user) {
-          //      if (err) {
-          //           console.log('err', err);
-          //      }
-              //  console.log('permissions[user.plan]',permissions[user.plan]);
-              //  console.log('options.options',options.options);
-              //  var validateOptions(options.options,permissions[user.plan]);
-              //  utils.findSomeBy(Permission, {
-              //       label: user.plan
-              //  }, function (err, permissions) {
-                    // console.log('Permission queryOne -->', permissions, err);
-                    // if (err) {
-                        //  console.log('err', err);
-                    // }
-
+     _preFlight(options, ['options', 'token', 'url', 'uid', 'oid'], function (activity) {
+         console.log('PREFLIGHT USER',activity,options);
                     _log('pageScanRequest _preFlight success');
                     var message = {
                          requestDate: +new Date(),
+                         oid: options.oid,
                          uid: options.uid,
                          url: options.url,
-                         page: options.page,
-                         options: options.options
+                         source: options.source,
+                         requestType: options.requestType,
+                         scanGroup: options.scanGroup,
+                         options: options.options,
+                         processes: 1
                     };
                     message.requestId = sh.unique(JSON.stringify(message));
                     var request = new Request(message);
@@ -60,7 +46,7 @@ function pageScan(options) {
                          if (err) {
                               _log('pageScanRequest save error', 'error');
                               defer.reject({
-                                   page: options.page,
+                                   source: options.source,
                                    success: false,
                                    status: 'error',
                                    statusType: 'failed',
@@ -74,15 +60,16 @@ function pageScan(options) {
                               });
                          } else {
 
-                              _log('pageScanRequest saved', 'success');
+                              _log('pageScanRequest saved', 'success','message',message);
+                              console.log('message',message);
                               publisher.publish("", "page:scan", new Buffer(JSON.stringify(message))).then(function (e) {
                                    _log('pagescanrequest publish success', 'success');
-                                   utils.updateActivity(user.oid, 'request',function(err,data){
+                                   utils.updateActivity(activity.oid, 'request',function(err,data){
                                       console.log('UPDATE ACTIVITY',err,data);
                                    });
 
                                    defer.resolve({
-                                        page: options.page,
+                                        source: options.source,
                                         success: true,
                                         status: 'success',
                                         statusType: 'update',
@@ -98,7 +85,7 @@ function pageScan(options) {
                               }).catch(function (err) {
                                    _log('pagescanrequest publish error', 'error', err);
                                    defer.reject({
-                                        page: options.page,
+                                        source: options.source,
                                         success: false,
                                         status: 'error',
                                         statusType: 'failed',

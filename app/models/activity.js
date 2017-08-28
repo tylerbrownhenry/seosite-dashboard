@@ -6,9 +6,12 @@ var activitySchema = new dynamoose.Schema({
           hashKey: true
      },
      "email": {
-       type: String,
+          type: String,
      },
      "customerId": {
+          type: String,
+     },
+     "apiToken": {
           type: String,
      },
      "site:scan-month-reset": {
@@ -20,8 +23,8 @@ var activitySchema = new dynamoose.Schema({
           default: +new Date()
      },
      "site:scan-all-count": {
-       type: Number,
-       default: 0
+          type: Number,
+          default: 0
      },
      "site:scan-day-count": {
           type: Number,
@@ -32,12 +35,12 @@ var activitySchema = new dynamoose.Schema({
           default: 0
      },
      "page:scan-month-reset": {
-       type: String,
-       default: +new Date()
+          type: String,
+          default: +new Date()
      },
      "page:scan-day-reset": {
-       type: String,
-       default: +new Date()
+          type: String,
+          default: +new Date()
      },
      "page:scan-all-count": {
           type: Number,
@@ -61,6 +64,6 @@ var activitySchema = new dynamoose.Schema({
           updatedAt: 'updatedTs'
      }
 });
-module.exports = dynamoose.model('Activity', activitySchema,{
-  create: true, // Create table in DB, if it does not exist,
+module.exports = dynamoose.model('Activity', activitySchema, {
+     create: true, // Create table in DB, if it does not exist,
 });

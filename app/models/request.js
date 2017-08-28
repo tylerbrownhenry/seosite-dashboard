@@ -8,11 +8,23 @@ var requestSchema = new dynamoose.Schema({
      retries: {
           type: Number
      },
+     oid: {
+          type: String
+     },
      uid: {
+          type: String
+     },
+     requestType:{
+       type: String
+     },
+     source: {
           type: String
      },
      page: {
           type: String
+     },
+     scanGroup:{
+       type: String
      },
      url: {
           type: String

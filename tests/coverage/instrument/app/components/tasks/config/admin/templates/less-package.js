@@ -1,0 +1,9 @@
+
+var __cov_AEk8wXf4KWZfB0DmQDMP5g = (Function('return this'))();
+if (!__cov_AEk8wXf4KWZfB0DmQDMP5g.__coverage__) { __cov_AEk8wXf4KWZfB0DmQDMP5g.__coverage__ = {}; }
+__cov_AEk8wXf4KWZfB0DmQDMP5g = __cov_AEk8wXf4KWZfB0DmQDMP5g.__coverage__;
+if (!(__cov_AEk8wXf4KWZfB0DmQDMP5g['app/components/tasks/config/admin/templates/less-package.js'])) {
+   __cov_AEk8wXf4KWZfB0DmQDMP5g['app/components/tasks/config/admin/templates/less-package.js'] = {"path":"app/components/tasks/config/admin/templates/less-package.js","s":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"b":{},"f":{"1":0},"fnMap":{"1":{"name":"(anonymous_1)","line":12,"loc":{"start":{"line":12,"column":14},"end":{"line":12,"column":28}}}},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":3,"column":1}},"2":{"start":{"line":5,"column":0},"end":{"line":10,"column":3}},"3":{"start":{"line":12,"column":0},"end":{"line":21,"column":3}},"4":{"start":{"line":14,"column":2},"end":{"line":14,"column":26}},"5":{"start":{"line":15,"column":2},"end":{"line":15,"column":28}},"6":{"start":{"line":17,"column":2},"end":{"line":19,"column":15}}},"branchMap":{}};
+}
+__cov_AEk8wXf4KWZfB0DmQDMP5g = __cov_AEk8wXf4KWZfB0DmQDMP5g['app/components/tasks/config/admin/templates/less-package.js'];
+__cov_AEk8wXf4KWZfB0DmQDMP5g.s['1']++;var where='client';__cov_AEk8wXf4KWZfB0DmQDMP5g.s['2']++;Package.describe({name:'semantic:ui',summary:'Semantic UI - LESS Release of Semantic UI',version:'{version}',git:'git://github.com/Semantic-Org/Semantic-UI-LESS.git'});__cov_AEk8wXf4KWZfB0DmQDMP5g.s['3']++;Package.onUse(function(api){__cov_AEk8wXf4KWZfB0DmQDMP5g.f['1']++;__cov_AEk8wXf4KWZfB0DmQDMP5g.s['4']++;api.versionsFrom('1.0');__cov_AEk8wXf4KWZfB0DmQDMP5g.s['5']++;api.use('less','client');__cov_AEk8wXf4KWZfB0DmQDMP5g.s['6']++;api.addFiles([{files}],'client');});

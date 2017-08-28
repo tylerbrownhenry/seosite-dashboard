@@ -8,20 +8,26 @@ var scanSchema = new dynamoose.Schema({
      uid: {
           type: String
      },
-     meta: {
+     htmlResults: {
           type: Object
      },
-     resources: {
-          type: Object
+     softwareSummary:{
+       type: Object
+     },
+     tapTargetCheck: {
+       type: Object
      },
      issues: {
           type: Object
      },
-     emails: {
+     fontInfo: {
           type: Object
      },
-     linkCount: {
-          type: Number
+     serverInfo:{
+      type: Object
+     },
+     tapTargetCheck: {
+       type:Object
      },
      thumb: {
           type: String
@@ -29,6 +35,9 @@ var scanSchema = new dynamoose.Schema({
      url: {
           type: Object,
           default: {}
+     },
+     sslEnabled: {
+          type: String
      },
      redirects: {
           type: Number

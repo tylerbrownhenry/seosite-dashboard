@@ -15,10 +15,10 @@
 <div class="header low">
     <h1>Code coverage report for <span class="entity">api-requests/callbacks.js</span></h1>
     <h2>
-        Statements: <span class="metric">11.43% <small>(8 / 70)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">0% <small>(0 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">11.43% <small>(8 / 70)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">13.33% <small>(10 / 75)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">13.33% <small>(10 / 75)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">api-requests/</a> &#187; callbacks.js</div>
@@ -206,7 +206,25 @@
 179
 180
 181
-182</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -228,6 +246,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,6 +419,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
@@ -404,6 +440,23 @@
 <span class="cstat-no" title="statement not covered" >     console.log('callbacks -&gt; sendStatus req',req);</span>
 <span class="cstat-no" title="statement not covered" >     socket.emit('statusUpdate/' + req.uid);</span>
 }
+&nbsp;
+<span class="fstat-no" title="function not covered" >function generateReport(req){</span>
+<span class="cstat-no" title="statement not covered" >  if(msg.requestType === 'embed:scan'){</span>
+      /*
+      TODO Check email settings for organization
+      Email requester
+      Email oid
+      */
+<span class="cstat-no" title="statement not covered" >     utils.findOneUser({uid:msg.uid},<span class="fstat-no" title="function not covered" >function(err,user){</span></span>
+<span class="cstat-no" title="statement not covered" >        email(user.email,'complete:scan',generateSummary(msg.i_id,msg.type,msg.status));</span>
+     });
+&nbsp;
+&nbsp;
+  }
+}
+// console.log('SEND AN EMAIL',msg);
+/** Send an email **/
 &nbsp;
 <span class="fstat-no" title="function not covered" >function broadcastAll(message) {</span>
 <span class="cstat-no" title="statement not covered" >     socket.emit('broadcastAll', message);</span>
@@ -536,8 +589,8 @@
 <span class="cstat-no" title="statement not covered" >               var appMessages = [];</span>
 <span class="cstat-no" title="statement not covered" >               var messageToDelete = []</span>
 <span class="cstat-no" title="statement not covered" >               _.each(messages, <span class="fstat-no" title="function not covered" >function (message) {</span></span>
-<span class="cstat-no" title="statement not covered" >                    console.log('message', message.page, e.currentPage, message.page === e.currentPage);</span>
-<span class="cstat-no" title="statement not covered" >                    if (message.page === e.currentPage) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log('message', message.source, e.currentPage, message.source === e.currentPage);</span>
+<span class="cstat-no" title="statement not covered" >                    if (message.source === e.currentPage) {</span>
 <span class="cstat-no" title="statement not covered" >                      console.log('this page');</span>
 <span class="cstat-no" title="statement not covered" >                         currentPageMessages.push(message);</span>
 <span class="cstat-no" title="statement not covered" >                         messageToDelete.push({</span>
@@ -558,7 +611,7 @@
                });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >               socket.emit('updates/' + e.uid + '/' + e.apiToken, {</span>
-                    page: currentPageMessages,
+                    source: currentPageMessages,
                     app: appMessages
                });
           });
@@ -567,13 +620,14 @@
 &nbsp;
 module.exports.callbacks = callbacks;
 module.exports.sendStatus = sendStatus;
+module.exports.generateReport = generateReport;
 module.exports.broadcastAll = broadcastAll;
 &nbsp;</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Jun 24 2017 10:56:26 GMT-0400 (EDT)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 27 2017 23:00:38 GMT-0400 (EDT)</div>
 </div>
 <script src="../prettify.js"></script>
 <script>

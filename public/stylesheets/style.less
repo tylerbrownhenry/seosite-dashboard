@@ -1,0 +1,118 @@
+@lighterAccent: #EEE6D1;
+/*
+A frequently used background color
+*/
+@lightAccent: #BAE7E0;
+/*
+A background color that is not used a lot
+*/
+@lightPrimary: #246E89;
+/*
+Used on lots of things, lines, text, the header
+*/
+@darkPrimary: #246E89;
+/*
+A nice compliment to the primary color, can be used
+for a pop of color when needed, like headers or
+icons and things
+*/
+@darkAccent: #56AFC1;
+/*
+Dark Accent can be used from some lines or squares, but should not
+be used on large spaces, aside from the footer
+*/
+@darkerAccent: #388FA3;
+/*
+Darker Accent is used in small doses, and not on
+large spaces
+*/
+@white: #ffffff;
+@black: #000;
+@modalBackgroundColor: rgba(29, 88, 110, 0.3);
+@veryLightBackground: #fefeff;
+@veryVeryLightBackground: #efefff;
+@notificationSize: 15px;
+/* Sizes */
+@headerHeight: 50;
+@headerFont: 11;
+@notificationFont: 10px;
+/* Common Classes */
+.hidden {
+    display: none;
+}
+/* Mixin */
+.border-radius (@radius:5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+/* Color Classes */
+&.prime {
+    &.bg {
+        background-color: @darkPrimary !important;
+    }
+
+    &.clr {
+        color: @darkPrimary !important;
+    }
+}
+
+.light-prime {
+    &.bg {
+        background-color: @lightPrimary !important;
+    }
+
+    &.clr {
+        color: @lightPrimary !important;
+    }
+}
+
+.light-accent {
+    &.bg {
+        background-color: @lightAccent !important;
+    }
+
+    &.clr {
+        color: @lightAccent !important;
+    }
+}
+
+.lighter-accent {
+    &.bg {
+        background-color: @lighterAccent !important;
+    }
+
+    &.clr {
+        color: @lighterAccent !important;
+    }
+}
+
+.dark-accent {
+    &.bg {
+        background-color: @darkAccent !important;
+    }
+
+    &.clr {
+        color: @darkAccent !important;
+    }
+}
+
+.darker-accent {
+    &.bg {
+        background-color: @darkerAccent !important;
+    }
+
+    &.clr {
+        color: @darkerAccent !important;
+    }
+}
+
+.white {
+    &.bg {
+        background-color: @white !important;
+    }
+
+    &.clr {
+        color: @white !important;
+    }
+}

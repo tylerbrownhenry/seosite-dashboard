@@ -4,8 +4,20 @@ var resourceSchema = new dynamoose.Schema({
      url: {
           type: String
      },
+     hostname: {
+          type: String
+     },
      timings: {
           type: Object
+     },
+     mainPage:{
+       type:Boolean
+     },
+     css:{
+       type:Object
+     },
+     server: {
+       type:String
      },
      start: {
           type: String,
@@ -27,7 +39,13 @@ var resourceSchema = new dynamoose.Schema({
        type:Boolean,
        default:false,
      },
+     bodySize: {
+       type:String
+     },
      type: {
+       type:String,
+     },
+     cleanType: {
        type:String,
      },
      _id: {

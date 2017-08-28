@@ -1,5 +1,6 @@
 var errorHandler = require('./errorHandler');
 var sendStatus = require('../api-requests/callbacks').sendStatus;
+var generateReport = require('../api-requests/callbacks').generateReport;
 
 /**
  * handler for messages
@@ -8,7 +9,12 @@ var sendStatus = require('../api-requests/callbacks').sendStatus;
  */
 function processUpdates(msg, ch) {
      ch.ack(msg);
-     sendStatus(JSON.parse(msg.content));
+     var _msg = JSON.parse(msg.content);
+     if(_msg.crequestType === 'embed:scan'){
+       generateReport(_msg);
+     } else {
+       sendStatus(_msg);
+     }
 }
 /**
  * initilizes rabbitMQ consumer

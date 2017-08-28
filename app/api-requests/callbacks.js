@@ -16,6 +16,23 @@ function sendStatus(req) {
      socket.emit('statusUpdate/' + req.uid);
 }
 
+function generateReport(req){
+  if(msg.requestType === 'embed:scan'){
+      /*
+      TODO Check email settings for organization
+      Email requester
+      Email oid
+      */
+     utils.findOneUser({uid:msg.uid},function(err,user){
+        email(user.email,'complete:scan',generateSummary(msg.i_id,msg.type,msg.status));
+     });
+
+
+  }
+}
+// console.log('SEND AN EMAIL',msg);
+/** Send an email **/
+
 function broadcastAll(message) {
      socket.emit('broadcastAll', message);
 }
@@ -147,8 +164,8 @@ function callbacks(_socket) {
                var appMessages = [];
                var messageToDelete = []
                _.each(messages, function (message) {
-                    console.log('message', message.page, e.currentPage, message.page === e.currentPage);
-                    if (message.page === e.currentPage) {
+                    console.log('message', message.source, e.currentPage, message.source === e.currentPage);
+                    if (message.source === e.currentPage) {
                       console.log('this page');
                          currentPageMessages.push(message);
                          messageToDelete.push({
@@ -169,7 +186,7 @@ function callbacks(_socket) {
                });
 
                socket.emit('updates/' + e.uid + '/' + e.apiToken, {
-                    page: currentPageMessages,
+                    source: currentPageMessages,
                     app: appMessages
                });
           });
@@ -178,4 +195,5 @@ function callbacks(_socket) {
 
 module.exports.callbacks = callbacks;
 module.exports.sendStatus = sendStatus;
+module.exports.generateReport = generateReport;
 module.exports.broadcastAll = broadcastAll;

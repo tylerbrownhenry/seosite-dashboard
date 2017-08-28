@@ -11,6 +11,13 @@ Testing Webhooks Locally:
 Card that saves but fails to charge:
 4000000000000341
 
+
+npm install -g gulp for semantic
+
+npm install semantic-ui --save
+cd semantic/
+gulp build
+
 # Node Stripe Membership SaaS
 
 This project is a boilerplate express app for creating a membership/subscription site with [Stripe](https://stripe.com), [Mailgun](https://mailgun.com/signup), mongodb and swig. Inspired by [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) and [RailsApps/rails-stripe-membership-saas](https://github.com/RailsApps/rails-stripe-membership-saas). It also handles stripe webhooks.
@@ -157,7 +164,7 @@ Command
 brew install rabbitmq
 Add: PATH=$PATH:/usr/local/sbin to your .bash_profile or .profile.rabbitmq-server
 Open new terminal window:
-rabbitmq-server
+./rabbitmq-server
 (If path doesnt work, you can always go to usr/local/sbin/) and run the command there)
 
 More : https://www.rabbitmq.com/install-homebrew.html

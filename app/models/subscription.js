@@ -19,9 +19,6 @@ var subscriptionSchema = new dynamoose.Schema({
      last4: {
           type: String
      },
-     apiToken: {
-          type: String
-     },
      activeUntil: {
           type: Date
      },

@@ -5,6 +5,8 @@ var utils = require('../../utils'),
      _ = require('underscore'),
      filename = 'embed/embed-controller.js',
      EmbedHash = require('../../models/embedHash'),
+     pageScan = require('../../api-requests/requests/pageScan'),
+     PageScanOptions = require('../../api-requests/requests/pageScanOptions'),
      subscriptionController = require('../subscriptions/subscription-controller'),
      userController = require('../pages/user/users-controller'),
      Email = require('../../models/email'),
@@ -25,7 +27,7 @@ function validateHash(hash, oid) {
           _id: hash,
           oid: oid
      }, function (err, data) {
-
+       console.log('err',err,'data',data);
           if (data && err === null) {
                promise.resolve(data);
           } else {
@@ -133,6 +135,67 @@ function performScan(req, user) {
             } else {
 
             }
+
+            var data = {
+              "uid": res.uid,
+              "oid": res.oid,
+              "url": req.body.url,
+              "source": req.body.source,
+              "scanGroup": 'default',
+              "type": req.body.type,
+              "temp_id": req.body.url,
+              "requestType": 'embed:scan',
+              "token": req.body.hash
+            };
+
+            var options = new PageScanOptions(data);
+            pageScan(options).then(function (response) {
+                console.log('requests.js queue/page --> success', response);
+                // socket.emit('update/'+data.token+'/'+data.uid,response);
+            }).catch(function (error) {
+                console.log('requests.js queue/page --> error', error);
+                // socket.emit('update/'+data.token+'/'+data.uid,error);
+            });
+
+          //   oid: 'ZzxprO',
+          //    url: 'http://www.mariojacome.com',
+          //    page: '/scan',
+          //    scanGroup: 'default',
+          //    token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Ilp6eHByTyIsImlhdCI6MTUwMDE3ODEzMSwiZXhwIjoxNTAxMzg3NzMxfQ.VMlgO1HdgV59TQCrfgc32yHfSlSAgMS9Qkeyn4epRWA',
+          //    type: 'page:scan' } ---
+          //  [ 'pageScan.js init options:',
+          //    { uid: '17PmsI',
+          //      oid: 'ZzxprO',
+          //      url: 'http://www.mariojacome.com',
+          //      source: '/scan',
+          //      scanGroup: 'default',
+          //      type: 'page:scan',
+          //      temp_id: undefined,
+          //      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Ilp6eHByTyIsImlhdCI6MTUwMDE3ODEzMSwiZXhwIjoxNTAxMzg3NzMxfQ.VMlgO1HdgV59TQCrfgc32yHfSlSAgMS9Qkeyn4epRWA',
+          //      options:
+          //       { captures: undefined,
+          //         links: undefined,
+          //         security: undefined,
+          //         type: 'page:scan',
+          //         save: [Object] } } ]
+
+
+            // return {
+            //      "uid": data.uid,
+            //      "oid": data.oid,
+            //      "url": data.url,
+            //      "page": data.page,
+            //      "scanGroup": data.scanGroup,
+            //      "type": data.type,
+            //      "temp_id": data.temp_id,
+            //      "token": data.token,
+            //      "options": {
+            //           "captures": data.captures,
+            //           "links": data.links,
+            //           "security": data.security,
+            //           "type": data.type,
+            //
+            //
                console.log('RES WHAAAA',res);
           });
 
@@ -142,7 +205,7 @@ function performScan(req, user) {
 function _checkPlanPermission(req, res, plan, subscription) {
   console.log('plan',plan);
      subscriptionController.checkPlanPermissions(plan, 'can:white:label', true, function (resp) {
-          console.log('can you do this?', resp);
+          console.log('can you do this?', resp,typeof resp);
           if (resp === false) {
                console.log('not allowed');
           } else {

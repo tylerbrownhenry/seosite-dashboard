@@ -1,24 +1,20 @@
 require('dotenv').config();
 var dynamoose = require('dynamoose');
+
 var embedHashSchema = new dynamoose.Schema({
   _id: {
     type: String,
-    rangeKey: true,
-  },
-  oid: {
-    type: String,
     hashKey: true
   },
-  created: {
-    type: Date,
-    default: new Date()
+  oid:{
+    type:String,
+    rangeKey: true
   },
-  name: {
+  name:{
     type: String
   },
-  status: {
-    type:String,
-    default: 'active:embed'
+  active:{
+    type: Boolean
   }
 }, {
   throughput: {

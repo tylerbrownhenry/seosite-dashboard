@@ -53,9 +53,6 @@ var userSchema = new dynamoose.Schema({
           type: String,
           default: ''
      },
-     apiToken: {
-          type: String,
-     },
      created: {
           type: String,
           default: +new Date()

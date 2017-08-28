@@ -103,14 +103,27 @@ function updateActivity(oid, type, callback) {
  * @param  {Function} callback
  */
 function updateActivityEmail(oid, email, callback) {
-     var updates = {
-          $ADD: {}
-     };
+  _updateActivity(oid,{$PUT:{email:emai}},callback);
+}
+/**
+ * update activity entry's apiKey property/value
+ * @param  {String}   oid      organization id to search by
+ * @param  {String}   apiKey    new apiKey for entry
+ * @param  {Function} callback
+ */
+function updateActivityApiToken(oid, apiToken, callback) {
+  _updateActivity(oid,{$PUT:{apiToken:apiToken}},callback);
+}
+/**
+ * update activity entry's property/value
+ * @param  {String}   oid      organization id to search by
+ * @param  {String}   updates
+ * @param  {Function} callback
+ */
+function _updateActivity(oid, updates, callback) {
      Activity.update({
           oid: oid
-     }, {
-          email: email
-     }, function (err) {
+     }, updates, function (err) {
           if (err) {
                if (typeof callback === 'function') {
                     return callback(err);
@@ -755,6 +768,7 @@ function fetchActivityByCustomer(customerId) {
      }).catch(function (err) {
           promise.reject(err);
      });
+     return promise.promise;
 };
 
 /**
@@ -839,6 +853,7 @@ var cachedPlans = {
  * @return {Object|Array}     a single plan or an array of all plans
  */
 function getPlans(cb, refresh, planId) {
+  console.log('getPlans',planId,refresh);
      if (refresh || cachedPlans.empty !== 'true') {
           subscriptionController.listPlans(function (err, plans) {
                if (err) {
@@ -853,13 +868,48 @@ function getPlans(cb, refresh, planId) {
      }
 }
 
+/**
+ * update an item in dynamo
+ * @param  {Object}   args     identifier(s) for the item
+ * @param  {Object}   updates  what and how to update
+ * @param  {Function} callback callback accepts one paramater, err
+ */
+function updateBy(model, args, updates, callback) {
+     console.log('updateBy');
+     try {
+          console.log('utils.js --> updateBy')
+          model.update(args, updates, function (err) {
+               console.log('utils.js --> updateBy -> response');
+               if (err) {
+                    console.log('utils.js --> updateBy:failed');
+                    if (typeof callback === 'function') {
+                         return callback(err);
+                    }
+               }
+               console.log('utils.js --> updateBy:passed');
+               if (typeof callback === 'function') {
+                    return callback(null);
+               }
+          });
+     } catch (err) {
+          //console.log('utils.js --> updateBy:error', err);
+          if (typeof callback === 'function') {
+               return callback({
+                    message: 'error:update:item'
+               });
+          }
+     }
+}
+
 module.exports.encrypt = encrypt;
+module.exports.updateBy = updateBy;
 module.exports.getPlans = getPlans;
 module.exports.findBy = findBy;
 module.exports.sendEmail = sendEmail;
 module.exports.findSomeBy = findSomeBy;
 module.exports.updateActivity = updateActivity;
 module.exports.updateActivityEmail = updateActivityEmail;
+module.exports.updateActivityApiToken= updateActivityApiToken;
 module.exports.checkActivity = checkActivity;
 module.exports.formatEmailContent = formatEmailContent;
 module.exports.checkAvailActivity = checkAvailActivity;
@@ -883,6 +933,7 @@ module.exports.findEmail = findEmail;
 module.exports.saveEmail = saveEmail;
 module.exports.deleteEmail = deleteEmail;
 module.exports.getAllUsers = getAllUsers;
+module.exports._checkPlanActivity = _checkPlanActivity;
 
 /* Smoke Covered */
 module.exports.deleteUser = deleteUser;

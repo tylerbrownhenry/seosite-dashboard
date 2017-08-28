@@ -74,7 +74,6 @@ function createUser(req, customer) {
        name: (req.body.name) ? req.body.name : null,
        location: (req.body.location) ? req.body.location : null,
        website: (req.body.website) ? req.body.website : null,
-       apiToken: createToken(req.uid),
        email: req.body.email,
        customerId: (customer) ? customer : null,
        uid: sh.unique(req.body.email),
@@ -336,6 +335,7 @@ function createAccount(req, done) {
 
           var activity = new Activity({
                oid: user.oid,
+               apiToken: createToken(user.oid),
                email: user.email,
                customerId: customerId
           });

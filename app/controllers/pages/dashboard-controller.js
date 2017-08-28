@@ -13,6 +13,7 @@ exports.getActivity = function (req, res) {
      console.log('dashboard-controller getActivity', req.user);
      var user = req.user.identity;
      var subscription = req.user.subscription;
+     var customization = req.user.customization;
     //  utils.findSomeBy(Permission, {
     //       label: subscription.plan
     //  }, function (err, permissions) {
@@ -79,6 +80,7 @@ exports.getDefault = function (req, res) {
      console.log('dashboard-controller Permission', user);
      var user = req.user.identity;
      var subscription = req.user.subscription;
+     var customization = req.user.customization;
 
      var form = {},
           error = null,
@@ -107,7 +109,8 @@ exports.getDefault = function (req, res) {
                     subscription: subscription,
                     form: form,
                     error: error,
-                    plans: plans
+                    plans: plans,
+                    customization: customization
                });
     //       } else {
     //            res.render('errors', {
