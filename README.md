@@ -1,3 +1,5 @@
+fair warning: Most of this readme is out of date or just notes, as this was a personal project.
+
 Set config vars to
 key:API_HOST value:https://limitless-cove-68401.herokuapp.com/
 
