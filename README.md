@@ -1,5 +1,10 @@
 fair warning: Most of this readme is out of date or just notes, as this was a personal project.
 
+
+# Overview
+
+This is the front dashboard of a node/strip dashboard with a backend that scanned websites for seo compatibility
+
 Set config vars to
 key:API_HOST value:https://limitless-cove-68401.herokuapp.com/
 
