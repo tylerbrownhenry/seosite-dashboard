@@ -3,7 +3,7 @@ fair warning: Most of this readme is out of date or just notes, as this was a pe
 
 # Overview
 
-This is the front dashboard of a node/strip dashboard with a backend that scanned websites for seo compatibility
+This is the front dashboard of a node/strip dashboard with a backend that scanned websites for seo compatibility.  This started as a fork of 'Node Stripe Membership SaaS' but was converted to use DynamoDB and required adding the logic for tracking monthly subscriptions through Stripe.
 
 Set config vars to
 key:API_HOST value:https://limitless-cove-68401.herokuapp.com/
