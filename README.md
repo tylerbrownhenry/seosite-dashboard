@@ -1,6 +1,3 @@
-fair warning: Most of this readme is out of date or just notes, as this was a personal project.
-
-
 # Overview
 
 This is the front dashboard of a node/strip dashboard with a backend that scanned websites for seo compatibility.  This started as a fork of 'Node Stripe Membership SaaS' but was converted to use DynamoDB and required adding the logic for tracking monthly subscriptions through Stripe.
